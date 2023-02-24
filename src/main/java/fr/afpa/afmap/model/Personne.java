@@ -1,5 +1,8 @@
 package fr.afpa.afmap.model;
 
+/**
+ * Description d'une personne, nom, prenom
+ */
 abstract public class Personne {
     private String nom;
     private String prenom;

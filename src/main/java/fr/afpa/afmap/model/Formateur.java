@@ -1,5 +1,8 @@
 package fr.afpa.afmap.model;
 
+/**
+ * Classe formateur, numero de tel et son mail
+ */
 public class Formateur extends Personne{
     private int numeroTelephone;
     private String mail;
