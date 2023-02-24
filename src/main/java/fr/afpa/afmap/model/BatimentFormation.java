@@ -1,5 +1,8 @@
 package fr.afpa.afmap.model;
 
+/**
+ * Batiment a usage de formation avec une formation et un formateur
+ */
 public class BatimentFormation extends Batiment{
     private Formation formation;
     private Formateur formateur;

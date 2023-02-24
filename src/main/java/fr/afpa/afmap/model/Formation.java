@@ -1,5 +1,8 @@
 package fr.afpa.afmap.model;
 
+/**
+ * Formation, nom, formateur
+ */
 public class Formation {
     private String nom;
     private Formateur formateur;
