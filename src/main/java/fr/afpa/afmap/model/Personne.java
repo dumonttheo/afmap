@@ -1,4 +1,4 @@
-package fr.afpa.afmap;
+package fr.afpa.afmap.model;
 
 abstract public class Personne {
     private String nom;

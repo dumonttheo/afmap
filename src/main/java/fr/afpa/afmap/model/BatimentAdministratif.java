@@ -1,4 +1,4 @@
-package fr.afpa.afmap;
+package fr.afpa.afmap.model;
 
 public class BatimentAdministratif extends Batiment {
     private String service;

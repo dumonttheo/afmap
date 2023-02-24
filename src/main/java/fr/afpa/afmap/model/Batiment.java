@@ -1,7 +1,10 @@
-package fr.afpa.afmap;
+package fr.afpa.afmap.model;
 
 import java.util.ArrayList;
 
+/**
+ * Description batiment afpa avec coordonnées
+ */
 abstract public class Batiment {
     private int numero;
     private String nom = "Batiment " + numero;

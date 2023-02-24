@@ -1,4 +1,4 @@
-package fr.afpa.afmap;
+package fr.afpa.afmap.model;
 
 public class Formation {
     private String nom;
