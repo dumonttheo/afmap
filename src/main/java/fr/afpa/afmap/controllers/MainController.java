@@ -19,6 +19,8 @@ public class MainController {
     @FXML
     public Label labelNomFormateur;
     @FXML
+    public Label changerceLabel;
+    @FXML
     public Label labelTelephoneFormateur;
     @FXML
     public Label labelMailFormateur;
@@ -30,6 +32,7 @@ public class MainController {
     private ComboBox<Formation> comboFormation;
     @FXML
     private VBox vBoxBat;
+
 
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
     private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
@@ -84,6 +87,7 @@ public class MainController {
             }
         });
         comboFormation.setOnAction(event -> {
+            vBoxBat.getChildren().clear();
             for(BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()){
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
