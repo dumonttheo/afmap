@@ -45,10 +45,10 @@ public class MainController {
     @FXML
     private ImageView imageViewBat;
 
-    @FXML
-    private Canvas canvaCDA;
-    @FXML
-    private Canvas canvaCDABis;
+//    @FXML
+//    private Canvas canvaCDA;
+//    @FXML
+//    private Canvas canvaCDABis;
 
 
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
@@ -98,11 +98,11 @@ public class MainController {
         //ComboFormation invisible
         comboFormation.setVisible(false);
         labelFormation.setVisible(false);
-
-
-
-        canvasArrayList.add(canvaCDA);
-        canvasArrayList.add(canvaCDABis);
+//
+//
+//
+//        canvasArrayList.add(canvaCDA);
+//        canvasArrayList.add(canvaCDABis);
 
 
         comboBat.setOnAction(event -> {
@@ -124,43 +124,43 @@ public class MainController {
             labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNumeroTelephone());
 
 
-            if(comboFormation.getSelectionModel().getSelectedItem().getNom() == "CDA"){
-                GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
-                gc.setFill(Color.LIGHTBLUE);
-                gc.fillRect(0,0,300,300);
-                canvaCDABis.setOpacity(1);
-            } else {
-                canvaCDABis.setOpacity(0);
-            }
+//            if(comboFormation.getSelectionModel().getSelectedItem().getNom() == "CDA"){
+//                GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
+//                gc.setFill(Color.LIGHTBLUE);
+//                gc.fillRect(0,0,300,300);
+//                canvaCDABis.setOpacity(1);
+//            } else {
+//                canvaCDABis.setOpacity(0);
+//            }
         });
 
 
 
 //        EVENT ON CDA BAT
 
-        canvaCDA.setOnMouseEntered(event -> {
-            GraphicsContext gc = canvaCDA.getGraphicsContext2D();
-            gc.setFill(Color.LIGHTBLUE);
-            gc.fillRect(0,0,300,300);
-            canvaCDA.setOpacity(1);
-        });
-
-        canvaCDA.setOnMouseExited(event-> {
-            canvaCDA.setOpacity(0);
-        });
-
-        canvaCDA.setOnMouseClicked(event-> {
-            for (Formation form : listeAllFormations){
-                if(form.getNom() == "CDA"){
-                    comboBat.getSelectionModel().selectFirst();
-                    comboFormation.getSelectionModel().select(form);
-                    GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
-                    gc.setFill(Color.LIGHTBLUE);
-                    gc.fillRect(0,0,300,300);
-                    canvaCDA.setOpacity(1);
-                }
-            }
-        });
+//        canvaCDA.setOnMouseEntered(event -> {
+//            GraphicsContext gc = canvaCDA.getGraphicsContext2D();
+//            gc.setFill(Color.LIGHTBLUE);
+//            gc.fillRect(0,0,300,300);
+//            canvaCDA.setOpacity(1);
+//        });
+//
+//        canvaCDA.setOnMouseExited(event-> {
+//            canvaCDA.setOpacity(0);
+//        });
+//
+//        canvaCDA.setOnMouseClicked(event-> {
+//            for (Formation form : listeAllFormations){
+//                if(form.getNom() == "CDA"){
+//                    comboBat.getSelectionModel().selectFirst();
+//                    comboFormation.getSelectionModel().select(form);
+//                    GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
+//                    gc.setFill(Color.LIGHTBLUE);
+//                    gc.fillRect(0,0,300,300);
+//                    canvaCDA.setOpacity(1);
+//                }
+//            }
+//        });
 
 
 
