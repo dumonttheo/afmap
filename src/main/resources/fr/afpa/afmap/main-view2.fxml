@@ -36,7 +36,8 @@
                   <ComboBox fx:id="comboFormation" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <TitledPane animated="false" prefWidth="200.0" text="Batiment">
+            <TitledPane animated="false" collapsible="false" prefWidth="200.0" text="Batiment">
+
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
@@ -44,8 +45,15 @@
                      </children>
                   </AnchorPane>
                </content>
+               <graphic>
+                  <ImageView fitHeight="37.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@homeRedimension.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </TitledPane>
-            <TitledPane animated="false" prefWidth="200.0" text="Formateur">
+            <TitledPane animated="false" collapsible="false" prefWidth="200.0" text="Formateur">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
@@ -62,6 +70,13 @@
                      </children>
                   </AnchorPane>
                </content>
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@formateurRedimension.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </TitledPane>
          </children>
          <padding>
