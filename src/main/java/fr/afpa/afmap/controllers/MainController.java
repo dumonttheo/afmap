@@ -1,5 +1,6 @@
 package fr.afpa.afmap.controllers;
 
+import fr.afpa.afmap.HelloApplication;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Formateur;
 import fr.afpa.afmap.model.Formation;
@@ -8,12 +9,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainController {
     @FXML
@@ -32,10 +35,17 @@ public class MainController {
     private ComboBox<Formation> comboFormation;
     @FXML
     private VBox vBoxBat;
+    @FXML
+    private BorderPane borderPane;
+    @FXML
+    private HBox hboxBat;
+    @FXML
+    private ImageView imageViewBat;
 
 
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
     private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
+    private Double widthBorderPane = 0.0;
 
     //ajout batiments
     BatimentFormation batFor1 = new BatimentFormation(64, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
@@ -53,14 +63,14 @@ public class MainController {
     List<Formation> formationList = new ArrayList<Formation>();
 
 
+    public void initialize() {
 
-    public void initialize(){
         batFor1.addFormation(cda);
         batFor2.addFormation(electricien);
         batimentFormationArrayList.add(batFor1);
         batimentFormationArrayList.add(batFor2);
         //recuperer toutes les formations de tous les batiments_formation et les afficher dans la comboFormation
-        for (BatimentFormation bat : batimentFormationArrayList){
+        for (BatimentFormation bat : batimentFormationArrayList) {
             List<Formation> formationsDuBatiment = bat.getListeFormations();
             listeAllFormations.addAll(formationsDuBatiment);
         }
@@ -77,18 +87,20 @@ public class MainController {
         comboFormation.setVisible(false);
         labelFormation.setVisible(false);
 
+
+
         comboBat.setOnAction(event -> {
-            if(comboBat.getSelectionModel().isSelected(0)){
+            if (comboBat.getSelectionModel().isSelected(0)) {
                 comboFormation.setVisible(true);
                 labelFormation.setVisible(true);
-            }else {
+            } else {
                 comboFormation.setVisible(false);
                 labelFormation.setVisible(false);
             }
         });
         comboFormation.setOnAction(event -> {
             vBoxBat.getChildren().clear();
-            for(BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()){
+            for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
             labelNomFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNom() + " " + comboFormation.getSelectionModel().getSelectedItem().getFormateur().getPrenom());
@@ -97,9 +109,7 @@ public class MainController {
         });
 
 
-
     }
-
 
 
 }
