@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 abstract public class Batiment {
     private int numero;
-    private String nom = "Batiment " + numero;
+    private String nom;
 
     private Double topLeftX;
     private Double topLeftY;
@@ -17,11 +17,10 @@ abstract public class Batiment {
     private Double bottomLeftY;
     private Double bottomRightX;
     private Double bottomRightY;
-    private Formation formation;
-    private Formateur formateur;
 
     public Batiment(int numero, Double topLeftX, Double topLeftY, Double topRightX, Double topRightY, Double bottomLeftX, Double bottomLeftY, Double bottomRightX, Double bottomRightY){
         this.numero = numero;
+        this.nom = "Batiment " + numero;
         this.topLeftX = topLeftX;
         this.topLeftY = topLeftY;
         this.topRightX = topRightX;
@@ -36,7 +35,10 @@ abstract public class Batiment {
         this.nom = nomBatiment;
     }
 
-
+    @Override
+    public String toString()  {
+        return this.nom;
+    }
 
     public int getNumero() {
         return numero;
@@ -118,15 +120,4 @@ abstract public class Batiment {
         this.bottomRightY = bottomRightY;
     }
 
-    public Formation getFormation() {
-        return formation;
-    }
-
-    public Formateur getFormateur() {
-        return formateur;
-    }
-
-    public void setFormateur(Formateur formateur) {
-        this.formateur = formateur;
-    }
 }
