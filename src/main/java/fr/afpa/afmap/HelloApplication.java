@@ -16,7 +16,6 @@ public class HelloApplication extends Application {
 
 
         stage.setTitle("AFMAP");
-
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();

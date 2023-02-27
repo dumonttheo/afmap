@@ -7,11 +7,14 @@ import fr.afpa.afmap.model.Formation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,10 +45,19 @@ public class MainController {
     @FXML
     private ImageView imageViewBat;
 
+    @FXML
+    private Canvas canvaCDA;
+    @FXML
+    private Canvas canvaCDABis;
+
 
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
     private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
-    private Double widthBorderPane = 0.0;
+
+    private ArrayList<Canvas> canvasArrayList = new ArrayList<>();
+
+
+    static GraphicsContext gc;
 
     //ajout batiments
     BatimentFormation batFor1 = new BatimentFormation(64, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
@@ -89,6 +101,10 @@ public class MainController {
 
 
 
+        canvasArrayList.add(canvaCDA);
+        canvasArrayList.add(canvaCDABis);
+
+
         comboBat.setOnAction(event -> {
             if (comboBat.getSelectionModel().isSelected(0)) {
                 comboFormation.setVisible(true);
@@ -106,7 +122,46 @@ public class MainController {
             labelNomFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNom() + " " + comboFormation.getSelectionModel().getSelectedItem().getFormateur().getPrenom());
             labelMailFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getMail());
             labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNumeroTelephone());
+
+
+            if(comboFormation.getSelectionModel().getSelectedItem().getNom() == "CDA"){
+                GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
+                gc.setFill(Color.LIGHTBLUE);
+                gc.fillRect(0,0,300,300);
+                canvaCDABis.setOpacity(1);
+            } else {
+                canvaCDABis.setOpacity(0);
+            }
         });
+
+
+
+//        EVENT ON CDA BAT
+
+        canvaCDA.setOnMouseEntered(event -> {
+            GraphicsContext gc = canvaCDA.getGraphicsContext2D();
+            gc.setFill(Color.LIGHTBLUE);
+            gc.fillRect(0,0,300,300);
+            canvaCDA.setOpacity(1);
+        });
+
+        canvaCDA.setOnMouseExited(event-> {
+            canvaCDA.setOpacity(0);
+        });
+
+        canvaCDA.setOnMouseClicked(event-> {
+            for (Formation form : listeAllFormations){
+                if(form.getNom() == "CDA"){
+                    comboBat.getSelectionModel().selectFirst();
+                    comboFormation.getSelectionModel().select(form);
+                    GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
+                    gc.setFill(Color.LIGHTBLUE);
+                    gc.fillRect(0,0,300,300);
+                    canvaCDA.setOpacity(1);
+                }
+            }
+        });
+
 
 
     }

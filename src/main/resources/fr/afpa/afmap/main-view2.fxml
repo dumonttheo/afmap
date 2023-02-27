@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
@@ -45,9 +47,9 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" prefWidth="200.0" text="Formateur">
+            <TitledPane animated="false" prefWidth="200.0" style="-fx-background-color: white;" text="Formateur">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0" style="-fx-background-color: white;">
                      <children>
                         <VBox layoutX="16.0" layoutY="9.0">
                            <children>
@@ -68,8 +70,18 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <Pane>
+      <Pane prefHeight="962.0" prefWidth="1536.0">
          <children>
+            <Canvas fx:id="canvaCDABis" height="52.0" layoutX="319.0" layoutY="166.0" width="61.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Canvas>
+            <Canvas fx:id="canvaCDA" height="52.0" layoutX="319.0" layoutY="166.0" width="61.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Canvas>
             <ImageView fx:id="imageViewBat" fitHeight="966.0" fitWidth="1441.0">
                <image>
                   <Image url="@batimentBis.png" />
