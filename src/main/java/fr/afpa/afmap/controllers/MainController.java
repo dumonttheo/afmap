@@ -10,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -32,10 +34,17 @@ public class MainController {
     private ComboBox<Formation> comboFormation;
     @FXML
     private VBox vBoxBat;
+    @FXML
+    private BorderPane borderPane;
+    @FXML
+    private HBox hboxBat;
+@FXML
+private ImageView imageViewBat;
 
 
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
     private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
+    private Double widthBorderPane = 0.0;
 
     //ajout batiments
     BatimentFormation batFor1 = new BatimentFormation(64, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
@@ -78,6 +87,7 @@ public class MainController {
         labelFormation.setVisible(false);
 
         comboBat.setOnAction(event -> {
+            System.out.println(borderPane.widthProperty().get());
             if(comboBat.getSelectionModel().isSelected(0)){
                 comboFormation.setVisible(true);
                 labelFormation.setVisible(true);
