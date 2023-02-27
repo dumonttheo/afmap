@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="768.0" minWidth="1280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.MainController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.0" minWidth="10.0" prefWidth="294.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="989.0" minWidth="10.0" prefWidth="986.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox prefHeight="352.0" prefWidth="480.0" spacing="5.0">
+         <children>
+            <Label text="Centre de Rochefort" />
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Type batiment : " />
+                  <Label fx:id="labelFormation" text="Formation :" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="comboBat" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="comboFormation" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <TitledPane animated="false" prefWidth="200.0" text="Batiment">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
+                     <children>
+                        <VBox fx:id="vBoxBat" layoutX="27.0" layoutY="14.0" />
+                     </children></AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" prefWidth="200.0" text="Formateur">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
+                     <children>
+                        <VBox layoutX="16.0" layoutY="9.0">
+                           <children>
+                              <Label fx:id="labelNomFormateur" />
+                              <Label fx:id="labelTelephoneFormateur" />
+                              <Label fx:id="labelMailFormateur" />
+                           </children>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </VBox>
+                     </children></AnchorPane>
+               </content>
+            </TitledPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+         <center>
+             <ImageView fitHeight="597.0" fitWidth="909.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                 <image>
+                     <Image url="@batimentBis.png" />
+                 </image>
+             </ImageView>
+         </center>
+      </BorderPane>
+   </children>
+</GridPane>
