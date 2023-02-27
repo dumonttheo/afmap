@@ -44,12 +44,15 @@ public class MainController {
     private HBox hboxBat;
     @FXML
     private ImageView imageViewBat;
+    @FXML
+    private Pane pane;
 
     @FXML
     private Canvas canvaCDA;
     @FXML
     private Canvas canvaCDABis;
 
+//dfdbf
 
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
     private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
@@ -76,7 +79,10 @@ public class MainController {
 
 
     public void initialize() {
-
+        pane.widthProperty().addListener((obs, oldVal, newVal)->{
+            imageViewBat.fitWidthProperty().bind(pane.widthProperty());
+//            System.out.println(column.getPrefWidth());
+        });
         batFor1.addFormation(cda);
         batFor2.addFormation(electricien);
         batimentFormationArrayList.add(batFor1);
