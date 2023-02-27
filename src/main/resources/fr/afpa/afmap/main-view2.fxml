@@ -41,15 +41,22 @@
                   <ComboBox fx:id="comboFormation" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <TitledPane animated="false" prefWidth="200.0" text="Batiment">
-               <content>
+            <TitledPane accessibleRole="IMAGE_VIEW" animated="false" collapsible="false" graphicTextGap="2.0" prefHeight="102.0" prefWidth="274.0" text="Batiment">
+
+
+                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
                         <VBox fx:id="vBoxBat" layoutX="27.0" layoutY="14.0" />
                      </children></AnchorPane>
                </content>
+               <graphic>
+                   <ImageView fitHeight="32.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@homeRedimension.png" />
+                   </ImageView>
+               </graphic>
             </TitledPane>
-            <TitledPane animated="false" prefWidth="200.0" text="Formateur">
+            <TitledPane animated="false" collapsible="false" prefWidth="200.0" text="Formateur">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
@@ -65,6 +72,11 @@
                         </VBox>
                      </children></AnchorPane>
                </content>
+               <graphic>
+                   <ImageView fitHeight="31.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@formateurRedimension.png"/>
+                   </ImageView>
+               </graphic>
             </TitledPane>
          </children>
          <padding>
@@ -73,7 +85,7 @@
       </VBox>
       <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
          <center>
-             <ImageView fitHeight="597.0" fitWidth="909.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+             <ImageView accessibleRole="TITLED_PANE" fitHeight="597.0" fitWidth="909.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                  <image>
                      <Image url="@batimentBis.png" />
                  </image>
