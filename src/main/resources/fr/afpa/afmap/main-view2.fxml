@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javax.print.DocFlavor.URL?>
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.MainController">
    <children>
       <VBox prefHeight="1072.0" prefWidth="385.0" spacing="5.0">
@@ -37,26 +36,26 @@
                   <ComboBox fx:id="comboFormation" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <TitledPane  animated="false" collapsible="false" prefWidth="200.0" text="Batiment" textFill="#0d0d0d">
+            <TitledPane animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Batiment" textFill="#0d0d0d">
 
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0" >
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
                         <VBox fx:id="vBoxBat" layoutX="27.0" layoutY="14.0" />
                      </children>
                   </AnchorPane>
                </content>
                <graphic>
-                  <ImageView fitHeight="37.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" >
+                  <ImageView fitHeight="37.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@homeRedimension.png" />
                      </image>
                   </ImageView>
                </graphic>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" prefWidth="200.0" text="Formateur">
+            <TitledPane animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Formateur">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0" >
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
                         <VBox layoutX="16.0" layoutY="9.0">
                            <children>
