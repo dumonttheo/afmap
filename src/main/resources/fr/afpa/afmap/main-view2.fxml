@@ -50,7 +50,7 @@
                <graphic>
                   <ImageView fitHeight="37.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@homeRedimension.png" />
+                        <Image url="@home.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -75,7 +75,7 @@
                <graphic>
                   <ImageView fitHeight="31.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@formateurRedimension.png" />
+                        <Image url="@formateur.png" />
                      </image>
                   </ImageView>
                </graphic>
