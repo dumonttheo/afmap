@@ -47,10 +47,7 @@ public class MainController {
     @FXML
     private Pane pane;
 
-//    @FXML
-//    private Canvas canvaCDA;
-//    @FXML
-//    private Canvas canvaCDABis;
+
 
 //dfdbf
 
@@ -81,7 +78,6 @@ public class MainController {
     public void initialize() {
         pane.widthProperty().addListener((obs, oldVal, newVal)->{
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
-//            System.out.println(column.getPrefWidth());
         });
         batFor1.addFormation(cda);
         batFor2.addFormation(electricien);
@@ -106,7 +102,7 @@ public class MainController {
         labelFormation.setVisible(false);
 //
 //
-//
+//    Canvas canvaCDA = new Canvas(22.55);
 //        canvasArrayList.add(canvaCDA);
 //        canvasArrayList.add(canvaCDABis);
 

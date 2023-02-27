@@ -41,7 +41,7 @@
             <TitledPane animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Batiment" textFill="#0d0d0d">
 
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="56.0" prefWidth="363.0">
                      <children>
                         <VBox fx:id="vBoxBat" layoutX="27.0" layoutY="14.0" />
                      </children>
@@ -87,7 +87,7 @@
       </VBox>
       <Pane fx:id="pane" prefHeight="962.0" prefWidth="1536.0">
          <children>
-            <Canvas fx:id="canvaCDABis" height="52.0" layoutX="319.0" layoutY="166.0" width="61.0">
+            <Canvas fx:id="canvaCDABis" height="55.0" layoutX="433.0" layoutY="186.0" width="80.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
