@@ -7,6 +7,7 @@ import fr.afpa.afmap.model.Formation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -50,19 +51,16 @@ public class MainController {
     @FXML
     private Pane pane;
 
-    @FXML
-    private Canvas mainCanvas;
+
 
     @FXML
     private Group drawingGroup;
 
 
-//dfdbf
-
     private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
     private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
 
-    private ArrayList<Canvas> canvasArrayList = new ArrayList<>();
+    private ArrayList<Rectangle> rectangleArrayList = new ArrayList<>();
 
 
     //ajout batiments
@@ -86,29 +84,48 @@ public class MainController {
     public void initialize() {
 
         Rectangle shapeCDA = new Rectangle(341.0,146.0, 60,44);
-        shapeCDA.setFill(Color.RED);
-        drawingGroup.getChildren().add(shapeCDA);
+
+        shapeCDA.setFill(Color.TRANSPARENT);
+
+        shapeCDA.setCursor(Cursor.HAND);
+
+        shapeCDA.setOnMouseEntered(event-> {
+            if(!shapeCDA.getFill().equals(Color.BLUE)){
+            shapeCDA.setFill(Color.RED);
+            }
+        });
+        shapeCDA.setOnMouseExited(event-> {
+            if(shapeCDA.getFill().equals(Color.RED)){
+                shapeCDA.setFill(Color.TRANSPARENT);
+            }
+        });
+
+        shapeCDA.setOnMouseClicked(mouseEvent -> {
+            shapeCDA.setFill(Color.BLUE);
+            for (Formation form : listeAllFormations){
+                if(form.getNom() == "CDA"){
+                    comboBat.getSelectionModel().selectFirst();
+                    comboFormation.getSelectionModel().select(form);
+                }
+            }
+        });
+
+        drawingGroup.getChildren().addAll(shapeCDA);
 
 
-//  Main Canvas Fill
-        GraphicsContext gc = mainCanvas.getGraphicsContext2D();
+
 
 
 //        LISTENER WIDTH
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
-            System.out.println(pane.getHeight());
             width = newVal.doubleValue();
 
-            changePlaceRectangle(newVal.doubleValue(), 22.21, 14.35 , Math.round(newVal.doubleValue() / 1.51), shapeCDA, 1536, 1014);
+            changePlaceRectangle(newVal.doubleValue(), 22.21, 14.35 , Math.round(newVal.doubleValue() / 1.51), 60 , 44 ,shapeCDA, 1536, 1014);
 
         });
 
-//        LISTENER HEIGHT
-        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            mainCanvas.setWidth(width);
-            mainCanvas.setHeight(newVal.doubleValue());
-        });
+
 
 
         batFor1.addFormation(cda);
@@ -161,14 +178,11 @@ public class MainController {
             labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNumeroTelephone());
 
 
-//            if(comboFormation.getSelectionModel().getSelectedItem().getNom() == "CDA"){
-//                GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
-//                gc.setFill(Color.LIGHTBLUE);
-//                gc.fillRect(0,0,300,300);
-//                canvaCDABis.setOpacity(1);
-//            } else {
-//                canvaCDABis.setOpacity(0);
-//            }
+            if(comboFormation.getSelectionModel().getSelectedItem().getNom() == "CDA"){
+                shapeCDA.setFill(Color.LIGHTBLUE);
+            } else {
+                shapeCDA.setFill(Color.TRANSPARENT);
+            }
         });
 //
 //        pane.setOnMouseMoved(mouseEvent -> {
@@ -215,24 +229,47 @@ public class MainController {
     }
 
 
-    public static void changePlaceRectangle(double newReso, double x, double y, double heigthReso, Rectangle rectangle, double oldReso, double oldResoHeigth) {
+    /**
+     * Manage a Rectangle to follow rezizing window
+     *
+     * @param newReso New Resolution after rezizing (only width)
+     * @param x   Layout X. Distance between left image and top-left point of rectangle
+     * @param y   Layout Y. Distance between Top image and top-left point of rectangle
+     * @param heigthReso New Resolution heigth after rezizing
+     * @param firstWidth First width of rectangle (on initialization)
+     * @param firstHeigth First heigth of rectangle (on initialization)
+     * @param rectangle Rectangle to manage
+     * @param oldReso First Width at initilisation
+     * @param oldResoHeigth First Heigth at initilisation
+     */
 
-//
+    public static void changePlaceRectangle(double newReso, double x, double y, double heigthReso, double firstWidth, double firstHeigth, Rectangle rectangle, double oldReso, double oldResoHeigth) {
 
-//        rectangle.
         double reso = 0;
         double resoHeigth = 0;
+
+//        Check if new Resolution is different to last resolution
         if (oldReso != newReso) {
+//            Calcul distance X Layout (can be negativ number)
             reso = Math.floor(newReso * x / 100) - Math.floor(oldReso * x / 100);
+
+//            Calcul distance Y Layout (can be negativ number)
             resoHeigth = Math.floor(heigthReso * y / 100) - Math.floor(oldResoHeigth * y / 100);
 
         }
 
+//        Calcul ratio of width at the first resolution
+        double ratioWidth = firstWidth * 100 / oldReso;
 
+//        Calcul ration of heigth at the first Resolution
+        double ratioHeigth = firstHeigth * 100 / oldResoHeigth;
+
+//  Set rectangle whit new values
         rectangle.setLayoutY(resoHeigth);
         rectangle.setLayoutX(reso);
+        rectangle.setWidth(newReso * ratioWidth / 100);
+        rectangle.setHeight( Math.floor(heigthReso * ratioHeigth / 100));
 
 }
-
 
 }
