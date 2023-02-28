@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -87,12 +88,8 @@
       </VBox>
       <Pane fx:id="pane" prefHeight="962.0" prefWidth="1536.0">
          <children>
-            <Canvas fx:id="canvaCDABis" height="55.0" layoutX="433.0" layoutY="186.0" width="80.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Canvas>
-            <Canvas fx:id="canvaCDA" height="52.0" layoutX="319.0" layoutY="166.0" width="61.0">
+            <Group fx:id="drawingGroup" />
+            <Canvas fx:id="mainCanvas" height="1080.0" width="1536.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
