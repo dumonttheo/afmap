@@ -11,7 +11,7 @@ public abstract class FormeBatiment {
     private double width;
     private double heigth;
 
-    private ArrayList<Line> lineArrayList = new ArrayList<>();
+    protected Double[] allPoints;
 
     public FormeBatiment(double x1, double y1, double width, double heigth) {
         this.x1 = x1;
@@ -20,8 +20,8 @@ public abstract class FormeBatiment {
         this.heigth = heigth;
     }
 
-    public FormeBatiment(ArrayList<Line> lineArrayList) {
-        this.lineArrayList = lineArrayList;
+    public FormeBatiment(Double[] allPoints)  {
+        this.allPoints = allPoints;
     }
 
     public double getWidth() {
@@ -29,5 +29,8 @@ public abstract class FormeBatiment {
     }
     public double getHeigth() {
         return heigth;
+    }
+    public  Double[] getAllPoints(){
+        return allPoints;
     }
 }

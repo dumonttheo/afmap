@@ -23,13 +23,10 @@ abstract public class Batiment extends FormeBatiment {
 
     }
 
-    public Batiment(int numero, Double topLeftX, Double topLeftY, ArrayList<Line> lineArrayList){
-        super(lineArrayList);
+    public Batiment(int numero, Double[] allPoints){
+        super(allPoints);
         this.numero = numero;
         this.nom = "Batiment " + numero;
-        this.topLeftX = topLeftX;
-        this.topLeftY = topLeftY;
-
     }
 
     public void setNomBatiment(String nomBatiment){
@@ -73,6 +70,9 @@ abstract public class Batiment extends FormeBatiment {
         this.topLeftY = topLeftY;
     }
 
+    public boolean isASquare(){
+        return this.allPoints == null;
+    }
 
 
 

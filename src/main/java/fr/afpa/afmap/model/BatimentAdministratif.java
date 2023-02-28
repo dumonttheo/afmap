@@ -11,8 +11,8 @@ public class BatimentAdministratif extends Batiment {
         super(numero, topLeftX, topLeftY,  width,  heigth);
         this.service = service;
     }
-    public BatimentAdministratif(int numero, Double topLeftX, Double topLeftY, ArrayList<Line> lines,  String service){
-        super(numero, topLeftX, topLeftY,  lines);
+    public BatimentAdministratif(int numero, Double[] allPoints,  String service){
+        super(numero,  allPoints);
         this.service = service;
     }
     @Override

@@ -15,8 +15,8 @@ public class BatimentFormation extends Batiment{
         super(numero, topLeftX, topLeftY, width, heigth);
     }
 
-    public BatimentFormation(int numero, Double topLeftX, Double topLeftY, ArrayList<Line> lineArrayList){
-        super(numero, topLeftX, topLeftY,lineArrayList);
+    public BatimentFormation(int numero, Double[] allPoints){
+        super(numero,allPoints);
     }
 
 

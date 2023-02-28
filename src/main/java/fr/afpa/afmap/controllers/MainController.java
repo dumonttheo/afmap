@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -129,6 +131,9 @@ public class MainController {
             }
         });
 
+//        Créer un square avec des lines
+
+
 //        pane.setOnMouseMoved(mouseEvent -> {
 //            System.out.println("---------------------");
 //            System.out.println("Mouse en X : " + mouseEvent.getX());
@@ -192,9 +197,23 @@ public class MainController {
 //        Create all buildings
         BatimentFormation batCDA = new BatimentFormation(9, 22.21, 14.35, 60.0, 44.0);
         BatimentFormation batCommerce = new BatimentFormation(9, 26.37, 14.35, 84.0, 44.0);
-        BatimentFormation batAPH = new BatimentFormation(8,38.74, 8.09, 45.5,146.5 );
-        BatimentFormation batAES = new BatimentFormation(7, 44.80,8.0,43.5, 146.6 );
-        BatimentFormation batCarrelage = new BatimentFormation(6, 50.70,8.0,37.0, 146.6 );
+        BatimentFormation batAPH = new BatimentFormation(8, 38.74, 8.09, 45.5, 146.5);
+        BatimentFormation batAES = new BatimentFormation(7, 44.80, 8.0, 43.5, 146.6);
+        BatimentFormation batCarrelage = new BatimentFormation(6, 50.70, 8.0, 37.0, 146.6);
+        BatimentFormation batOldCDA = new BatimentFormation(58, new Double[]{
+                494.0, 600.0,
+                521.0, 600.0,
+                521.0, 606.0,
+                551.0, 606.0,
+                551.0, 600.0,
+                579.0, 600.0,
+                579.0, 636.0,
+                552.0, 636.0,
+                552.0, 630.0,
+                521.0, 630.0,
+                521.0, 636.0,
+                494.0, 636.0
+        });
 
 
 //        Create all formateur
@@ -208,6 +227,7 @@ public class MainController {
         Formation aph = new Formation("APH", jean, batAPH, Color.GREEN);
         Formation aes = new Formation("AES", jean, batAES, Color.BLUE);
         Formation carrelage = new Formation("Carrelage", jean, batCarrelage, Color.BLUE);
+        Formation oldCDA = new Formation("OLD CDA", ludo, batOldCDA, Color.PINK);
 
 
         formationList.add(cda);
@@ -215,6 +235,7 @@ public class MainController {
         formationList.add(aph);
         formationList.add(aes);
         formationList.add(carrelage);
+        formationList.add(oldCDA);
 
 
 //        Add formation to a batiment
@@ -223,6 +244,7 @@ public class MainController {
         batAPH.addFormation(aph);
         batAES.addFormation(aes);
         batCarrelage.addFormation(carrelage);
+        batOldCDA.addFormation(oldCDA);
 
 
 //      Add all formation to array list of batiments
@@ -231,6 +253,7 @@ public class MainController {
         batimentFormationArrayList.add(batAPH);
         batimentFormationArrayList.add(batAES);
         batimentFormationArrayList.add(batCarrelage);
+        batimentFormationArrayList.add(batOldCDA);
 
     }
 
@@ -241,66 +264,99 @@ public class MainController {
     public void createAllRectangle() {
 
         for (BatimentFormation batiment : batimentFormationArrayList) {
+            if (batiment.isASquare()) {
 
 //       Generare a square
-            Rectangle shape = new Rectangle(batiment.getTopLeftX() * 1536 / 100, batiment.getTopLeftY() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
+                Rectangle shape = new Rectangle(batiment.getTopLeftX() * 1536 / 100, batiment.getTopLeftY() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
 
 //      Add shape to ArrayList
-            squareArrayList.add(shape);
+                squareArrayList.add(shape);
 
 //      Fill Color Transparent
-            shape.setFill(Color.TRANSPARENT);
+                shape.setFill(Color.TRANSPARENT);
 
 
 //      Set Cursor to Hand
-            shape.setCursor(Cursor.HAND);
+                shape.setCursor(Cursor.HAND);
 
 
 //      Event Listener of square
-            shape.setOnMouseEntered(event -> {
+                shape.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                for (Formation formation : batiment.getListeFormations()) {
-                    if (!shape.getFill().equals(formation.getCouleur())) {
-                        shape.setFill(Color.LIGHTGRAY);
-                    }
-                }
-            });
-            shape.setOnMouseExited(event -> {
-
-//                Verify if is clicked before whit Color of square
-                for (Formation formation : batiment.getListeFormations()) {
-                    if (!shape.getFill().equals(formation.getCouleur())) {
-                        shape.setFill(Color.TRANSPARENT);
-                    }
-                }
-            });
-
-            shape.setOnMouseClicked(mouseEvent -> {
-
-//                change all Square to Transparent Color
-                for (Rectangle square : squareArrayList) {
-                    square.setFill(Color.TRANSPARENT);
-                }
-//      Change all batiment of formation to Color
-                for (Formation formation : batiment.getListeFormations()) {
-                    shape.setFill(formation.getCouleur());
-                }
-
-//  Change on Combobox all information.
-                for (Formation formation : batiment.getListeFormations()) {
-
-                    for (Formation form : listeAllFormations) {
-                        if (form.getNom().equals(formation.getNom())) {
-                            comboBat.getSelectionModel().selectFirst();
-                            comboFormation.getSelectionModel().select(form);
+                    for (Formation formation : batiment.getListeFormations()) {
+                        if (!shape.getFill().equals(formation.getCouleur())) {
+                            shape.setFill(Color.LIGHTGRAY);
                         }
                     }
-                }
+                });
+                shape.setOnMouseExited(event -> {
 
-            });
+//                Verify if is clicked before whit Color of square
+                    for (Formation formation : batiment.getListeFormations()) {
+                        if (!shape.getFill().equals(formation.getCouleur())) {
+                            shape.setFill(Color.TRANSPARENT);
+                        }
+                    }
+                });
 
-            drawingGroup.getChildren().addAll(shape);
+                shape.setOnMouseClicked(mouseEvent -> {
+
+//                change all Square to Transparent Color
+                    for (Rectangle square : squareArrayList) {
+                        square.setFill(Color.TRANSPARENT);
+                    }
+//      Change all batiment of formation to Color
+                    for (Formation formation : batiment.getListeFormations()) {
+                        shape.setFill(formation.getCouleur());
+                    }
+
+//  Change on Combobox all information.
+                    for (Formation formation : batiment.getListeFormations()) {
+
+                        for (Formation form : listeAllFormations) {
+                            if (form.getNom().equals(formation.getNom())) {
+                                comboBat.getSelectionModel().selectFirst();
+                                comboFormation.getSelectionModel().select(form);
+                            }
+                        }
+                    }
+
+                });
+
+                drawingGroup.getChildren().addAll(shape);
+            } else {
+                Polygon polygon = new Polygon();
+                polygon.getPoints().addAll(batiment.getAllPoints());
+                polygon.setFill(Color.TRANSPARENT);
+                polygon.setCursor(Cursor.HAND);
+
+                drawingGroup.getChildren().add(polygon);
+
+
+                //      Event Listener of square
+                polygon.setOnMouseEntered(event -> {
+//                Verify if is clicked before whit Color of square
+                    for (Formation formation : batiment.getListeFormations()) {
+                        if (!polygon.getFill().equals(formation.getCouleur())) {
+                            polygon.setFill(Color.LIGHTGRAY);
+                        }
+                    }
+                });
+
+                polygon.setOnMouseExited(event -> {
+
+//                Verify if is clicked before whit Color of square
+                    for (Formation formation : batiment.getListeFormations()) {
+                        if (!polygon.getFill().equals(formation.getCouleur())) {
+                            polygon.setFill(Color.TRANSPARENT);
+                        }
+                    }
+                });
+
+
+            }
         }
-    }
 
+
+    }
 }
