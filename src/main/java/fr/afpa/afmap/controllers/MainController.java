@@ -194,7 +194,7 @@ public class MainController {
         BatimentFormation batCommerce = new BatimentFormation(9, 26.37, 14.35, 84.0, 44.0);
         BatimentFormation batAPH = new BatimentFormation(8,38.74, 8.09, 45.5,146.5 );
         BatimentFormation batAES = new BatimentFormation(7, 44.80,8.0,43.5, 146.6 );
-        BatimentFormation batCarrelage = new BatimentFormation(6, 50.75,8.0,36.0, 146.6 );
+        BatimentFormation batCarrelage = new BatimentFormation(6, 50.70,8.0,37.0, 146.6 );
 
 
 //        Create all formateur
