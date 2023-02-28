@@ -85,7 +85,9 @@ public class MainController {
 
     public void initialize() {
 
-        Rectangle shapeCDA = new Rectangle();
+        Rectangle shapeCDA = new Rectangle(341.0,146.0, 60,44);
+        shapeCDA.setFill(Color.RED);
+        drawingGroup.getChildren().add(shapeCDA);
 
 
 //  Main Canvas Fill
@@ -98,8 +100,7 @@ public class MainController {
             System.out.println(pane.getHeight());
             width = newVal.doubleValue();
 
-            Shape shape = changePlaceRectangle(newVal.doubleValue(), 22.21, 14.35 , Math.round(newVal.doubleValue() / 1.51), shapeCDA, 1536, 1014);
-            drawingGroup.getChildren().add(shape);
+            changePlaceRectangle(newVal.doubleValue(), 22.21, 14.35 , Math.round(newVal.doubleValue() / 1.51), shapeCDA, 1536, 1014);
 
         });
 
@@ -214,7 +215,7 @@ public class MainController {
     }
 
 
-    public static Shape changePlaceRectangle(double newReso, double x, double y, double heigthReso, Rectangle rectangle, double oldReso, double oldResoHeigth) {
+    public static void changePlaceRectangle(double newReso, double x, double y, double heigthReso, Rectangle rectangle, double oldReso, double oldResoHeigth) {
 
 //
 
@@ -230,13 +231,6 @@ public class MainController {
 
         rectangle.setLayoutY(resoHeigth);
         rectangle.setLayoutX(reso);
-
-        rectangle.setFill(Color.RED);
-
-
-        return rectangle;
-
-
 
 }
 
