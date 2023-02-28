@@ -3,6 +3,7 @@ package fr.afpa.afmap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,8 +17,8 @@ public class HelloApplication extends Application {
 
 
         stage.setTitle("AFMAP");
-        String css=this.getClass().getResource("style.css").toExternalForm();
-scene.getStylesheets().add(css);
+        String css = this.getClass().getResource("style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();

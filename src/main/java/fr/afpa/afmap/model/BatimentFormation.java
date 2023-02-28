@@ -1,5 +1,7 @@
 package fr.afpa.afmap.model;
 
+import javafx.scene.shape.Line;
+
 import java.util.ArrayList;
 
 /**
@@ -9,9 +11,14 @@ public class BatimentFormation extends Batiment{
     private ArrayList<Formation> listeFormations = new ArrayList<Formation>();
     private ArrayList<Formateur> listeFormateurs = new ArrayList<Formateur>();
 
-    public BatimentFormation(int numero, Double topLeftX, Double topLeftY, Double topRightX, Double topRightY, Double bottomLeftX, Double bottomLeftY, Double bottomRightX, Double bottomRightY){
-        super(numero, topLeftX, topLeftY, topRightX, topRightY, bottomLeftX, bottomLeftY, bottomRightX, bottomRightY);
+    public BatimentFormation(int numero, Double topLeftX, Double topLeftY, Double width, Double heigth){
+        super(numero, topLeftX, topLeftY, width, heigth);
     }
+
+    public BatimentFormation(int numero, Double topLeftX, Double topLeftY, ArrayList<Line> lineArrayList){
+        super(numero, topLeftX, topLeftY,lineArrayList);
+    }
+
 
 
     public ArrayList<Formation> getListeFormations() {
@@ -26,6 +33,8 @@ public class BatimentFormation extends Batiment{
         this.listeFormations.add(formation);
         this.listeFormateurs.add(formation.getFormateur());
     }
+
+
 
 
 

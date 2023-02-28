@@ -1,6 +1,5 @@
 package fr.afpa.afmap.controllers;
 
-import fr.afpa.afmap.HelloApplication;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Formateur;
 import fr.afpa.afmap.model.Formation;
@@ -9,27 +8,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainController {
     @FXML
     public Label labelNomFormateur;
-    @FXML
-    public Label changerceLabel;
     @FXML
     public Label labelTelephoneFormateur;
     @FXML
@@ -42,96 +34,52 @@ public class MainController {
     private ComboBox<Formation> comboFormation;
     @FXML
     private VBox vBoxBat;
-    @FXML
-    private BorderPane borderPane;
-    @FXML
-    private HBox hboxBat;
+
     @FXML
     private ImageView imageViewBat;
     @FXML
     private Pane pane;
 
-
-
     @FXML
     private Group drawingGroup;
 
 
-    private ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<BatimentFormation>();
-    private ArrayList<Formation> listeAllFormations = new ArrayList<Formation>();
+    private final ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<>();
+    private final ArrayList<Formation> listeAllFormations = new ArrayList<>();
 
-    private ArrayList<Rectangle> rectangleArrayList = new ArrayList<>();
+    private final ArrayList<Rectangle> squareArrayList = new ArrayList<>();
 
-
-    //ajout batiments
-    BatimentFormation batFor1 = new BatimentFormation(64, 22.21, 9.55, 27.41, 9.55, 22.21, 13.10, 27.41, 13.10);
-    BatimentFormation batFor2 = new BatimentFormation(125, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-
-    //ajout formateurs
-    Formateur ludo = new Formateur("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
-    Formateur jean = new Formateur("Jean", "Jacques", "0612345678", "jj@gmail.com");
-    //ajout formations
-    Formation cda = new Formation("CDA", ludo, batFor1);
-    Formation electricien = new Formation("Electricien", jean, batFor2);
 
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
-    List<String> typeBatimentListe = new ArrayList<String>();
-    List<Formation> formationList = new ArrayList<Formation>();
+    List<String> typeBatimentListe = new ArrayList<>();
+    List<Formation> formationList = new ArrayList<>();
 
     Double width;
 
 
     public void initialize() {
 
-        Rectangle shapeCDA = new Rectangle(341.0,146.0, 60,44);
+//        Create all formation
+        getAllFormation();
 
-        shapeCDA.setFill(Color.TRANSPARENT);
-
-        shapeCDA.setCursor(Cursor.HAND);
-
-        shapeCDA.setOnMouseEntered(event-> {
-            if(!shapeCDA.getFill().equals(Color.BLUE)){
-            shapeCDA.setFill(Color.RED);
-            }
-        });
-        shapeCDA.setOnMouseExited(event-> {
-            if(shapeCDA.getFill().equals(Color.RED)){
-                shapeCDA.setFill(Color.TRANSPARENT);
-            }
-        });
-
-        shapeCDA.setOnMouseClicked(mouseEvent -> {
-            shapeCDA.setFill(Color.BLUE);
-            for (Formation form : listeAllFormations){
-                if(form.getNom() == "CDA"){
-                    comboBat.getSelectionModel().selectFirst();
-                    comboFormation.getSelectionModel().select(form);
-                }
-            }
-        });
-
-        drawingGroup.getChildren().addAll(shapeCDA);
-
-
-
+//        Create all Square
+        createAllRectangle();
 
 
 //        LISTENER WIDTH
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+//            Change imageViewBat whit to new pan width
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
+
+//            Instancie width to parameter new val
             width = newVal.doubleValue();
 
-            changePlaceRectangle(newVal.doubleValue(), 22.21, 14.35 , Math.round(newVal.doubleValue() / 1.51), 60 , 44 ,shapeCDA, 1536, 1014);
+//            Use Function SwapPlaceRectangle to replace all square on the map
+            for (int i = 0; i < squareArrayList.size(); i++) {
+                swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getTopLeftX(), batimentFormationArrayList.get(i).getTopLeftY(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), squareArrayList.get(i), 1536, 1014);
+            }
 
         });
-
-
-
-
-        batFor1.addFormation(cda);
-        batFor2.addFormation(electricien);
-        batimentFormationArrayList.add(batFor1);
-        batimentFormationArrayList.add(batFor2);
 
 
         //recuperer toutes les formations de tous les batiments_formation et les afficher dans la comboFormation
@@ -139,6 +87,7 @@ public class MainController {
             List<Formation> formationsDuBatiment = bat.getListeFormations();
             listeAllFormations.addAll(formationsDuBatiment);
         }
+
         ObservableList<Formation> formationObservableList = FXCollections.observableArrayList(listeAllFormations);
         comboFormation.setItems(formationObservableList);
 
@@ -151,12 +100,6 @@ public class MainController {
         //ComboFormation invisible
         comboFormation.setVisible(false);
         labelFormation.setVisible(false);
-//
-//
-
-
-//        canvasArrayList.add(canvaCDA);
-//        canvasArrayList.add(canvaCDABis);
 
 
         comboBat.setOnAction(event -> {
@@ -177,14 +120,15 @@ public class MainController {
             labelMailFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getMail());
             labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNumeroTelephone());
 
-
-            if(comboFormation.getSelectionModel().getSelectedItem().getNom() == "CDA"){
-                shapeCDA.setFill(Color.LIGHTBLUE);
-            } else {
-                shapeCDA.setFill(Color.TRANSPARENT);
+            for (int i = 0; i < formationList.size(); i++) {
+                if (comboFormation.getSelectionModel().getSelectedItem().getNom().equals(formationList.get(i).getNom())) {
+                    squareArrayList.get(i).setFill(formationList.get(i).getCouleur());
+                } else {
+                    squareArrayList.get(i).setFill(Color.TRANSPARENT);
+                }
             }
         });
-//
+
 //        pane.setOnMouseMoved(mouseEvent -> {
 //            System.out.println("---------------------");
 //            System.out.println("Mouse en X : " + mouseEvent.getX());
@@ -193,57 +137,24 @@ public class MainController {
 //            System.out.println("Hauteur de l'image : " + pane.getHeight());
 //        });
 
-
-//        EVENT ON CDA BAT
-
-//        canvaCDA.setOnMouseEntered(event -> {
-//            GraphicsContext gc = canvaCDA.getGraphicsContext2D();
-//            gc.setFill(Color.LIGHTBLUE);
-//            gc.fillRect(0,0,300,300);
-//            canvaCDA.setOpacity(1);
-//        });
-//
-//        canvaCDA.setOnMouseExited(event-> {
-//            canvaCDA.setOpacity(0);
-//        });
-//
-//        canvaCDA.setOnMouseClicked(event-> {
-//            for (Formation form : listeAllFormations){
-//                if(form.getNom() == "CDA"){
-//                    comboBat.getSelectionModel().selectFirst();
-//                    comboFormation.getSelectionModel().select(form);
-//                    GraphicsContext gc = canvaCDABis.getGraphicsContext2D();
-//                    gc.setFill(Color.LIGHTBLUE);
-//                    gc.fillRect(0,0,300,300);
-//                    canvaCDA.setOpacity(1);
-//                }
-//            }
-//        });
-
-
-    }
-
-
-    public static double getLayout(double x, double reso) {
-        return x * reso / 100;
     }
 
 
     /**
      * Manage a Rectangle to follow rezizing window
      *
-     * @param newReso New Resolution after rezizing (only width)
-     * @param x   Layout X. Distance between left image and top-left point of rectangle
-     * @param y   Layout Y. Distance between Top image and top-left point of rectangle
-     * @param heigthReso New Resolution heigth after rezizing
-     * @param firstWidth First width of rectangle (on initialization)
-     * @param firstHeigth First heigth of rectangle (on initialization)
-     * @param rectangle Rectangle to manage
-     * @param oldReso First Width at initilisation
+     * @param newReso       New Resolution after rezizing (only width)
+     * @param x             Layout X. Distance between left image and top-left point of rectangle
+     * @param y             Layout Y. Distance between Top image and top-left point of rectangle
+     * @param heigthReso    New Resolution heigth after rezizing
+     * @param firstWidth    First width of rectangle (on initialization)
+     * @param firstHeigth   First heigth of rectangle (on initialization)
+     * @param rectangle     Rectangle to manage
+     * @param oldReso       First Width at initilisation
      * @param oldResoHeigth First Heigth at initilisation
      */
 
-    public static void changePlaceRectangle(double newReso, double x, double y, double heigthReso, double firstWidth, double firstHeigth, Rectangle rectangle, double oldReso, double oldResoHeigth) {
+    public static void swapPlaceRectangle(double newReso, double x, double y, double heigthReso, double firstWidth, double firstHeigth, Rectangle rectangle, double oldReso, double oldResoHeigth) {
 
         double reso = 0;
         double resoHeigth = 0;
@@ -268,8 +179,128 @@ public class MainController {
         rectangle.setLayoutY(resoHeigth);
         rectangle.setLayoutX(reso);
         rectangle.setWidth(newReso * ratioWidth / 100);
-        rectangle.setHeight( Math.floor(heigthReso * ratioHeigth / 100));
+        rectangle.setHeight(Math.floor(heigthReso * ratioHeigth / 100));
 
-}
+    }
+
+
+    /**
+     * Generate All Formation
+     */
+    public void getAllFormation() {
+
+//        Create all buildings
+        BatimentFormation batCDA = new BatimentFormation(9, 22.21, 14.35, 60.0, 44.0);
+        BatimentFormation batCommerce = new BatimentFormation(9, 26.37, 14.35, 84.0, 44.0);
+        BatimentFormation batAPH = new BatimentFormation(8,38.74, 8.09, 45.5,146.5 );
+        BatimentFormation batAES = new BatimentFormation(7, 44.80,8.0,43.5, 146.6 );
+        BatimentFormation batCarrelage = new BatimentFormation(6, 50.75,8.0,36.0, 146.6 );
+
+
+//        Create all formateur
+        Formateur ludo = new Formateur("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
+        Formateur jean = new Formateur("Jean", "Jacques", "0612345678", "jj@gmail.com");
+
+
+//      Crete All formation whit formateur and building
+        Formation cda = new Formation("CDA", ludo, batCDA, Color.RED);
+        Formation commerce = new Formation("Commerce", jean, batCommerce, Color.BLUE);
+        Formation aph = new Formation("APH", jean, batAPH, Color.GREEN);
+        Formation aes = new Formation("AES", jean, batAES, Color.BLUE);
+        Formation carrelage = new Formation("Carrelage", jean, batCarrelage, Color.BLUE);
+
+
+        formationList.add(cda);
+        formationList.add(commerce);
+        formationList.add(aph);
+        formationList.add(aes);
+        formationList.add(carrelage);
+
+
+//        Add formation to a batiment
+        batCDA.addFormation(cda);
+        batCommerce.addFormation(commerce);
+        batAPH.addFormation(aph);
+        batAES.addFormation(aes);
+        batCarrelage.addFormation(carrelage);
+
+
+//      Add all formation to array list of batiments
+        batimentFormationArrayList.add(batCDA);
+        batimentFormationArrayList.add(batCommerce);
+        batimentFormationArrayList.add(batAPH);
+        batimentFormationArrayList.add(batAES);
+        batimentFormationArrayList.add(batCarrelage);
+
+    }
+
+
+    /**
+     * Generate all square and give list of rectangle
+     */
+    public void createAllRectangle() {
+
+        for (BatimentFormation batiment : batimentFormationArrayList) {
+
+//       Generare a square
+            Rectangle shape = new Rectangle(batiment.getTopLeftX() * 1536 / 100, batiment.getTopLeftY() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
+
+//      Add shape to ArrayList
+            squareArrayList.add(shape);
+
+//      Fill Color Transparent
+            shape.setFill(Color.TRANSPARENT);
+
+
+//      Set Cursor to Hand
+            shape.setCursor(Cursor.HAND);
+
+
+//      Event Listener of square
+            shape.setOnMouseEntered(event -> {
+//                Verify if is clicked before whit Color of square
+                for (Formation formation : batiment.getListeFormations()) {
+                    if (!shape.getFill().equals(formation.getCouleur())) {
+                        shape.setFill(Color.LIGHTGRAY);
+                    }
+                }
+            });
+            shape.setOnMouseExited(event -> {
+
+//                Verify if is clicked before whit Color of square
+                for (Formation formation : batiment.getListeFormations()) {
+                    if (!shape.getFill().equals(formation.getCouleur())) {
+                        shape.setFill(Color.TRANSPARENT);
+                    }
+                }
+            });
+
+            shape.setOnMouseClicked(mouseEvent -> {
+
+//                change all Square to Transparent Color
+                for (Rectangle square : squareArrayList) {
+                    square.setFill(Color.TRANSPARENT);
+                }
+//      Change all batiment of formation to Color
+                for (Formation formation : batiment.getListeFormations()) {
+                    shape.setFill(formation.getCouleur());
+                }
+
+//  Change on Combobox all information.
+                for (Formation formation : batiment.getListeFormations()) {
+
+                    for (Formation form : listeAllFormations) {
+                        if (form.getNom().equals(formation.getNom())) {
+                            comboBat.getSelectionModel().selectFirst();
+                            comboFormation.getSelectionModel().select(form);
+                        }
+                    }
+                }
+
+            });
+
+            drawingGroup.getChildren().addAll(shape);
+        }
+    }
 
 }

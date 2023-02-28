@@ -1,13 +1,20 @@
 package fr.afpa.afmap.model;
 
+import javafx.scene.shape.Line;
+
+import java.util.ArrayList;
+
 public class BatimentAdministratif extends Batiment {
     private String service;
 
-    public BatimentAdministratif(int numero, Double topLeftX, Double topLeftY, Double topRightX, Double topRightY, Double bottomLeftX, Double bottomLeftY, Double bottomRightX, Double bottomRightY, String service){
-        super(numero, topLeftX, topLeftY, topRightX, topRightY, bottomLeftX, bottomLeftY, bottomRightX, bottomRightY);
+    public BatimentAdministratif(int numero, Double topLeftX, Double topLeftY, Double width, Double heigth, String service){
+        super(numero, topLeftX, topLeftY,  width,  heigth);
         this.service = service;
     }
-
+    public BatimentAdministratif(int numero, Double topLeftX, Double topLeftY, ArrayList<Line> lines,  String service){
+        super(numero, topLeftX, topLeftY,  lines);
+        this.service = service;
+    }
     @Override
     public void setNomBatiment(String nomBatiment) {
         super.setNomBatiment(nomBatiment);

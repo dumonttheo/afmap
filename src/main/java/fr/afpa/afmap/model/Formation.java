@@ -1,5 +1,7 @@
 package fr.afpa.afmap.model;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 /**
@@ -9,11 +11,13 @@ public class Formation {
     private String nom;
     private Formateur formateur;
     private ArrayList<BatimentFormation> listeBatimentsFormation = new ArrayList<BatimentFormation>();
+    private Color couleur;
 
-    public Formation(String nom, Formateur formateur, BatimentFormation batimentFormation) {
+    public Formation(String nom, Formateur formateur, BatimentFormation batimentFormation, Color color) {
         this.nom = nom;
         this.formateur = formateur;
         this.listeBatimentsFormation.add(batimentFormation);
+        this.couleur = color;
     }
 
     @Override
@@ -47,5 +51,10 @@ public class Formation {
 
     public void setFormateur(Formateur formateur) {
         this.formateur = formateur;
+    }
+
+
+    public Color getCouleur(){
+        return this.couleur;
     }
 }
