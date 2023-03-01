@@ -66,12 +66,10 @@ public class MainController {
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
 
 
-
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
     List<String> typeBatimentListe = new ArrayList<>();
 
     List<Formation> formationList = new ArrayList<>();
-
 
 
     public void initialize() {
@@ -102,7 +100,6 @@ public class MainController {
                     }
                 }
             }
-
 
 
         });
@@ -142,23 +139,23 @@ public class MainController {
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+            if (comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
                 titledPaneForm.setText("Formateurs");
-            }else{
+            } else {
                 titledPaneForm.setText("Formateur");
             }
-            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1){
+            if (comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1) {
                 titledPaneBat.setText("Batiments");
-            }else{
+            } else {
                 titledPaneBat.setText("Batiment");
             }
-            for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
+            for (Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()) {
                 int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
                 countFormateurI++;
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
-                if(countFormateurI != countFormateurs ){
+                if (countFormateurI != countFormateurs) {
                     vBoxFormateurs.getChildren().add(new Label(" "));
                 }
 
@@ -177,13 +174,13 @@ public class MainController {
         });
 
 
-//        pane.setOnMouseMoved(mouseEvent -> {
-//            System.out.println("---------------------");
-//            System.out.println("Mouse en X : " + mouseEvent.getX());
-//            System.out.println("Mouse en Y : " + mouseEvent.getY());
-//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-//            System.out.println("Hauteur de l'image : " + pane.getHeight());
-//        });
+        pane.setOnMouseMoved(mouseEvent -> {
+            System.out.println("---------------------");
+            System.out.println("Mouse en X : " + mouseEvent.getX());
+            System.out.println("Mouse en Y : " + mouseEvent.getY());
+            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
+            System.out.println("Hauteur de l'image : " + pane.getHeight());
+        });
 
     }
 
@@ -259,11 +256,17 @@ public class MainController {
         }, Color.PINK);
         BatimentFormation batMaconMain = new BatimentFormation(25, 20.05, 51.6, 100.0, 110.0, Color.BROWN);
         BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
-                399.0, 683.0,
-                500.0, 683.0,
+                399.0, 678.0,
+                500.0, 679.0,
                 500.0, 730.0,
                 399.0, 730.0
         }, Color.BROWN);
+        BatimentFormation batMaconDepotSecond = new BatimentFormation(26, new Double[]{
+                180.0, 680.0,
+                318.0, 710.0,
+                306.0, 774.0,
+                180.0, 774.0
+        }, Color.PINK);
 
 
 //        Create all formateur
@@ -291,7 +294,8 @@ public class MainController {
         cda.addPersonnel(ludo);
         cda.addPersonnel(jean);
 
-        macon.addBatiment(batAES);
+        macon.addBatiment(batMaconDepotFirst);
+        macon.addBatiment(batMaconDepotSecond);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
@@ -302,8 +306,7 @@ public class MainController {
         batOldCDA.addFormation(oldCDA);
         batMaconMain.addFormation(macon);
         batMaconDepotFirst.addFormation(macon);
-
-
+        batMaconDepotSecond.addFormation(macon);
 
 
     }
@@ -369,7 +372,7 @@ public class MainController {
                 } else {
                     Polygon polygon = new Polygon();
                     polygon.getPoints().addAll(batiment.getAllPoints());
-                    polygon.setFill(Color.TRANSPARENT);
+//                    polygon.setFill(Color.TRANSPARENT);
                     polygon.setCursor(Cursor.HAND);
 
                     drawingGroup.getChildren().add(polygon);
@@ -449,7 +452,6 @@ public class MainController {
 //  Set all points a the polygon
         polygon.getPoints().setAll(newPoints);
     }
-
 
 
 }
