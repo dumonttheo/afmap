@@ -1,9 +1,7 @@
 package fr.afpa.afmap.model;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-
-import java.util.ArrayList;
+import javafx.scene.shape.Shape;
 
 public abstract class FormeBatiment {
 
@@ -13,6 +11,7 @@ public abstract class FormeBatiment {
     private double heigth;
     private Color color;
     protected Double[] allPoints;
+    private Shape shape;
 
     public FormeBatiment(double x1, double y1, double width, double heigth, Color color) {
         this.x1 = x1;
@@ -55,5 +54,12 @@ public abstract class FormeBatiment {
     }
     public  Double[] getAllPoints(){
         return allPoints;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+    public void setShape(Shape shape) {
+        this.shape = shape;
     }
 }
