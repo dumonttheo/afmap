@@ -11,6 +11,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -43,6 +44,10 @@ public class MainController {
     private ImageView imageViewBat;
     @FXML
     public Pane pane;
+    @FXML
+    private TitledPane titledPaneBat;
+    @FXML
+    private TitledPane titledPaneForm;
 
     @FXML
     private Group drawingGroup;
@@ -52,6 +57,7 @@ public class MainController {
     @FXML
     private Image image;
     public Double widthHeigth;
+    private int countFormateurI = 0;
 
     public Double getWidthHeigth() {
         return widthHeigth;
@@ -60,10 +66,12 @@ public class MainController {
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
 
 
+
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
     List<String> typeBatimentListe = new ArrayList<>();
 
     List<Formation> formationList = new ArrayList<>();
+
 
 
     public void initialize() {
@@ -132,11 +140,24 @@ public class MainController {
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            for (Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()) {
+            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+                titledPaneForm.setText("Formateurs");
+            }
+            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1){
+                titledPaneBat.setText("Batiments");
+            }
+            for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
+                int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
+                System.out.println(countFormateurs);
+                countFormateurI++;
+                System.out.println(countFormateurI);
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
-                vBoxFormateurs.getChildren().add(new Label(" "));
+                if(countFormateurI != countFormateurs ){
+                    vBoxFormateurs.getChildren().add(new Label(" "));
+                }
+
 
             }
 
@@ -265,7 +286,10 @@ public class MainController {
         formationList.add(carrelage);
         formationList.add(oldCDA);
         formationList.add(macon);
+        macon.addBatiment(batMaconDepotFirst);
 
+        cda.addPersonnel(ludo);
+        cda.addPersonnel(jean);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
@@ -276,6 +300,7 @@ public class MainController {
         batOldCDA.addFormation(oldCDA);
         batMaconMain.addFormation(macon);
         batMaconDepotFirst.addFormation(macon);
+
 
 
 
@@ -422,6 +447,7 @@ public class MainController {
 //  Set all points a the polygon
         polygon.getPoints().setAll(newPoints);
     }
+
 
 
 }
