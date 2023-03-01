@@ -19,7 +19,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.MainController">
    <children>
-      <VBox prefHeight="1072.0" prefWidth="385.0" spacing="5.0">
+      <VBox prefHeight="1072.0" prefWidth="385.0" minWidth="200" spacing="5.0">
          <children>
             <Label prefHeight="34.0" prefWidth="236.0" text="Centre de Rochefort">
                <font>
@@ -92,7 +92,7 @@
          <children>
             <ImageView fx:id="imageViewBat" preserveRatio="true">
                <image>
-                  <Image url="@batimentBis.png" />
+                  <Image url="@batimentBis_1.png" />
                </image>
                <viewport>
                   <Rectangle2D />
