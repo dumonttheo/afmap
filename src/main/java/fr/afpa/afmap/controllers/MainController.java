@@ -104,6 +104,7 @@ public class MainController {
 
 
         //recuperer toutes les formations de tous les batiments_formation et les afficher dans la comboFormation
+        System.out.println(batimentFormationArrayList);
         for (BatimentFormation bat : batimentFormationArrayList) {
             List<Formation> formationsDuBatiment = bat.getListeFormations();
             listeAllFormations.addAll(formationsDuBatiment);
@@ -143,14 +144,14 @@ public class MainController {
 
             for (int i = 0; i < formationList.size(); i++) {
                 if (comboFormation.getSelectionModel().getSelectedItem().getNom().equals(formationList.get(i).getNom())) {
-                    squareArrayList.get(i).setFill(formationList.get(i).getCouleur());
+                    System.out.println(squareArrayList);
                 } else {
                     squareArrayList.get(i).setFill(Color.TRANSPARENT);
                 }
             }
         });
 
-
+//
 //        pane.setOnMouseMoved(mouseEvent -> {
 //            System.out.println("---------------------");
 //            System.out.println("Mouse en X : " + mouseEvent.getX());
@@ -212,8 +213,8 @@ public class MainController {
     public void getAllFormation() {
 
 //        Create all buildings
-        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.79, 60.0, 44.0);
-        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.79, 84.0, 44.0);
+        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.76, 60.0, 44.0);
+        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.76, 84.0, 44.0);
         BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0);
         BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0);
         BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0);
@@ -231,6 +232,13 @@ public class MainController {
                 502.0, 648.0,
                 474.0, 648.0
         });
+        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05,51.6,100.0,110.0);
+        BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
+            399.0, 683.0,
+                500.0,683.0,
+                500.0,730.0,
+                399.0,730.0
+        });
 
 
 //        Create all formateur
@@ -245,6 +253,7 @@ public class MainController {
         Formation aes = new Formation("AES", jean, batAES, Color.BLUE);
         Formation carrelage = new Formation("Carrelage", jean, batCarrelage, Color.BLUE);
         Formation oldCDA = new Formation("OLD CDA", ludo, batOldCDA, Color.PINK);
+        Formation macon = new Formation("Macon", jean, batMaconMain, Color.BROWN);
 
 
         formationList.add(cda);
@@ -253,6 +262,8 @@ public class MainController {
         formationList.add(aes);
         formationList.add(carrelage);
         formationList.add(oldCDA);
+        formationList.add(macon);
+        macon.addBatiment(batMaconDepotFirst);
 
 
 //        Add formation to a batiment
@@ -262,6 +273,8 @@ public class MainController {
         batAES.addFormation(aes);
         batCarrelage.addFormation(carrelage);
         batOldCDA.addFormation(oldCDA);
+        batMaconMain.addFormation(macon);
+        batMaconDepotFirst.addFormation(macon);
 
 
 //      Add all formation to array list of batiments
@@ -271,6 +284,9 @@ public class MainController {
         batimentFormationArrayList.add(batAES);
         batimentFormationArrayList.add(batCarrelage);
         batimentFormationArrayList.add(batOldCDA);
+        batimentFormationArrayList.add(batMaconMain);
+//        batimentFormationArrayList.add(batMaconDepotFirst);
+
 
     }
 
@@ -341,7 +357,7 @@ public class MainController {
                 } else {
                     Polygon polygon = new Polygon();
                     polygon.getPoints().addAll(batiment.getAllPoints());
-                    polygon.setFill(Color.TRANSPARENT);
+//                    polygon.setFill(Color.TRANSPARENT);
                     polygon.setCursor(Cursor.HAND);
 
                     drawingGroup.getChildren().add(polygon);
