@@ -33,8 +33,6 @@ public class HelloApplication extends Application {
         String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
-        stage.setMaximized(true);
-
         stage.show();
 
     }
