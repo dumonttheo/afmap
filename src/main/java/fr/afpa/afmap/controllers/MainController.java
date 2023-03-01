@@ -144,6 +144,8 @@ public class MainController {
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
+                vBoxFormateurs.getChildren().add(new Label(" "));
+
             }
 
             for (int i = 0; i < formationList.size(); i++) {
