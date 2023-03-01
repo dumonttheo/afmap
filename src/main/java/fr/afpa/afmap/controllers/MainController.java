@@ -100,7 +100,7 @@ public class MainController {
             for (int i = 0; i < squareArrayList.size(); i++) {
 
 
-                if (batimentFormationArrayList.get(i).isASquare()) {
+                if (batimentFormationArrayList.       get(i).isASquare()) {
                     swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getX1(), batimentFormationArrayList.get(i).getY1(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), (Rectangle) squareArrayList.get(i), 1536, 1014);
                 } else {
                     swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) squareArrayList.get(i), 1536, 1014, batimentFormationArrayList.get(i).getAllPoints());
