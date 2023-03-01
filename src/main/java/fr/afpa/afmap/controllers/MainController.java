@@ -10,6 +10,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -40,11 +41,18 @@ public class MainController {
     @FXML
     private ImageView imageViewBat;
     @FXML
-    private Pane pane;
+    public Pane pane;
 
     @FXML
     private Group drawingGroup;
 
+    @FXML
+    private Image image;
+    public Double widthHeigth;
+
+    public Double getWidthHeigth() {
+        return widthHeigth;
+    }
 
     private final ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<>();
     private final ArrayList<Formation> listeAllFormations = new ArrayList<>();
@@ -52,11 +60,13 @@ public class MainController {
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
 
 
+
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
     List<String> typeBatimentListe = new ArrayList<>();
     List<Formation> formationList = new ArrayList<>();
 
     Double width;
+
 
 
     public void initialize() {
@@ -72,9 +82,9 @@ public class MainController {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
 //            Change imageViewBat whit to new pan width
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
-
+            pane.setMaxHeight((double) newVal/1.51);
 //            Instancie width to parameter new val
-            width = newVal.doubleValue();
+            widthHeigth = newVal.doubleValue()/1.51;
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
             for (int i = 0; i < squareArrayList.size(); i++) {
@@ -86,6 +96,10 @@ public class MainController {
                 }
             }
 
+        });
+
+        image.heightProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
         });
 
 
@@ -137,13 +151,13 @@ public class MainController {
         });
 
 
-        pane.setOnMouseMoved(mouseEvent -> {
-            System.out.println("---------------------");
-            System.out.println("Mouse en X : " + mouseEvent.getX());
-            System.out.println("Mouse en Y : " + mouseEvent.getY());
-            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-            System.out.println("Hauteur de l'image : " + pane.getHeight());
-        });
+//        pane.setOnMouseMoved(mouseEvent -> {
+//            System.out.println("---------------------");
+//            System.out.println("Mouse en X : " + mouseEvent.getX());
+//            System.out.println("Mouse en Y : " + mouseEvent.getY());
+//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
+//            System.out.println("Hauteur de l'image : " + pane.getHeight());
+//        });
 
     }
 
