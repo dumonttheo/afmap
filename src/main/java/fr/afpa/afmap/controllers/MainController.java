@@ -84,7 +84,7 @@ public class MainController {
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
             pane.setMaxHeight((double) newVal/1.51);
 //            Instancie width to parameter new val
-            widthHeigth = newVal.doubleValue()/1.51;
+            widthHeigth = newVal.doubleValue()/1.61;
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
             for (int i = 0; i < squareArrayList.size(); i++) {
