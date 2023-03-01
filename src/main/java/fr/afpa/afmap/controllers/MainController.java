@@ -135,22 +135,26 @@ public class MainController {
 
 
         comboFormation.setOnAction(event -> {
+            countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
+            System.out.println(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size());
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
             if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
                 titledPaneForm.setText("Formateurs");
+            }else{
+                titledPaneForm.setText("Formateur");
             }
             if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1){
                 titledPaneBat.setText("Batiments");
+            }else{
+                titledPaneBat.setText("Batiment");
             }
             for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
                 int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
-                System.out.println(countFormateurs);
                 countFormateurI++;
-                System.out.println(countFormateurI);
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
@@ -276,9 +280,6 @@ public class MainController {
         Formation oldCDA = new Formation("OLD CDA", batOldCDA);
         Formation macon = new Formation("Maçon", batMaconMain);
 
-        macon.addBatiment(batMaconDepotFirst);
-
-
         formationList.add(cda);
         formationList.add(commerce);
         formationList.add(aph);
@@ -286,10 +287,11 @@ public class MainController {
         formationList.add(carrelage);
         formationList.add(oldCDA);
         formationList.add(macon);
-        macon.addBatiment(batMaconDepotFirst);
 
         cda.addPersonnel(ludo);
         cda.addPersonnel(jean);
+
+        macon.addBatiment(batAES);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
