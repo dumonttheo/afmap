@@ -41,7 +41,7 @@
                   <ComboBox fx:id="comboFormation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <TitledPane animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Batiment" textFill="#0d0d0d">
+            <TitledPane fx:id="titledPaneBat" animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Batiment" textFill="#0d0d0d">
 
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="56.0" prefWidth="363.0">
@@ -58,7 +58,7 @@
                   </ImageView>
                </graphic>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Formateur">
+            <TitledPane fx:id="titledPaneForm" animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Formateur">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>

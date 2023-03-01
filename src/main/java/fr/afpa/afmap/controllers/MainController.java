@@ -11,6 +11,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -43,6 +44,10 @@ public class MainController {
     private ImageView imageViewBat;
     @FXML
     public Pane pane;
+    @FXML
+    private TitledPane titledPaneBat;
+    @FXML
+    private TitledPane titledPaneForm;
 
     @FXML
     private Group drawingGroup;
@@ -52,15 +57,14 @@ public class MainController {
     @FXML
     private Image image;
     public Double widthHeigth;
+    private int countFormateurI = 0;
 
     public Double getWidthHeigth() {
         return widthHeigth;
     }
 
-    private final ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<>();
-    private final ArrayList<Formation> listeAllFormations = new ArrayList<>();
-
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
+
 
 
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
@@ -68,7 +72,6 @@ public class MainController {
 
     List<Formation> formationList = new ArrayList<>();
 
-    Double width;
 
 
     public void initialize() {
@@ -89,13 +92,18 @@ public class MainController {
             widthHeigth = newVal.doubleValue() / 1.51;
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
-            for (int i = 0; i < squareArrayList.size(); i++) {
-                if (batimentFormationArrayList.get(i).isASquare()) {
-                    swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getX1(), batimentFormationArrayList.get(i).getY1(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), (Rectangle) squareArrayList.get(i), 1536, 1014);
-                } else {
-                    swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) squareArrayList.get(i), 1536, 1014, batimentFormationArrayList.get(i).getAllPoints());
+
+            for (Formation formation : formationList) {
+                for (Batiment batiment : formation.getListeBatimentsFormation()) {
+                    if (batiment.isASquare()) {
+                        swapPlaceRectangle(newVal.doubleValue(), batiment.getX1(), batiment.getY1(), Math.round(newVal.doubleValue() / 1.51), batiment.getWidth(), batiment.getHeigth(), (Rectangle) batiment.getShape(), 1536, 1014);
+                    } else {
+                        swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) batiment.getShape(), 1536, 1014, batiment.getAllPoints());
+                    }
                 }
             }
+
+
 
         });
 
@@ -132,11 +140,24 @@ public class MainController {
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            for (Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()) {
+            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+                titledPaneForm.setText("Formateurs");
+            }
+            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1){
+                titledPaneBat.setText("Batiments");
+            }
+            for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
+                int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
+                System.out.println(countFormateurs);
+                countFormateurI++;
+                System.out.println(countFormateurI);
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
-                vBoxFormateurs.getChildren().add(new Label(" "));
+                if(countFormateurI != countFormateurs ){
+                    vBoxFormateurs.getChildren().add(new Label(" "));
+                }
+
 
             }
 
@@ -145,7 +166,7 @@ public class MainController {
             }
 
             Formation formationSelected = comboFormation.getSelectionModel().getSelectedItem();
-            for (Batiment batForm : formationSelected.getListeBatimentsFormation()){
+            for (Batiment batForm : formationSelected.getListeBatimentsFormation()) {
                 batForm.getShape().setFill(batForm.getColor());
             }
 
@@ -265,7 +286,10 @@ public class MainController {
         formationList.add(carrelage);
         formationList.add(oldCDA);
         formationList.add(macon);
+        macon.addBatiment(batMaconDepotFirst);
 
+        cda.addPersonnel(ludo);
+        cda.addPersonnel(jean);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
@@ -278,15 +302,6 @@ public class MainController {
         batMaconDepotFirst.addFormation(macon);
 
 
-//      Add all formation to array list of batiments
-        batimentFormationArrayList.add(batCDA);
-        batimentFormationArrayList.add(batCommerce);
-        batimentFormationArrayList.add(batAPH);
-        batimentFormationArrayList.add(batAES);
-        batimentFormationArrayList.add(batCarrelage);
-        batimentFormationArrayList.add(batOldCDA);
-        batimentFormationArrayList.add(batMaconMain);
-        batimentFormationArrayList.add(batMaconDepotFirst);
 
 
     }
@@ -339,18 +354,12 @@ public class MainController {
                         }
 //      Change all batiment of formation to Color
                         for (Batiment bat : formation.getListeBatimentsFormation()) {
-                            shape.setFill(bat.getColor());
+                            bat.getShape().setFill(bat.getColor());
                         }
 
 //  Change on Combobox all information.
-                        for (Formation formationL : formationList) {
-
-                            if (formationL.getNom().equals(formation.getNom())) {
-                                comboBat.getSelectionModel().selectFirst();
-                                comboFormation.getSelectionModel().select(formationL);
-
-                            }
-                        }
+                        comboBat.getSelectionModel().selectFirst();
+                        comboFormation.getSelectionModel().select(formation);
 
                     });
 
@@ -390,19 +399,13 @@ public class MainController {
                             square.setFill(Color.TRANSPARENT);
                         }
 //      Change all batiment of formation to Color
-                        for (BatimentFormation ignored : formation.getListeBatimentsFormation()) {
-                            polygon.setFill(batiment.getColor());
+                        for (Batiment bat : formation.getListeBatimentsFormation()) {
+                            bat.getShape().setFill(bat.getColor());
                         }
 
 //  Change on Combobox all information.
-                        for (Formation formationL : formationList) {
-
-                            if (formationL.getNom().equals(formation.getNom())) {
-                                comboBat.getSelectionModel().selectFirst();
-                                comboFormation.getSelectionModel().select(formationL);
-
-                            }
-                        }
+                        comboBat.getSelectionModel().selectFirst();
+                        comboFormation.getSelectionModel().select(formation);
                     });
 
 
@@ -444,6 +447,7 @@ public class MainController {
 //  Set all points a the polygon
         polygon.getPoints().setAll(newPoints);
     }
+
 
 
 }

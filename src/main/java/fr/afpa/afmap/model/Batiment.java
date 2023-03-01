@@ -1,7 +1,6 @@
 package fr.afpa.afmap.model;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 /**
  * Description batiment afpa avec coordonnées
@@ -10,6 +9,15 @@ abstract public class Batiment extends FormeBatiment {
     private int numero;
     private String nom;
 
+    /**
+     * Constructor for Square Building
+     * @param numero Number of Building
+     * @param topLeftX  Layout X to left corner of square
+     * @param topLeftY  Layout Y to left corner of square
+     * @param width Width of square
+     * @param heigth    heigth of square
+     * @param color Color of the Batiment
+     */
     public Batiment(int numero, Double topLeftX, Double topLeftY, Double width, Double heigth, Color color){
         super(topLeftX, topLeftY, width, heigth, color);
         this.numero = numero;
