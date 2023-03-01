@@ -63,14 +63,12 @@ public class MainController {
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
 
 
-
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
     List<String> typeBatimentListe = new ArrayList<>();
 
     List<Formation> formationList = new ArrayList<>();
 
     Double width;
-
 
 
     public void initialize() {
@@ -86,14 +84,12 @@ public class MainController {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
 //            Change imageViewBat whit to new pan width
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
-            pane.setMaxHeight((double) newVal/1.51);
+            pane.setMaxHeight((double) newVal / 1.51);
 //            Instancie width to parameter new val
-            widthHeigth = newVal.doubleValue()/1.51;
+            widthHeigth = newVal.doubleValue() / 1.51;
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
             for (int i = 0; i < squareArrayList.size(); i++) {
-
-
                 if (batimentFormationArrayList.get(i).isASquare()) {
                     swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getX1(), batimentFormationArrayList.get(i).getY1(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), (Rectangle) squareArrayList.get(i), 1536, 1014);
                 } else {
@@ -103,18 +99,9 @@ public class MainController {
 
         });
 
-//        image.heightProperty().addListener((observable, oldValue, newValue) -> {
-//            System.out.println(newValue);
-//        });
 
-
-        //recuperer toutes les formations de tous les batiments_formation et les afficher dans la comboFormation
-        for (BatimentFormation bat : batimentFormationArrayList) {
-            List<Formation> formationsDuBatiment = bat.getListeFormations();
-            listeAllFormations.addAll(formationsDuBatiment);
-        }
-
-        ObservableList<Formation> formationObservableList = FXCollections.observableArrayList(listeAllFormations);
+//  Add in ComboBox all Formation whit an ArrayList FormationList
+        ObservableList<Formation> formationObservableList = FXCollections.observableArrayList(formationList);
         comboFormation.setItems(formationObservableList);
 
         //ajouter les deux types de batiments dans la comboBat
@@ -137,13 +124,15 @@ public class MainController {
                 labelFormation.setVisible(false);
             }
         });
+
+
         comboFormation.setOnAction(event -> {
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
+            for (Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()) {
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
@@ -151,13 +140,15 @@ public class MainController {
 
             }
 
-            for (int i = 0; i < formationList.size(); i++) {
-                if (comboFormation.getSelectionModel().getSelectedItem().getNom().equals(formationList.get(i).getNom())) {
-                    System.out.println(squareArrayList);
-                } else {
-                    squareArrayList.get(i).setFill(Color.TRANSPARENT);
-                }
+            for (Shape shape : squareArrayList) {
+                shape.setFill(Color.TRANSPARENT);
             }
+
+            Formation formationSelected = comboFormation.getSelectionModel().getSelectedItem();
+            for (Batiment batForm : formationSelected.getListeBatimentsFormation()){
+                batForm.getShape().setFill(batForm.getColor());
+            }
+
         });
 
 
@@ -241,12 +232,12 @@ public class MainController {
                 502.0, 648.0,
                 474.0, 648.0
         }, Color.PINK);
-        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05,51.6,100.0,110.0, Color.BROWN);
+        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05, 51.6, 100.0, 110.0, Color.BROWN);
         BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
-            399.0, 683.0,
-                500.0,683.0,
-                500.0,730.0,
-                399.0,730.0
+                399.0, 683.0,
+                500.0, 683.0,
+                500.0, 730.0,
+                399.0, 730.0
         }, Color.BROWN);
 
 
@@ -262,7 +253,9 @@ public class MainController {
         Formation aes = new Formation("AES", batAES);
         Formation carrelage = new Formation("Carrelage", batCarrelage);
         Formation oldCDA = new Formation("OLD CDA", batOldCDA);
-        Formation macon = new Formation("Macon", batMaconMain);
+        Formation macon = new Formation("Maçon", batMaconMain);
+
+        macon.addBatiment(batMaconDepotFirst);
 
 
         formationList.add(cda);
@@ -272,7 +265,6 @@ public class MainController {
         formationList.add(carrelage);
         formationList.add(oldCDA);
         formationList.add(macon);
-        macon.addBatiment(batMaconDepotFirst);
 
 
 //        Add formation to a batiment
@@ -314,7 +306,7 @@ public class MainController {
 
 //      Add shape to ArrayList
                     squareArrayList.add(shape);
-
+                    batiment.setShape(shape);
 //      Fill Color Transparent
                     shape.setFill(Color.TRANSPARENT);
 
@@ -371,6 +363,7 @@ public class MainController {
 
                     drawingGroup.getChildren().add(polygon);
 
+                    batiment.setShape(polygon);
                     squareArrayList.add(polygon);
 
 
@@ -436,22 +429,21 @@ public class MainController {
 //  Check if new resolution is different than old resolution
 
 //  Create a list of Double to get all points in a list
-            List<Double> newPoints = new ArrayList<>();
+        List<Double> newPoints = new ArrayList<>();
 
-            for (int i = 0; i < allPoints.length; i++) {
+        for (int i = 0; i < allPoints.length; i++) {
 //  Check if i is divisible by 2 for get only layout X
-                if (i % 2 == 0) {
+            if (i % 2 == 0) {
 //  Add to list NewPoints new Layout X
-                    newPoints.add(Math.floor(newReso * allPoints[i] / oldReso));
-                } else {
+                newPoints.add(Math.floor(newReso * allPoints[i] / oldReso));
+            } else {
 //  Add to list NewPoints new Layout Y
-                    newPoints.add(Math.floor(heigthReso * allPoints[i] / oldResoHeigth));
-                }
+                newPoints.add(Math.floor(heigthReso * allPoints[i] / oldResoHeigth));
             }
-//  Set all points a the polygon
-            polygon.getPoints().setAll(newPoints);
         }
-
+//  Set all points a the polygon
+        polygon.getPoints().setAll(newPoints);
+    }
 
 
 }

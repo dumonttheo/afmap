@@ -1,9 +1,7 @@
 package fr.afpa.afmap.model;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-
-import java.util.ArrayList;
+import javafx.scene.shape.Shape;
 
 /**
  * Description batiment afpa avec coordonnées
