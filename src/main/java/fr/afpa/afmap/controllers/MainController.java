@@ -148,9 +148,7 @@ public class MainController {
             }
             for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
                 int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
-                System.out.println(countFormateurs);
                 countFormateurI++;
-                System.out.println(countFormateurI);
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
