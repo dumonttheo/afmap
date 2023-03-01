@@ -26,8 +26,8 @@ public class HelloApplication extends Application {
         });
         scene.heightProperty().addListener((observable, oldValue, newValue) -> {
             Double value = controller.getWidthHeigth();
-
             stage.setHeight(value);
+            System.out.println(value);
         });
         stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
             Double value = controller.getWidthHeigth();

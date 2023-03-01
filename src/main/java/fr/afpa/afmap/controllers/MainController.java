@@ -301,19 +301,16 @@ public class MainController {
 //      Event Listener of square
                     shape.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                        for (Formation formationL : formationList) {
-                            if (!shape.getFill().equals(formationL.getCouleur())) {
-                                shape.setFill(Color.LIGHTGRAY);
-                            }
+                        if (!shape.getFill().equals(formation.getCouleur())) {
+                            shape.setFill(Color.LIGHTGRAY);
+
                         }
                     });
                     shape.setOnMouseExited(event -> {
 
 //                Verify if is clicked before whit Color of square
-                        for (Formation formationL : formationList) {
-                            if (!shape.getFill().equals(formationL.getCouleur())) {
-                                shape.setFill(Color.TRANSPARENT);
-                            }
+                        if (!shape.getFill().equals(formation.getCouleur())) {
+                            shape.setFill(Color.TRANSPARENT);
                         }
                     });
 
@@ -355,19 +352,37 @@ public class MainController {
                     //      Event Listener of square
                     polygon.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                        for (Formation ignored : formationList) {
-                            if (!polygon.getFill().equals(formation.getCouleur())) {
-                                polygon.setFill(Color.LIGHTGRAY);
-                            }
+                        if (!polygon.getFill().equals(formation.getCouleur())) {
+                            polygon.setFill(Color.LIGHTGRAY);
+
                         }
                     });
 
                     polygon.setOnMouseExited(event -> {
 
 //                Verify if is clicked before whit Color of square
-                        for (Formation ignored : formationList) {
-                            if (!polygon.getFill().equals(formation.getCouleur())) {
-                                polygon.setFill(Color.TRANSPARENT);
+                        if (!polygon.getFill().equals(formation.getCouleur())) {
+                            polygon.setFill(Color.TRANSPARENT);
+                        }
+                    });
+
+                    polygon.setOnMouseClicked(event -> {
+//                        change all Square to Transparent Color
+                        for (Shape square : squareArrayList) {
+                            square.setFill(Color.TRANSPARENT);
+                        }
+//      Change all batiment of formation to Color
+                        for (BatimentFormation ignored : formation.getListeBatimentsFormation()) {
+                            polygon.setFill(formation.getCouleur());
+                        }
+
+//  Change on Combobox all information.
+                        for (Formation formationL : formationList) {
+
+                            if (formationL.getNom().equals(formation.getNom())) {
+                                comboBat.getSelectionModel().selectFirst();
+                                comboFormation.getSelectionModel().select(formationL);
+
                             }
                         }
                     });
