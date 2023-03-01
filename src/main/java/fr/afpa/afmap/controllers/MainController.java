@@ -45,6 +45,8 @@ public class MainController {
 
     @FXML
     private Group drawingGroup;
+    @FXML
+    private VBox vBoxFormateurs;
 
     @FXML
     private Image image;
@@ -134,12 +136,15 @@ public class MainController {
         });
         comboFormation.setOnAction(event -> {
             vBoxBat.getChildren().clear();
+            vBoxFormateurs.getChildren().clear();
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            labelNomFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getNom() + " " + comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getPrenom());
-            labelMailFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getMail());
-            labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getNumeroTelephone());
+            for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
+                vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
+                vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
+                vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
+            }
 
             for (int i = 0; i < formationList.size(); i++) {
                 if (comboFormation.getSelectionModel().getSelectedItem().getNom().equals(formationList.get(i).getNom())) {

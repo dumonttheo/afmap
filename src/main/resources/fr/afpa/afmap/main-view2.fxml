@@ -19,7 +19,7 @@
 
 <HBox maxHeight="1000" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.MainController">
    <children>
-      <VBox prefHeight="1072.0" prefWidth="385.0" minWidth="200" spacing="5.0">
+      <VBox minWidth="200" prefHeight="1072.0" prefWidth="385.0" spacing="5.0">
          <children>
             <Label prefHeight="34.0" prefWidth="236.0" text="Centre de Rochefort">
                <font>
@@ -62,12 +62,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
-                        <VBox layoutX="16.0" layoutY="9.0">
-                           <children>
-                              <Label fx:id="labelNomFormateur" />
-                              <Label fx:id="labelTelephoneFormateur" />
-                              <Label fx:id="labelMailFormateur" />
-                           </children>
+                        <VBox fx:id="vBoxFormateurs" layoutX="16.0" layoutY="9.0">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
