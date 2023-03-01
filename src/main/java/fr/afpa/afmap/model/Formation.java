@@ -11,12 +11,10 @@ public class Formation {
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
     private ArrayList<BatimentFormation> listeBatimentsFormation = new ArrayList<BatimentFormation>();
-    private Color couleur;
 
-    public Formation(String nom, BatimentFormation batimentFormation, Color color) {
+    public Formation(String nom, BatimentFormation batimentFormation) {
         this.nom = nom;
         this.listeBatimentsFormation.add(batimentFormation);
-        this.couleur = color;
     }
 
     @Override
@@ -53,7 +51,4 @@ public class Formation {
     }
 
 
-    public Color getCouleur(){
-        return this.couleur;
-    }
 }

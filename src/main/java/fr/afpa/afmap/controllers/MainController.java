@@ -1,5 +1,6 @@
 package fr.afpa.afmap.controllers;
 
+import fr.afpa.afmap.model.Batiment;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Personnel;
 import fr.afpa.afmap.model.Formation;
@@ -65,6 +66,7 @@ public class MainController {
 
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
     List<String> typeBatimentListe = new ArrayList<>();
+
     List<Formation> formationList = new ArrayList<>();
 
     Double width;
@@ -91,8 +93,9 @@ public class MainController {
 //            Use Function SwapPlaceRectangle to replace all square on the map
             for (int i = 0; i < squareArrayList.size(); i++) {
 
+
                 if (batimentFormationArrayList.get(i).isASquare()) {
-                    swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getTopLeftX(), batimentFormationArrayList.get(i).getTopLeftY(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), (Rectangle) squareArrayList.get(i), 1536, 1014);
+                    swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getX1(), batimentFormationArrayList.get(i).getY1(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), (Rectangle) squareArrayList.get(i), 1536, 1014);
                 } else {
                     swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) squareArrayList.get(i), 1536, 1014, batimentFormationArrayList.get(i).getAllPoints());
                 }
@@ -219,11 +222,11 @@ public class MainController {
     public void getAllFormation() {
 
 //        Create all buildings
-        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.76, 60.0, 44.0);
-        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.76, 84.0, 44.0);
-        BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0);
-        BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0);
-        BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0);
+        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.76, 60.0, 44.0, Color.RED);
+        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.76, 84.0, 44.0, Color.BLUE);
+        BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0, Color.BLUE);
+        BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0, Color.LIGHTGREEN);
+        BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0, Color.CHARTREUSE);
         BatimentFormation batOldCDA = new BatimentFormation(58, new Double[]{
                 474.0, 613.0,
                 502.0, 613.0,
@@ -237,14 +240,14 @@ public class MainController {
                 502.0, 641.0,
                 502.0, 648.0,
                 474.0, 648.0
-        });
-        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05,51.6,100.0,110.0);
+        }, Color.PINK);
+        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05,51.6,100.0,110.0, Color.BROWN);
         BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
             399.0, 683.0,
                 500.0,683.0,
                 500.0,730.0,
                 399.0,730.0
-        });
+        }, Color.BROWN);
 
 
 //        Create all formateur
@@ -253,13 +256,13 @@ public class MainController {
 
 
 //      Crete All formation whit formateur and building
-        Formation cda = new Formation("CDA", batCDA, Color.RED);
-        Formation commerce = new Formation("Commerce", batCommerce, Color.BLUE);
-        Formation aph = new Formation("APH", batAPH, Color.GREEN);
-        Formation aes = new Formation("AES", batAES, Color.BLUE);
-        Formation carrelage = new Formation("Carrelage", batCarrelage, Color.BLUE);
-        Formation oldCDA = new Formation("OLD CDA", batOldCDA, Color.PINK);
-        Formation macon = new Formation("Macon", batMaconMain, Color.BROWN);
+        Formation cda = new Formation("CDA", batCDA);
+        Formation commerce = new Formation("Commerce", batCommerce);
+        Formation aph = new Formation("APH", batAPH);
+        Formation aes = new Formation("AES", batAES);
+        Formation carrelage = new Formation("Carrelage", batCarrelage);
+        Formation oldCDA = new Formation("OLD CDA", batOldCDA);
+        Formation macon = new Formation("Macon", batMaconMain);
 
 
         formationList.add(cda);
@@ -291,7 +294,7 @@ public class MainController {
         batimentFormationArrayList.add(batCarrelage);
         batimentFormationArrayList.add(batOldCDA);
         batimentFormationArrayList.add(batMaconMain);
-//        batimentFormationArrayList.add(batMaconDepotFirst);
+        batimentFormationArrayList.add(batMaconDepotFirst);
 
 
     }
@@ -307,7 +310,7 @@ public class MainController {
                 if (batiment.isASquare()) {
 
 //       Generare a square
-                    Rectangle shape = new Rectangle(batiment.getTopLeftX() * 1536 / 100, batiment.getTopLeftY() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
+                    Rectangle shape = new Rectangle(batiment.getX1() * 1536 / 100, batiment.getY1() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
 
 //      Add shape to ArrayList
                     squareArrayList.add(shape);
@@ -323,7 +326,7 @@ public class MainController {
 //      Event Listener of square
                     shape.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                        if (!shape.getFill().equals(formation.getCouleur())) {
+                        if (!shape.getFill().equals(batiment.getColor())) {
                             shape.setFill(Color.LIGHTGRAY);
 
                         }
@@ -331,7 +334,7 @@ public class MainController {
                     shape.setOnMouseExited(event -> {
 
 //                Verify if is clicked before whit Color of square
-                        if (!shape.getFill().equals(formation.getCouleur())) {
+                        if (!shape.getFill().equals(batiment.getColor())) {
                             shape.setFill(Color.TRANSPARENT);
                         }
                     });
@@ -343,8 +346,8 @@ public class MainController {
                             square.setFill(Color.TRANSPARENT);
                         }
 //      Change all batiment of formation to Color
-                        for (BatimentFormation ignored : formation.getListeBatimentsFormation()) {
-                            shape.setFill(formation.getCouleur());
+                        for (Batiment bat : formation.getListeBatimentsFormation()) {
+                            shape.setFill(bat.getColor());
                         }
 
 //  Change on Combobox all information.
@@ -374,7 +377,7 @@ public class MainController {
                     //      Event Listener of square
                     polygon.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                        if (!polygon.getFill().equals(formation.getCouleur())) {
+                        if (!polygon.getFill().equals(batiment.getColor())) {
                             polygon.setFill(Color.LIGHTGRAY);
 
                         }
@@ -383,7 +386,7 @@ public class MainController {
                     polygon.setOnMouseExited(event -> {
 
 //                Verify if is clicked before whit Color of square
-                        if (!polygon.getFill().equals(formation.getCouleur())) {
+                        if (!polygon.getFill().equals(batiment.getColor())) {
                             polygon.setFill(Color.TRANSPARENT);
                         }
                     });
@@ -395,7 +398,7 @@ public class MainController {
                         }
 //      Change all batiment of formation to Color
                         for (BatimentFormation ignored : formation.getListeBatimentsFormation()) {
-                            polygon.setFill(formation.getCouleur());
+                            polygon.setFill(batiment.getColor());
                         }
 
 //  Change on Combobox all information.
