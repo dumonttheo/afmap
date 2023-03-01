@@ -3,12 +3,15 @@ package fr.afpa.afmap.model;
 /**
  * Classe formateur, numero de tel et son mail
  */
-public class Formateur extends Personne{
+public class Personnel {
+    private String nom;
+    private String prenom;
     private String numeroTelephone;
     private String mail;
 
-    public Formateur(String nom, String prenom, String numeroTelephone, String mail){
-        super(nom, prenom);
+    public Personnel(String nom, String prenom, String numeroTelephone, String mail){
+        this.nom = nom;
+        this.prenom = prenom;
         this.numeroTelephone = numeroTelephone;
         this.mail = mail;
     }
@@ -27,5 +30,21 @@ public class Formateur extends Personne{
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 }

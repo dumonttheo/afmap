@@ -1,5 +1,6 @@
 package fr.afpa.afmap.model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
@@ -11,20 +12,14 @@ abstract public class Batiment extends FormeBatiment {
     private int numero;
     private String nom;
 
-    private Double topLeftX;
-    private Double topLeftY;
-
-    public Batiment(int numero, Double topLeftX, Double topLeftY, Double width, Double heigth){
-        super(topLeftX, topLeftY, width, heigth);
+    public Batiment(int numero, Double topLeftX, Double topLeftY, Double width, Double heigth, Color color){
+        super(topLeftX, topLeftY, width, heigth, color);
         this.numero = numero;
         this.nom = "Batiment " + numero;
-        this.topLeftX = topLeftX;
-        this.topLeftY = topLeftY;
-
     }
 
-    public Batiment(int numero, Double[] allPoints){
-        super(allPoints);
+    public Batiment(int numero, Double[] allPoints, Color color){
+        super(allPoints, color);
         this.numero = numero;
         this.nom = "Batiment " + numero;
     }
@@ -54,25 +49,8 @@ abstract public class Batiment extends FormeBatiment {
         this.nom = nom;
     }
 
-    public Double getTopLeftX() {
-        return topLeftX;
-    }
 
-    public void setTopLeftX(Double topLeftX) {
-        this.topLeftX = topLeftX;
-    }
 
-    public Double getTopLeftY() {
-        return topLeftY;
-    }
-
-    public void setTopLeftY(Double topLeftY) {
-        this.topLeftY = topLeftY;
-    }
-
-    public boolean isASquare(){
-        return this.allPoints == null;
-    }
 
 
 

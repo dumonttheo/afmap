@@ -78,7 +78,7 @@
                <graphic>
                   <ImageView fitHeight="31.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@formateur.png" />
+                        <Image url="@personnel.png" />
                      </image>
                   </ImageView>
                </graphic>

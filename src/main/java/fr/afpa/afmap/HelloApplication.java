@@ -22,14 +22,20 @@ public class HelloApplication extends Application {
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             Double value = controller.getWidthHeigth();
             stage.setHeight(value);
-            System.out.println(value);
+
         });
         scene.heightProperty().addListener((observable, oldValue, newValue) -> {
             Double value = controller.getWidthHeigth();
-            stage.setHeight(value);
-            System.out.println(value);
-        });
 
+            stage.setHeight(value);
+        });
+        stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+            Double value = controller.getWidthHeigth();
+            if(Objects.equals(newValue.toString(), "true")){
+                stage.setHeight(2000);
+                System.out.println(newValue);
+            }
+        });
         stage.setTitle("AFMAP");
         String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);

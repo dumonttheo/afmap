@@ -5,17 +5,16 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- * Formation, nom, formateur
+ * Formation, nom, personnel
  */
 public class Formation {
     private String nom;
-    private Formateur formateur;
+    private ArrayList<Personnel> listePersonnel = new ArrayList<>();
     private ArrayList<BatimentFormation> listeBatimentsFormation = new ArrayList<BatimentFormation>();
     private Color couleur;
 
-    public Formation(String nom, Formateur formateur, BatimentFormation batimentFormation, Color color) {
+    public Formation(String nom, BatimentFormation batimentFormation, Color color) {
         this.nom = nom;
-        this.formateur = formateur;
         this.listeBatimentsFormation.add(batimentFormation);
         this.couleur = color;
     }
@@ -27,6 +26,14 @@ public class Formation {
 
     public ArrayList<BatimentFormation> getListeBatimentsFormation() {
         return this.listeBatimentsFormation;
+    }
+
+    public void addPersonnel(Personnel personnel){
+        listePersonnel.add(personnel);
+    }
+
+    public ArrayList<Personnel> getListePersonnel() {
+        return listePersonnel;
     }
 
     public void addBatiment(BatimentFormation batimentFormation) {
@@ -43,14 +50,6 @@ public class Formation {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public Formateur getFormateur() {
-        return formateur;
-    }
-
-    public void setFormateur(Formateur formateur) {
-        this.formateur = formateur;
     }
 
 

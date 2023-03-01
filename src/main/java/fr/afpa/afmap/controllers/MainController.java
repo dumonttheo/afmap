@@ -1,7 +1,7 @@
 package fr.afpa.afmap.controllers;
 
 import fr.afpa.afmap.model.BatimentFormation;
-import fr.afpa.afmap.model.Formateur;
+import fr.afpa.afmap.model.Personnel;
 import fr.afpa.afmap.model.Formation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,9 +98,9 @@ public class MainController {
 
         });
 
-        image.heightProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-        });
+//        image.heightProperty().addListener((observable, oldValue, newValue) -> {
+//            System.out.println(newValue);
+//        });
 
 
         //recuperer toutes les formations de tous les batiments_formation et les afficher dans la comboFormation
@@ -137,9 +137,9 @@ public class MainController {
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            labelNomFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNom() + " " + comboFormation.getSelectionModel().getSelectedItem().getFormateur().getPrenom());
-            labelMailFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getMail());
-            labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getFormateur().getNumeroTelephone());
+            labelNomFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getNom() + " " + comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getPrenom());
+            labelMailFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getMail());
+            labelTelephoneFormateur.setText(comboFormation.getSelectionModel().getSelectedItem().getPersonnel().getNumeroTelephone());
 
             for (int i = 0; i < formationList.size(); i++) {
                 if (comboFormation.getSelectionModel().getSelectedItem().getNom().equals(formationList.get(i).getNom())) {
@@ -234,17 +234,17 @@ public class MainController {
 
 
 //        Create all formateur
-        Formateur ludo = new Formateur("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
-        Formateur jean = new Formateur("Jean", "Jacques", "0612345678", "jj@gmail.com");
+        Personnel ludo = new Personnel("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
+        Personnel jean = new Personnel("Jean", "Jacques", "0612345678", "jj@gmail.com");
 
 
 //      Crete All formation whit formateur and building
-        Formation cda = new Formation("CDA", ludo, batCDA, Color.RED);
-        Formation commerce = new Formation("Commerce", jean, batCommerce, Color.BLUE);
-        Formation aph = new Formation("APH", jean, batAPH, Color.GREEN);
-        Formation aes = new Formation("AES", jean, batAES, Color.BLUE);
-        Formation carrelage = new Formation("Carrelage", jean, batCarrelage, Color.BLUE);
-        Formation oldCDA = new Formation("OLD CDA", ludo, batOldCDA, Color.PINK);
+        Formation cda = new Formation("CDA", batCDA, Color.RED);
+        Formation commerce = new Formation("Commerce", batCommerce, Color.BLUE);
+        Formation aph = new Formation("APH", batAPH, Color.GREEN);
+        Formation aes = new Formation("AES", batAES, Color.BLUE);
+        Formation carrelage = new Formation("Carrelage", batCarrelage, Color.BLUE);
+        Formation oldCDA = new Formation("OLD CDA", batOldCDA, Color.PINK);
 
 
         formationList.add(cda);
