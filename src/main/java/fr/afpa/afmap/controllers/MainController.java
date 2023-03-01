@@ -137,13 +137,13 @@ public class MainController {
         });
 
 
-        pane.setOnMouseMoved(mouseEvent -> {
-            System.out.println("---------------------");
-            System.out.println("Mouse en X : " + mouseEvent.getX());
-            System.out.println("Mouse en Y : " + mouseEvent.getY());
-            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-            System.out.println("Hauteur de l'image : " + pane.getHeight());
-        });
+//        pane.setOnMouseMoved(mouseEvent -> {
+//            System.out.println("---------------------");
+//            System.out.println("Mouse en X : " + mouseEvent.getX());
+//            System.out.println("Mouse en Y : " + mouseEvent.getY());
+//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
+//            System.out.println("Hauteur de l'image : " + pane.getHeight());
+//        });
 
     }
 
@@ -199,23 +199,23 @@ public class MainController {
 
 //        Create all buildings
         BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.79, 60.0, 44.0);
-        BatimentFormation batCommerce = new BatimentFormation(9, 26.37, 14.35, 84.0, 44.0);
-        BatimentFormation batAPH = new BatimentFormation(8, 38.74, 8.09, 45.5, 146.5);
-        BatimentFormation batAES = new BatimentFormation(7, 44.80, 8.0, 43.5, 146.6);
-        BatimentFormation batCarrelage = new BatimentFormation(6, 50.70, 8.0, 37.0, 146.6);
+        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.79, 84.0, 44.0);
+        BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0);
+        BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0);
+        BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0);
         BatimentFormation batOldCDA = new BatimentFormation(58, new Double[]{
-                494.0, 600.0,
-                521.0, 600.0,
-                521.0, 606.0,
-                551.0, 606.0,
-                551.0, 600.0,
-                579.0, 600.0,
-                579.0, 636.0,
-                552.0, 636.0,
-                552.0, 630.0,
-                521.0, 630.0,
-                521.0, 636.0,
-                494.0, 636.0
+                474.0, 613.0,
+                502.0, 613.0,
+                502.0, 620.0,
+                532.0, 620.0,
+                532.0, 613.0,
+                560.0, 613.0,
+                560.0, 648.0,
+                532.0, 648.0,
+                532.0, 641.0,
+                502.0, 641.0,
+                502.0, 648.0,
+                474.0, 648.0
         });
 
 
@@ -380,7 +380,7 @@ public class MainController {
      */
     public void swapPlacePolygon(double newReso, double heigthReso, Polygon polygon, double oldReso, double oldResoHeigth, Double[] allPoints) {
 //  Check if new resolution is different than old resolution
-        if (newReso != oldReso) {
+
 //  Create a list of Double to get all points in a list
             List<Double> newPoints = new ArrayList<>();
 
@@ -397,7 +397,7 @@ public class MainController {
 //  Set all points a the polygon
             polygon.getPoints().setAll(newPoints);
         }
-    }
+
 
 
 }
