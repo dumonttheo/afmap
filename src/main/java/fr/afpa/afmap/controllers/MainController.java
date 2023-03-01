@@ -137,13 +137,13 @@ public class MainController {
         });
 
 
-        pane.setOnMouseMoved(mouseEvent -> {
-            System.out.println("---------------------");
-            System.out.println("Mouse en X : " + mouseEvent.getX());
-            System.out.println("Mouse en Y : " + mouseEvent.getY());
-            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-            System.out.println("Hauteur de l'image : " + pane.getHeight());
-        });
+//        pane.setOnMouseMoved(mouseEvent -> {
+//            System.out.println("---------------------");
+//            System.out.println("Mouse en X : " + mouseEvent.getX());
+//            System.out.println("Mouse en Y : " + mouseEvent.getY());
+//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
+//            System.out.println("Hauteur de l'image : " + pane.getHeight());
+//        });
 
     }
 
@@ -204,18 +204,18 @@ public class MainController {
         BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0);
         BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0);
         BatimentFormation batOldCDA = new BatimentFormation(58, new Double[]{
-                473.0, 614.0,
-                502.0, 614.0,
+                474.0, 613.0,
+                502.0, 613.0,
                 502.0, 620.0,
                 532.0, 620.0,
-                532.0, 614.0,
-                560.0, 614.0,
-                560.0, 649.0,
-                532.0, 649.0,
-                532.0, 642.0,
-                502.0, 642.0,
-                502.0, 649.0,
-                473.0, 649.0
+                532.0, 613.0,
+                560.0, 613.0,
+                560.0, 648.0,
+                532.0, 648.0,
+                532.0, 641.0,
+                502.0, 641.0,
+                502.0, 648.0,
+                474.0, 648.0
         });
 
 
@@ -380,7 +380,7 @@ public class MainController {
      */
     public void swapPlacePolygon(double newReso, double heigthReso, Polygon polygon, double oldReso, double oldResoHeigth, Double[] allPoints) {
 //  Check if new resolution is different than old resolution
-        if (newReso != oldReso) {
+
 //  Create a list of Double to get all points in a list
             List<Double> newPoints = new ArrayList<>();
 
@@ -397,7 +397,7 @@ public class MainController {
 //  Set all points a the polygon
             polygon.getPoints().setAll(newPoints);
         }
-    }
+
 
 
 }
