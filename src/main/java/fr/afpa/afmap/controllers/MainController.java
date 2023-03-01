@@ -137,13 +137,13 @@ public class MainController {
         });
 
 
-//        pane.setOnMouseMoved(mouseEvent -> {
-//            System.out.println("---------------------");
-//            System.out.println("Mouse en X : " + mouseEvent.getX());
-//            System.out.println("Mouse en Y : " + mouseEvent.getY());
-//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-//            System.out.println("Hauteur de l'image : " + pane.getHeight());
-//        });
+        pane.setOnMouseMoved(mouseEvent -> {
+            System.out.println("---------------------");
+            System.out.println("Mouse en X : " + mouseEvent.getX());
+            System.out.println("Mouse en Y : " + mouseEvent.getY());
+            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
+            System.out.println("Hauteur de l'image : " + pane.getHeight());
+        });
 
     }
 
@@ -198,7 +198,7 @@ public class MainController {
     public void getAllFormation() {
 
 //        Create all buildings
-        BatimentFormation batCDA = new BatimentFormation(9, 22.21, 14.35, 60.0, 44.0);
+        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.79, 60.0, 44.0);
         BatimentFormation batCommerce = new BatimentFormation(9, 26.37, 14.35, 84.0, 44.0);
         BatimentFormation batAPH = new BatimentFormation(8, 38.74, 8.09, 45.5, 146.5);
         BatimentFormation batAES = new BatimentFormation(7, 44.80, 8.0, 43.5, 146.6);
@@ -310,7 +310,7 @@ public class MainController {
                             square.setFill(Color.TRANSPARENT);
                         }
 //      Change all batiment of formation to Color
-                        for (BatimentFormation batimentFormation : formation.getListeBatimentsFormation()) {
+                        for (BatimentFormation ignored : formation.getListeBatimentsFormation()) {
                             shape.setFill(formation.getCouleur());
                         }
 
@@ -341,7 +341,7 @@ public class MainController {
                     //      Event Listener of square
                     polygon.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                        for (Formation formationL : formationList) {
+                        for (Formation ignored : formationList) {
                             if (!polygon.getFill().equals(formation.getCouleur())) {
                                 polygon.setFill(Color.LIGHTGRAY);
                             }
@@ -351,7 +351,7 @@ public class MainController {
                     polygon.setOnMouseExited(event -> {
 
 //                Verify if is clicked before whit Color of square
-                        for (Formation formationL : formationList) {
+                        for (Formation ignored : formationList) {
                             if (!polygon.getFill().equals(formation.getCouleur())) {
                                 polygon.setFill(Color.TRANSPARENT);
                             }
