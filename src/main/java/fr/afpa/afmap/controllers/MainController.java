@@ -14,9 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class MainController {
     private final ArrayList<BatimentFormation> batimentFormationArrayList = new ArrayList<>();
     private final ArrayList<Formation> listeAllFormations = new ArrayList<>();
 
-    private final ArrayList<Rectangle> squareArrayList = new ArrayList<>();
+    private final ArrayList<Shape> squareArrayList = new ArrayList<>();
 
 
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
@@ -65,7 +65,7 @@ public class MainController {
         getAllFormation();
 
 //        Create all Square
-        createAllRectangle();
+        createAllSquare();
 
 
 //        LISTENER WIDTH
@@ -78,7 +78,12 @@ public class MainController {
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
             for (int i = 0; i < squareArrayList.size(); i++) {
-                swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getTopLeftX(), batimentFormationArrayList.get(i).getTopLeftY(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), squareArrayList.get(i), 1536, 1014);
+
+                if (batimentFormationArrayList.get(i).isASquare()) {
+                    swapPlaceRectangle(newVal.doubleValue(), batimentFormationArrayList.get(i).getTopLeftX(), batimentFormationArrayList.get(i).getTopLeftY(), Math.round(newVal.doubleValue() / 1.51), batimentFormationArrayList.get(i).getWidth(), batimentFormationArrayList.get(i).getHeigth(), (Rectangle) squareArrayList.get(i), 1536, 1014);
+                } else {
+                    swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) squareArrayList.get(i), 1536, 1014, batimentFormationArrayList.get(i).getAllPoints());
+                }
             }
 
         });
@@ -130,8 +135,6 @@ public class MainController {
                 }
             }
         });
-
-//        Créer un square avec des lines
 
 
 //        pane.setOnMouseMoved(mouseEvent -> {
@@ -261,102 +264,140 @@ public class MainController {
     /**
      * Generate all square and give list of rectangle
      */
-    public void createAllRectangle() {
+    public void createAllSquare() {
 
-        for (BatimentFormation batiment : batimentFormationArrayList) {
-            if (batiment.isASquare()) {
+        for (Formation formation : formationList) {
+            for (BatimentFormation batiment : formation.getListeBatimentsFormation()) {
+                if (batiment.isASquare()) {
 
 //       Generare a square
-                Rectangle shape = new Rectangle(batiment.getTopLeftX() * 1536 / 100, batiment.getTopLeftY() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
+                    Rectangle shape = new Rectangle(batiment.getTopLeftX() * 1536 / 100, batiment.getTopLeftY() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
 
 //      Add shape to ArrayList
-                squareArrayList.add(shape);
+                    squareArrayList.add(shape);
 
 //      Fill Color Transparent
-                shape.setFill(Color.TRANSPARENT);
+                    shape.setFill(Color.TRANSPARENT);
 
 
 //      Set Cursor to Hand
-                shape.setCursor(Cursor.HAND);
+                    shape.setCursor(Cursor.HAND);
 
 
 //      Event Listener of square
-                shape.setOnMouseEntered(event -> {
+                    shape.setOnMouseEntered(event -> {
 //                Verify if is clicked before whit Color of square
-                    for (Formation formation : batiment.getListeFormations()) {
-                        if (!shape.getFill().equals(formation.getCouleur())) {
-                            shape.setFill(Color.LIGHTGRAY);
-                        }
-                    }
-                });
-                shape.setOnMouseExited(event -> {
-
-//                Verify if is clicked before whit Color of square
-                    for (Formation formation : batiment.getListeFormations()) {
-                        if (!shape.getFill().equals(formation.getCouleur())) {
-                            shape.setFill(Color.TRANSPARENT);
-                        }
-                    }
-                });
-
-                shape.setOnMouseClicked(mouseEvent -> {
-
-//                change all Square to Transparent Color
-                    for (Rectangle square : squareArrayList) {
-                        square.setFill(Color.TRANSPARENT);
-                    }
-//      Change all batiment of formation to Color
-                    for (Formation formation : batiment.getListeFormations()) {
-                        shape.setFill(formation.getCouleur());
-                    }
-
-//  Change on Combobox all information.
-                    for (Formation formation : batiment.getListeFormations()) {
-
-                        for (Formation form : listeAllFormations) {
-                            if (form.getNom().equals(formation.getNom())) {
-                                comboBat.getSelectionModel().selectFirst();
-                                comboFormation.getSelectionModel().select(form);
+                        for (Formation formationL : formationList) {
+                            if (!shape.getFill().equals(formationL.getCouleur())) {
+                                shape.setFill(Color.LIGHTGRAY);
                             }
                         }
-                    }
-
-                });
-
-                drawingGroup.getChildren().addAll(shape);
-            } else {
-                Polygon polygon = new Polygon();
-                polygon.getPoints().addAll(batiment.getAllPoints());
-                polygon.setFill(Color.TRANSPARENT);
-                polygon.setCursor(Cursor.HAND);
-
-                drawingGroup.getChildren().add(polygon);
-
-
-                //      Event Listener of square
-                polygon.setOnMouseEntered(event -> {
-//                Verify if is clicked before whit Color of square
-                    for (Formation formation : batiment.getListeFormations()) {
-                        if (!polygon.getFill().equals(formation.getCouleur())) {
-                            polygon.setFill(Color.LIGHTGRAY);
-                        }
-                    }
-                });
-
-                polygon.setOnMouseExited(event -> {
+                    });
+                    shape.setOnMouseExited(event -> {
 
 //                Verify if is clicked before whit Color of square
-                    for (Formation formation : batiment.getListeFormations()) {
-                        if (!polygon.getFill().equals(formation.getCouleur())) {
-                            polygon.setFill(Color.TRANSPARENT);
+                        for (Formation formationL : formationList) {
+                            if (!shape.getFill().equals(formationL.getCouleur())) {
+                                shape.setFill(Color.TRANSPARENT);
+                            }
                         }
-                    }
-                });
+                    });
+
+                    shape.setOnMouseClicked(mouseEvent -> {
+
+//                change all Square to Transparent Color
+                        for (Shape square : squareArrayList) {
+                            square.setFill(Color.TRANSPARENT);
+                        }
+//      Change all batiment of formation to Color
+                        for (BatimentFormation batimentFormation : formation.getListeBatimentsFormation()) {
+                            shape.setFill(formation.getCouleur());
+                        }
+
+//  Change on Combobox all information.
+                        for (Formation formationL : formationList) {
+
+                            if (formationL.getNom().equals(formation.getNom())) {
+                                comboBat.getSelectionModel().selectFirst();
+                                comboFormation.getSelectionModel().select(formationL);
+
+                            }
+                        }
+
+                    });
+
+                    drawingGroup.getChildren().addAll(shape);
+                } else {
+                    Polygon polygon = new Polygon();
+                    polygon.getPoints().addAll(batiment.getAllPoints());
+                    polygon.setFill(Color.TRANSPARENT);
+                    polygon.setCursor(Cursor.HAND);
+
+                    drawingGroup.getChildren().add(polygon);
+
+                    squareArrayList.add(polygon);
 
 
+                    //      Event Listener of square
+                    polygon.setOnMouseEntered(event -> {
+//                Verify if is clicked before whit Color of square
+                        for (Formation formationL : formationList) {
+                            if (!polygon.getFill().equals(formation.getCouleur())) {
+                                polygon.setFill(Color.LIGHTGRAY);
+                            }
+                        }
+                    });
+
+                    polygon.setOnMouseExited(event -> {
+
+//                Verify if is clicked before whit Color of square
+                        for (Formation formationL : formationList) {
+                            if (!polygon.getFill().equals(formation.getCouleur())) {
+                                polygon.setFill(Color.TRANSPARENT);
+                            }
+                        }
+                    });
+
+
+                }
             }
+
+
         }
 
-
     }
+
+
+    /**
+     * Change Layout x and y for responsiv polygon
+     *
+     * @param newReso       New resolution
+     * @param heigthReso    New Heigth resolution
+     * @param polygon       Polygon to moove
+     * @param oldReso       Old width Resolution
+     * @param oldResoHeigth old Heigth Resolution
+     * @param allPoints     Get All points at the first polygon
+     */
+    public void swapPlacePolygon(double newReso, double heigthReso, Polygon polygon, double oldReso, double oldResoHeigth, Double[] allPoints) {
+//  Check if new resolution is different than old resolution
+        if (newReso != oldReso) {
+//  Create a list of Double to get all points in a list
+            List<Double> newPoints = new ArrayList<>();
+
+            for (int i = 0; i < allPoints.length; i++) {
+//  Check if i is divisible by 2 for get only layout X
+                if (i % 2 == 0) {
+//  Add to list NewPoints new Layout X
+                    newPoints.add(Math.floor(newReso * allPoints[i] / oldReso));
+                } else {
+//  Add to list NewPoints new Layout Y
+                    newPoints.add(Math.floor(heigthReso * allPoints[i] / oldResoHeigth));
+                }
+            }
+//  Set all points a the polygon
+            polygon.getPoints().setAll(newPoints);
+        }
+    }
+
+
 }
