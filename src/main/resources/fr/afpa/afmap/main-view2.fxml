@@ -15,12 +15,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.MainController">
    <children>
       <VBox prefHeight="1072.0" prefWidth="385.0" spacing="5.0">
          <children>
-            <Label text="Centre de Rochefort" />
+            <Label prefHeight="34.0" prefWidth="236.0" text="Centre de Rochefort">
+               <font>
+                  <Font name="Lucida Fax Demibold" size="21.0" />
+               </font></Label>
             <GridPane>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.5999755859375" minWidth="97.59998321533203" prefWidth="97.59998321533203" />
