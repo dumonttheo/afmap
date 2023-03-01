@@ -23,7 +23,7 @@
          <children>
             <Label prefHeight="34.0" prefWidth="236.0" text="Centre de Rochefort">
                <font>
-                  <Font name="Lucida Fax Demibold" size="21.0" />
+                  <Font name="Lucida Fax Demibold" size="15.0" />
                </font></Label>
             <GridPane>
                <columnConstraints>
