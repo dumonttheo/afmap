@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,10 +32,15 @@ public class MainController {
     public Label labelMailFormateur;
     @FXML
     private Label labelFormation;
+
+    private final Label labelService = new Label();
     @FXML
     private ComboBox<String> comboBat;
     @FXML
     private ComboBox<Formation> comboFormation;
+
+    private final ComboBox<Service> comboService = new ComboBox<>();
+
     @FXML
     private VBox vBoxBat;
 
@@ -48,6 +55,9 @@ public class MainController {
 
     @FXML
     private Group drawingGroup;
+
+    @FXML
+    private GridPane gridPaneBat;
     @FXML
     private VBox vBoxFormateurs;
 
@@ -114,7 +124,11 @@ public class MainController {
 
 //  Add in ComboBox all Formation whit an ArrayList FormationList
         ObservableList<Formation> formationObservableList = FXCollections.observableArrayList(formationList);
+        ObservableList<Service> servicesObservableList = FXCollections.observableArrayList(administrativList);
+
         comboFormation.setItems(formationObservableList);
+        comboService.setItems(servicesObservableList);
+
 
         //ajouter les deux types de batiments dans la comboBat
         typeBatimentListe.add("Plateau formation");
@@ -128,13 +142,17 @@ public class MainController {
 
 
         comboBat.setOnAction(event -> {
-            if (comboBat.getSelectionModel().isSelected(0)) {
-                comboFormation.setVisible(true);
-                labelFormation.setVisible(true);
-            } else {
-                comboFormation.setVisible(false);
-                labelFormation.setVisible(false);
-            }
+            setCombobox();
+//            if (comboBat.getSelectionModel().isSelected(0)) {
+//                comboFormation.setVisible(true);
+//                labelFormation.setVisible(true);
+//                comboService.setVisible(false);
+//            } else {
+//                comboFormation.setVisible(false);
+//                labelFormation.setVisible(false);
+//                comboService.setVisible(true);
+//
+//            }
         });
 
 
@@ -175,6 +193,48 @@ public class MainController {
 
             Formation formationSelected = comboFormation.getSelectionModel().getSelectedItem();
             for (Batiment batForm : formationSelected.getListeBatimentsFormation()) {
+                batForm.getShape().setFill(batForm.getColor());
+            }
+
+        });
+
+        comboService.setOnAction(actionEvent -> {
+            countFormateurI = 0;
+            vBoxBat.getChildren().clear();
+            vBoxFormateurs.getChildren().clear();
+//            System.out.println(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size());
+            for (BatimentAdministratif batiment : comboService.getSelectionModel().getSelectedItem().getListBatiment()) {
+                vBoxBat.getChildren().add(new Label(batiment.getNom()));
+            }
+            if (comboService.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
+                titledPaneForm.setText("Personnels");
+            } else {
+                titledPaneForm.setText("Personnel");
+            }
+            if (comboService.getSelectionModel().getSelectedItem().getListBatiment().size() > 1) {
+                titledPaneBat.setText("Batiments");
+            } else {
+                titledPaneBat.setText("Batiment");
+            }
+            for (Personnel personnel : comboService.getSelectionModel().getSelectedItem().getListePersonnel()) {
+                int countFormateurs = comboService.getSelectionModel().getSelectedItem().getListePersonnel().size();
+                countFormateurI++;
+                vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
+                vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
+                vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
+                if (countFormateurI != countFormateurs) {
+                    vBoxFormateurs.getChildren().add(new Label(" "));
+                }
+
+
+            }
+
+            for (Shape shape : squareArrayList) {
+                shape.setFill(Color.TRANSPARENT);
+            }
+
+            Service serviceSelected = comboService.getSelectionModel().getSelectedItem();
+            for (Batiment batForm : serviceSelected.getListBatiment()) {
                 batForm.getShape().setFill(batForm.getColor());
             }
 
@@ -278,18 +338,18 @@ public class MainController {
                 1051.0, 184.0,
                 1083.0, 169.0,
                 1086.0, 175.0,
-                1098.0, 175.0,
-                1099.0, 170.0,
-                1117.0, 170.0,
-                1118.0, 196.0,
-                1110.0, 196.0,
-                1109.0, 219.0,
-                1117.0, 220.0,
-                1118.0, 227.0,
+                1099.0, 175.0,
+                1099.0, 171.0,
+                1119.0, 171.0,
+                1119.0, 197.0,
+                1110.0, 197.0,
+                1110.0, 219.0,
+                1119.0, 219.0,
+                1119.0, 280.0,
                 1105.0, 280.0,
-                1105.0, 287.0,
-                1073.0, 288.0,
-                1072.0, 219.0,
+                1105.0, 289.0,
+                1072.0, 289.0,
+                1072.0, 220.0,
                 1050.0, 220.0
 
         }, Color.LIGHTSALMON);
@@ -405,7 +465,7 @@ public class MainController {
                 } else {
                     Polygon polygon = new Polygon();
                     polygon.getPoints().addAll(batiment.getAllPoints());
-//                    polygon.setFill(Color.TRANSPARENT);
+                    polygon.setFill(Color.TRANSPARENT);
                     polygon.setCursor(Cursor.HAND);
 
                     drawingGroup.getChildren().add(polygon);
@@ -500,7 +560,7 @@ public class MainController {
 
 //  Change on Combobox all information.
                         comboBat.getSelectionModel().selectLast();
-//                        comboFormation.getSelectionModel().select(service);
+                        comboService.getSelectionModel().select(service);
 
                     });
 
@@ -508,7 +568,7 @@ public class MainController {
                 } else {
                     Polygon polygon = new Polygon();
                     polygon.getPoints().addAll(batiment.getAllPoints());
-//                    polygon.setFill(Color.TRANSPARENT);
+                    polygon.setFill(Color.TRANSPARENT);
                     polygon.setCursor(Cursor.HAND);
 
                     drawingGroup.getChildren().add(polygon);
@@ -546,7 +606,7 @@ public class MainController {
 
 //  Change on Combobox all information.
                         comboBat.getSelectionModel().selectLast();
-//                        comboFormation.getSelectionModel().select(formation);
+                        comboService.getSelectionModel().select(service);
                     });
 
 
@@ -587,6 +647,28 @@ public class MainController {
         }
 //  Set all points a the polygon
         polygon.getPoints().setAll(newPoints);
+    }
+
+    public void setCombobox() {
+        if (comboBat.getSelectionModel().isSelected(0)) {
+            if (gridPaneBat.getChildren().remove(comboService)){
+                gridPaneBat.getChildren().remove(comboService);
+                gridPaneBat.getChildren().remove(labelService);
+                gridPaneBat.add(comboFormation, 1, 1);
+                gridPaneBat.add(labelFormation, 0, 1);
+            }
+            labelFormation.setVisible(true);
+            comboFormation.setVisible(true);
+        }else {
+            if (gridPaneBat.getChildren().remove(comboFormation)){
+                gridPaneBat.getChildren().remove(comboFormation);
+                gridPaneBat.getChildren().remove(labelFormation);
+                gridPaneBat.add(comboService, 1, 1);
+                gridPaneBat.add(labelService, 0, 1);
+            }
+            labelService.setText("Services");
+
+        }
     }
 
 

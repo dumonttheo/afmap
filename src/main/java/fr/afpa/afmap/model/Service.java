@@ -54,4 +54,12 @@ public class Service {
     public ArrayList<BatimentAdministratif> getListBatiment() {
         return listBatiment;
     }
+
+    /**
+     * @return Name of formation
+     */
+    @Override
+    public String toString() {
+        return this.nom;
+    }
 }
