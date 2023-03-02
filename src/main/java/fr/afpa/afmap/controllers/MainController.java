@@ -1,5 +1,6 @@
 package fr.afpa.afmap.controllers;
 
+import fr.afpa.afmap.HelloApplication;
 import fr.afpa.afmap.model.Batiment;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Personnel;
@@ -63,6 +64,8 @@ public class MainController {
         return widthHeigth;
     }
 
+    public Double newValeur;
+
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
 
 
@@ -85,11 +88,11 @@ public class MainController {
 
 //        LISTENER WIDTH
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
-//            Change imageViewBat whit to new pan width
+            //            Change imageViewBat whit to new pan width
+            newValeur = newVal.doubleValue();
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
-            pane.setMaxHeight((double) newVal / 1.51);
 //            Instancie width to parameter new val
-            widthHeigth = newVal.doubleValue() / 1.51;
+            widthHeigth = newVal.doubleValue() / 1.61;
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
 
@@ -107,6 +110,10 @@ public class MainController {
 
         });
 
+        pane.heightProperty().addListener((obs1, oldVal1, newVal1) -> {
+//            Instancie width to parameter new val
+            widthHeigth = newValeur / 1.61;
+        });
 
 //  Add in ComboBox all Formation whit an ArrayList FormationList
         ObservableList<Formation> formationObservableList = FXCollections.observableArrayList(formationList);
@@ -292,6 +299,8 @@ public class MainController {
         cda.addPersonnel(jean);
 
         macon.addBatiment(batAES);
+        macon.addBatiment(batAPH);
+        macon.addBatiment(batCommerce);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
