@@ -64,6 +64,8 @@ public class MainController {
     private VBox vBoxFormateurs;
 @FXML
 private ScrollPane scrollPane;
+@FXML
+private ScrollPane scrollPaneForm;
     @FXML
     private Image image;
     public Double widthHeigth;
@@ -92,6 +94,8 @@ private ScrollPane scrollPane;
     public void initialize() {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
+        scrollPaneForm.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPaneForm.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
 
 //        Create all formation
         getAllFormation();
