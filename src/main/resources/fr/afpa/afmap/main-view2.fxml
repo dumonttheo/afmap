@@ -67,7 +67,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
-                        <ScrollPane fx:id="scrollPaneForm" layoutX="18.6" layoutY="10.0" prefHeight="104.0" prefWidth="344.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0">
+                        <ScrollPane fx:id="scrollPaneForm" layoutX="18.6" layoutY="10.0" prefHeight="104.0" prefWidth="344.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <content>
                               <VBox fx:id="vBoxFormateurs">
                                  <padding>
