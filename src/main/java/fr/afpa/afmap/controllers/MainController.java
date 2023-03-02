@@ -162,16 +162,7 @@ private ScrollPane scrollPaneForm;
 
         comboBat.setOnAction(event -> {
             setCombobox();
-            if (comboBat.getSelectionModel().isSelected(0)) {
-                comboFormation.setVisible(true);
-                labelFormation.setVisible(true);
-                comboService.setVisible(false);
-            } else {
-                comboFormation.setVisible(false);
-                labelFormation.setVisible(false);
-                comboService.setVisible(true);
 
-            }
         });
 
 
@@ -179,7 +170,6 @@ private ScrollPane scrollPaneForm;
             countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
-            System.out.println(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size());
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
@@ -221,7 +211,6 @@ private ScrollPane scrollPaneForm;
             countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
-//            System.out.println(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size());
             for (BatimentAdministratif batiment : comboService.getSelectionModel().getSelectedItem().getListBatiment()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
@@ -408,10 +397,8 @@ private ScrollPane scrollPaneForm;
         cda.addPersonnel(ludo);
         cda.addPersonnel(jean);
 
-        macon.addBatiment(batAES);
-        macon.addBatiment(batAPH);
-        macon.addBatiment(batCommerce);
-        macon.addBatiment(batCarrelage);
+        macon.addBatiment(batMaconDepotFirst);
+        macon.addBatiment(batMaconDepotSecond);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
@@ -680,6 +667,15 @@ private ScrollPane scrollPaneForm;
             }
             labelFormation.setVisible(true);
             comboFormation.setVisible(true);
+            for (Shape shape : squareArrayList){
+                shape.setFill(Color.TRANSPARENT);
+            }
+            if (comboFormation.getSelectionModel().getSelectedItem() != null){
+                for (Batiment batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()){
+                    batiment.getShape().setFill(batiment.getColor());
+                }
+            }
+
         }else {
             if (gridPaneBat.getChildren().remove(comboFormation)){
                 gridPaneBat.getChildren().remove(comboFormation);
@@ -689,7 +685,18 @@ private ScrollPane scrollPaneForm;
             }
             labelService.setText("Services");
 
+            for (Shape shape : squareArrayList){
+                shape.setFill(Color.TRANSPARENT);
+            }
+            if (comboService.getSelectionModel().getSelectedItem() != null){
+                for (Batiment batiment : comboService.getSelectionModel().getSelectedItem().getListBatiment()){
+                    batiment.getShape().setFill(batiment.getColor());
+                }
+            }
+
         }
+
+
     }
 
 

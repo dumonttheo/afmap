@@ -42,12 +42,6 @@ public class HelloApplication extends Application {
                 Double value = controller.getWidthHeigth();
                 stage.setHeight(value);
             }
-        });        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-
-            if(!isMaximized){
-                Double value = controller.getWidthHeigth();
-                stage.setHeight(value);
-            }
         });
 
 
@@ -55,11 +49,11 @@ public class HelloApplication extends Application {
             isMaximized = newValue;
         });
 
+        stage.setMaximized(true);
         stage.setTitle("AFMAP");
         String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
-
         stage.show();
 
     }
