@@ -9,9 +9,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -60,11 +62,15 @@ public class MainController {
     private GridPane gridPaneBat;
     @FXML
     private VBox vBoxFormateurs;
-
+@FXML
+private ScrollPane scrollPane;
     @FXML
     private Image image;
     public Double widthHeigth;
     private int countFormateurI = 0;
+
+
+
 
     public Double getWidthHeigth() {
         return widthHeigth;
@@ -84,6 +90,8 @@ public class MainController {
 
 
     public void initialize() {
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
 
 //        Create all formation
         getAllFormation();
@@ -150,16 +158,16 @@ public class MainController {
 
         comboBat.setOnAction(event -> {
             setCombobox();
-//            if (comboBat.getSelectionModel().isSelected(0)) {
-//                comboFormation.setVisible(true);
-//                labelFormation.setVisible(true);
-//                comboService.setVisible(false);
-//            } else {
-//                comboFormation.setVisible(false);
-//                labelFormation.setVisible(false);
-//                comboService.setVisible(true);
-//
-//            }
+            if (comboBat.getSelectionModel().isSelected(0)) {
+                comboFormation.setVisible(true);
+                labelFormation.setVisible(true);
+                comboService.setVisible(false);
+            } else {
+                comboFormation.setVisible(false);
+                labelFormation.setVisible(false);
+                comboService.setVisible(true);
+
+            }
         });
 
 
@@ -399,8 +407,7 @@ public class MainController {
         macon.addBatiment(batAES);
         macon.addBatiment(batAPH);
         macon.addBatiment(batCommerce);
-        macon.addBatiment(batMaconDepotFirst);
-        macon.addBatiment(batMaconDepotSecond);
+        macon.addBatiment(batCarrelage);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);

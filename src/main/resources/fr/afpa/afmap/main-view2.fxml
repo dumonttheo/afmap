@@ -5,7 +5,7 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -44,11 +44,14 @@
             </GridPane>
             <TitledPane fx:id="titledPaneBat" animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Batiment" textFill="#0d0d0d">
 
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="56.0" prefWidth="363.0">
+                           <content>
+                  <AnchorPane fx:id="anchorBat" minHeight="0.0" minWidth="0.0" prefHeight="56.0" prefWidth="363.0">
                      <children>
-                        <VBox fx:id="vBoxBat" layoutX="27.0" layoutY="14.0" />
-                        <ScrollBar layoutY="-2.0" orientation="VERTICAL" prefHeight="60.0" prefWidth="14.0" />
+                        <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="1.0" prefHeight="49.0" prefWidth="186.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <content>
+                              <VBox fx:id="vBoxBat" />
+                           </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
                </content>
@@ -62,7 +65,7 @@
             </TitledPane>
             <TitledPane fx:id="titledPaneForm" animated="false" collapsible="false" prefWidth="200.0" styleClass="infoPane" stylesheets="@style.css" text="Formateur">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="363.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="198.0">
                      <children>
                         <VBox fx:id="vBoxFormateurs" layoutX="16.0" layoutY="9.0">
                            <padding>
