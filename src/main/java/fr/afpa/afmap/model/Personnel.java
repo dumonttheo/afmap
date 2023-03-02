@@ -9,6 +9,13 @@ public class Personnel {
     private String numeroTelephone;
     private String mail;
 
+    /**
+     *
+     * @param nom name of personnel
+     * @param prenom firstname of personnel
+     * @param numeroTelephone phone number of personnel
+     * @param mail mail of personnel
+     */
     public Personnel(String nom, String prenom, String numeroTelephone, String mail){
         this.nom = nom;
         this.prenom = prenom;
@@ -16,34 +23,58 @@ public class Personnel {
         this.mail = mail;
     }
 
+    /**
+     * @return phoneNumber
+     */
     public String getNumeroTelephone() {
         return numeroTelephone;
     }
 
+    /**
+     * @param numeroTelephone set a phone number
+     */
     public void setNumeroTelephone(String numeroTelephone) {
         this.numeroTelephone = numeroTelephone;
     }
 
+    /**
+     * @return mail
+     */
     public String getMail() {
         return mail;
     }
 
+    /**
+     * @param mail set a mail
+     */
     public void setMail(String mail) {
         this.mail = mail;
     }
 
+    /**
+     * @return get name of personnal
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * @param nom set name of personnal
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     * @return get firstname of personnal
+     */
     public String getPrenom() {
         return prenom;
     }
 
+    /**
+     * @param prenom set firstname of personnal
+     */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }

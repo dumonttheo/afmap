@@ -1,10 +1,6 @@
 package fr.afpa.afmap.controllers;
 
-import fr.afpa.afmap.HelloApplication;
-import fr.afpa.afmap.model.Batiment;
-import fr.afpa.afmap.model.BatimentFormation;
-import fr.afpa.afmap.model.Personnel;
-import fr.afpa.afmap.model.Formation;
+import fr.afpa.afmap.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -67,7 +63,7 @@ public class MainController {
     public Double newValeur;
 
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
-
+    private final ArrayList<Service> administrativList = new ArrayList<>();
 
 
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
@@ -105,7 +101,15 @@ public class MainController {
                     }
                 }
             }
-
+            for (Service service : administrativList) {
+                for (Batiment batiment : service.getListBatiment()) {
+                    if (batiment.isASquare()) {
+                        swapPlaceRectangle(newVal.doubleValue(), batiment.getX1(), batiment.getY1(), Math.round(newVal.doubleValue() / 1.51), batiment.getWidth(), batiment.getHeigth(), (Rectangle) batiment.getShape(), 1536, 1014);
+                    } else {
+                        swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) batiment.getShape(), 1536, 1014, batiment.getAllPoints());
+                    }
+                }
+            }
 
 
         });
@@ -149,23 +153,23 @@ public class MainController {
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
-            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+            if (comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
                 titledPaneForm.setText("Formateurs");
-            }else{
+            } else {
                 titledPaneForm.setText("Formateur");
             }
-            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1){
+            if (comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1) {
                 titledPaneBat.setText("Batiments");
-            }else{
+            } else {
                 titledPaneBat.setText("Batiment");
             }
-            for(Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()){
+            for (Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()) {
                 int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
                 countFormateurI++;
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
                 vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
-                if(countFormateurI != countFormateurs ){
+                if (countFormateurI != countFormateurs) {
                     vBoxFormateurs.getChildren().add(new Label(" "));
                 }
 
@@ -266,16 +270,42 @@ public class MainController {
         }, Color.PINK);
         BatimentFormation batMaconMain = new BatimentFormation(25, 20.05, 51.6, 100.0, 110.0, Color.BROWN);
         BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
-                399.0, 683.0,
-                500.0, 683.0,
+                399.0, 678.0,
+                500.0, 679.0,
                 500.0, 730.0,
                 399.0, 730.0
         }, Color.BROWN);
+        BatimentFormation batMaconDepotSecond = new BatimentFormation(26, new Double[]{
+                180.0, 680.0,
+                318.0, 710.0,
+                306.0, 774.0,
+                180.0, 774.0
+        }, Color.PINK);
+        BatimentAdministratif batAccueil = new BatimentAdministratif(3, new Double[]{
+                1051.0, 184.0,
+                1083.0, 169.0,
+                1086.0, 175.0,
+                1098.0, 175.0,
+                1099.0, 170.0,
+                1117.0, 170.0,
+                1118.0, 196.0,
+                1110.0, 196.0,
+                1109.0, 219.0,
+                1117.0, 220.0,
+                1118.0, 227.0,
+                1105.0, 280.0,
+                1105.0, 287.0,
+                1073.0, 288.0,
+                1072.0, 219.0,
+                1050.0, 220.0
+
+        }, Color.LIGHTSALMON);
 
 
 //        Create all formateur
         Personnel ludo = new Personnel("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
         Personnel jean = new Personnel("Jean", "Jacques", "0612345678", "jj@gmail.com");
+        Personnel secretaire = new Personnel("Micheline", "Micheline", "0123456789", "micheline.micheline@gmail.com");
 
 
 //      Crete All formation whit formateur and building
@@ -286,6 +316,13 @@ public class MainController {
         Formation carrelage = new Formation("Carrelage", batCarrelage);
         Formation oldCDA = new Formation("OLD CDA", batOldCDA);
         Formation macon = new Formation("Maçon", batMaconMain);
+        Service accueil = new Service("Accueil");
+
+        accueil.addPersonnel(secretaire);
+        accueil.addBatiment(batAccueil);
+
+        batAccueil.addService(accueil);
+
 
         formationList.add(cda);
         formationList.add(commerce);
@@ -294,6 +331,7 @@ public class MainController {
         formationList.add(carrelage);
         formationList.add(oldCDA);
         formationList.add(macon);
+        administrativList.add(accueil);
 
         cda.addPersonnel(ludo);
         cda.addPersonnel(jean);
@@ -301,6 +339,8 @@ public class MainController {
         macon.addBatiment(batAES);
         macon.addBatiment(batAPH);
         macon.addBatiment(batCommerce);
+        macon.addBatiment(batMaconDepotFirst);
+        macon.addBatiment(batMaconDepotSecond);
 
 //        Add formation to a batiment
         batCDA.addFormation(cda);
@@ -311,10 +351,7 @@ public class MainController {
         batOldCDA.addFormation(oldCDA);
         batMaconMain.addFormation(macon);
         batMaconDepotFirst.addFormation(macon);
-
-
-
-
+        batMaconDepotSecond.addFormation(macon);
     }
 
 
@@ -378,7 +415,7 @@ public class MainController {
                 } else {
                     Polygon polygon = new Polygon();
                     polygon.getPoints().addAll(batiment.getAllPoints());
-                    polygon.setFill(Color.TRANSPARENT);
+//                    polygon.setFill(Color.TRANSPARENT);
                     polygon.setCursor(Cursor.HAND);
 
                     drawingGroup.getChildren().add(polygon);
@@ -417,6 +454,109 @@ public class MainController {
 //  Change on Combobox all information.
                         comboBat.getSelectionModel().selectFirst();
                         comboFormation.getSelectionModel().select(formation);
+                    });
+
+
+                }
+            }
+
+
+        }
+
+        for (Service service : administrativList) {
+            for (Batiment batiment : service.getListBatiment()) {
+                if (batiment.isASquare()) {
+
+//       Generare a square
+                    Rectangle shape = new Rectangle(batiment.getX1() * 1536 / 100, batiment.getY1() * 1014 / 100, batiment.getWidth(), batiment.getHeigth());
+
+//      Add shape to ArrayList
+                    squareArrayList.add(shape);
+                    batiment.setShape(shape);
+//      Fill Color Transparent
+                    shape.setFill(Color.TRANSPARENT);
+
+
+//      Set Cursor to Hand
+                    shape.setCursor(Cursor.HAND);
+
+
+//      Event Listener of square
+                    shape.setOnMouseEntered(event -> {
+//                Verify if is clicked before whit Color of square
+                        if (!shape.getFill().equals(batiment.getColor())) {
+                            shape.setFill(Color.LIGHTGRAY);
+
+                        }
+                    });
+                    shape.setOnMouseExited(event -> {
+
+//                Verify if is clicked before whit Color of square
+                        if (!shape.getFill().equals(batiment.getColor())) {
+                            shape.setFill(Color.TRANSPARENT);
+                        }
+                    });
+
+                    shape.setOnMouseClicked(mouseEvent -> {
+
+//                change all Square to Transparent Color
+                        for (Shape square : squareArrayList) {
+                            square.setFill(Color.TRANSPARENT);
+                        }
+//      Change all batiment of formation to Color
+                        for (Batiment bat : service.getListBatiment()) {
+                            bat.getShape().setFill(bat.getColor());
+                        }
+
+//  Change on Combobox all information.
+                        comboBat.getSelectionModel().selectLast();
+//                        comboFormation.getSelectionModel().select(service);
+
+                    });
+
+                    drawingGroup.getChildren().addAll(shape);
+                } else {
+                    Polygon polygon = new Polygon();
+                    polygon.getPoints().addAll(batiment.getAllPoints());
+//                    polygon.setFill(Color.TRANSPARENT);
+                    polygon.setCursor(Cursor.HAND);
+
+                    drawingGroup.getChildren().add(polygon);
+
+                    batiment.setShape(polygon);
+                    squareArrayList.add(polygon);
+
+
+                    //      Event Listener of square
+                    polygon.setOnMouseEntered(event -> {
+//                Verify if is clicked before whit Color of square
+                        if (!polygon.getFill().equals(batiment.getColor())) {
+                            polygon.setFill(Color.LIGHTGRAY);
+
+                        }
+                    });
+
+                    polygon.setOnMouseExited(event -> {
+
+//                Verify if is clicked before whit Color of square
+                        if (!polygon.getFill().equals(batiment.getColor())) {
+                            polygon.setFill(Color.TRANSPARENT);
+                        }
+                    });
+
+                    polygon.setOnMouseClicked(event -> {
+//                        change all Square to Transparent Color
+                        for (Shape square : squareArrayList) {
+                            square.setFill(Color.TRANSPARENT);
+                        }
+//      Change all batiment of formation to Color
+                        for (Batiment bat : service.getListBatiment()) {
+                            bat.getShape().setFill(bat.getColor());
+                        }
+
+//  Change on Combobox all information.
+                        comboBat.getSelectionModel().selectLast();
+//                        comboFormation.getSelectionModel().select(formation);
                     });
 
 
