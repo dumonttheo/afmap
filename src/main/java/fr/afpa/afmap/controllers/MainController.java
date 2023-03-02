@@ -70,6 +70,10 @@ private ScrollPane scrollPane;
 private ScrollPane scrollPaneForm;
     @FXML
     private Image image;
+    @FXML
+    private ImageView fleche;
+    @FXML
+    private ImageView fleche1;
     public Double widthHeigth;
     private int countFormateurI = 0;
 
@@ -94,6 +98,11 @@ private ScrollPane scrollPaneForm;
 
 
     public void initialize() {
+        fleche.setViewOrder(1);
+        fleche1.setViewOrder(1);
+        fleche.setVisible(false);
+        fleche1.setVisible(false);
+        scrollPane.setViewOrder(2);
         drawingGroup.setViewOrder(1);
 //                    imageViewNombres.setViewOrder(-1);
         imageViewBat.setViewOrder(2);
@@ -173,9 +182,17 @@ private ScrollPane scrollPaneForm;
 
 
         comboFormation.setOnAction(event -> {
+            fleche.setVisible(false);
+            fleche1.setVisible(false);
             countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
+            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 2){
+                fleche.setVisible(true);
+            }
+            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+                fleche1.setVisible(true);
+            }
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }

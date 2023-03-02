@@ -29,7 +29,8 @@ public class HelloApplication extends Application {
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             if(!isMaximized){
                 Double value = controller.getWidthHeigth();
-                stage.setHeight(value);
+                stage.setHeight(observable.getValue().doubleValue()/1.51);
+                System.out.println(observable.getValue().doubleValue()/1.51);
             }else{
                 stage.setHeight((double) observable.getValue() / 1.51);
                 stage.setWidth((double) observable.getValue());
