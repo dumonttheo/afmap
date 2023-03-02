@@ -70,6 +70,8 @@ public class MainController {
         return widthHeigth;
     }
 
+    public Double newValeur;
+
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
     private final ArrayList<Service> administrativList = new ArrayList<>();
 
@@ -78,6 +80,7 @@ public class MainController {
     List<String> typeBatimentListe = new ArrayList<>();
 
     List<Formation> formationList = new ArrayList<>();
+
 
 
     public void initialize() {
@@ -91,11 +94,11 @@ public class MainController {
 
 //        LISTENER WIDTH
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
-//            Change imageViewBat whit to new pan width
+            //            Change imageViewBat whit to new pan width
+            newValeur = newVal.doubleValue();
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
-            pane.setMaxHeight((double) newVal / 1.51);
 //            Instancie width to parameter new val
-            widthHeigth = newVal.doubleValue() / 1.51;
+            widthHeigth = newVal.doubleValue() / 1.61;
 
 //            Use Function SwapPlaceRectangle to replace all square on the map
 
@@ -121,6 +124,10 @@ public class MainController {
 
         });
 
+        pane.heightProperty().addListener((obs1, oldVal1, newVal1) -> {
+//            Instancie width to parameter new val
+            widthHeigth = newValeur / 1.61;
+        });
 
 //  Add in ComboBox all Formation whit an ArrayList FormationList
         ObservableList<Formation> formationObservableList = FXCollections.observableArrayList(formationList);
@@ -241,13 +248,13 @@ public class MainController {
         });
 
 
-        pane.setOnMouseMoved(mouseEvent -> {
-            System.out.println("---------------------");
-            System.out.println("Mouse en X : " + mouseEvent.getX());
-            System.out.println("Mouse en Y : " + mouseEvent.getY());
-            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-            System.out.println("Hauteur de l'image : " + pane.getHeight());
-        });
+//        pane.setOnMouseMoved(mouseEvent -> {
+//            System.out.println("---------------------");
+//            System.out.println("Mouse en X : " + mouseEvent.getX());
+//            System.out.println("Mouse en Y : " + mouseEvent.getY());
+//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
+//            System.out.println("Hauteur de l'image : " + pane.getHeight());
+//        });
 
     }
 
@@ -389,6 +396,9 @@ public class MainController {
         cda.addPersonnel(ludo);
         cda.addPersonnel(jean);
 
+        macon.addBatiment(batAES);
+        macon.addBatiment(batAPH);
+        macon.addBatiment(batCommerce);
         macon.addBatiment(batMaconDepotFirst);
         macon.addBatiment(batMaconDepotSecond);
 
@@ -670,6 +680,7 @@ public class MainController {
 
         }
     }
+
 
 
 }

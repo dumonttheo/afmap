@@ -3,13 +3,18 @@ package fr.afpa.afmap;
 import fr.afpa.afmap.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
+
+    private boolean isMaximized;
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -19,20 +24,47 @@ public class HelloApplication extends Application {
         MainController controller = fxmlLoader.getController();
 
 
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-            Double value = controller.getWidthHeigth();
 
-        });
-        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-            Double value = controller.getWidthHeigth();
-            stage.setHeight(value);
-        });
-        stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-            Double value = controller.getWidthHeigth();
-            if(Objects.equals(newValue.toString(), "true")){
-                stage.setHeight(2000);
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        double width = bounds.getWidth();
+        double height = bounds.getHeight();
+
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+
+            if(!isMaximized){
+                Double value = controller.getWidthHeigth();
+                stage.setHeight(value);
+            }else{
+                stage.setHeight(height);
+                stage.setWidth(width);
             }
         });
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            if(!isMaximized){
+                Double value = controller.getWidthHeigth();
+                stage.setHeight(value);
+            }else{
+                stage.setHeight(height);
+                stage.setWidth(width);
+            }
+        });
+
+
+        stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+                isMaximized = true;
+            }else{
+                isMaximized = false;
+                Double value = controller.getWidthHeigth();
+            }
+            System.out.println(isMaximized);
+        });
+
+
+        System.out.println("Largeur d'affichage: " + width + " pixels");
+        System.out.println("Hauteur d'affichage: " + height + " pixels");
         stage.setTitle("AFMAP");
         String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);
