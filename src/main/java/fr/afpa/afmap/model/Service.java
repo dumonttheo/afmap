@@ -9,6 +9,9 @@ public class Service {
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
 
+    private ArrayList<BatimentAdministratif> listBatiment = new ArrayList<>();
+
+
     /**
      * @param nom Name of service
      */
@@ -42,5 +45,13 @@ public class Service {
      */
     public ArrayList<Personnel> getListePersonnel() {
         return listePersonnel;
+    }
+
+    public void addBatiment (BatimentAdministratif batiment) {
+        this.listBatiment.add(batiment);
+    }
+
+    public ArrayList<BatimentAdministratif> getListBatiment() {
+        return listBatiment;
     }
 }
