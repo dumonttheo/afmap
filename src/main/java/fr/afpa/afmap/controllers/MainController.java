@@ -49,6 +49,8 @@ public class MainController {
     @FXML
     private ImageView imageViewBat;
     @FXML
+    private ImageView imageViewNombres;
+    @FXML
     public Pane pane;
     @FXML
     private TitledPane titledPaneBat;
@@ -92,6 +94,9 @@ private ScrollPane scrollPaneForm;
 
 
     public void initialize() {
+        drawingGroup.setViewOrder(1);
+//                    imageViewNombres.setViewOrder(-1);
+        imageViewBat.setViewOrder(2);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
         scrollPaneForm.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -109,6 +114,7 @@ private ScrollPane scrollPaneForm;
             //            Change imageViewBat whit to new pan width
             newValeur = newVal.doubleValue();
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
+            imageViewNombres.fitWidthProperty().bind(pane.widthProperty());
 //            Instancie width to parameter new val
             widthHeigth = newVal.doubleValue() / 1.61;
 

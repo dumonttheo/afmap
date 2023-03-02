@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -94,13 +93,15 @@
       </VBox>
       <Pane fx:id="pane" prefHeight="962.0" prefWidth="1536.0" style="-fx-background-color: #1F894E;">
          <children>
-            <ImageView fx:id="imageViewBat" preserveRatio="true">
+            <ImageView fx:id="imageViewBat" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
                <image>
                   <Image fx:id="image" url="@batimentBis_1.png" />
                </image>
-               <viewport>
-                  <Rectangle2D />
-               </viewport>
+            </ImageView>
+            <ImageView fx:id="imageViewNombres" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
+               <image>
+                  <Image url="@batimentNombre.png" />
+               </image>
             </ImageView>
             <Group fx:id="drawingGroup" />
          </children>
