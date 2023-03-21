@@ -48,6 +48,8 @@ public class MainController {
     @FXML
     private ImageView imageViewBat;
     @FXML
+    private ImageView imageViewNombres;
+    @FXML
     public Pane pane;
     @FXML
     private TitledPane titledPaneBat;
@@ -67,6 +69,10 @@ private ScrollPane scrollPane;
 private ScrollPane scrollPaneForm;
     @FXML
     private Image image;
+    @FXML
+    private ImageView fleche;
+    @FXML
+    private ImageView fleche1;
     public Double widthHeigth;
     private int countFormateurI = 0;
 
@@ -91,6 +97,14 @@ private ScrollPane scrollPaneForm;
 
 
     public void initialize() {
+        fleche.setViewOrder(1);
+        fleche1.setViewOrder(1);
+        fleche.setVisible(false);
+        fleche1.setVisible(false);
+        scrollPane.setViewOrder(2);
+        drawingGroup.setViewOrder(1);
+//                    imageViewNombres.setViewOrder(-1);
+        imageViewBat.setViewOrder(2);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
         scrollPaneForm.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -110,6 +124,7 @@ private ScrollPane scrollPaneForm;
             //            Change imageViewBat whit to new pan width
             newValeur = newVal.doubleValue();
             imageViewBat.fitWidthProperty().bind(pane.widthProperty());
+            imageViewNombres.fitWidthProperty().bind(pane.widthProperty());
 //            Instancie width to parameter new val
             widthHeigth = newVal.doubleValue() / 1.61;
 
@@ -168,9 +183,17 @@ private ScrollPane scrollPaneForm;
 
 
         comboFormation.setOnAction(event -> {
+            fleche.setVisible(false);
+            fleche1.setVisible(false);
             countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
+            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 2){
+                fleche.setVisible(true);
+            }
+            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+                fleche1.setVisible(true);
+            }
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
