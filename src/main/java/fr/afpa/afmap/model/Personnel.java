@@ -23,6 +23,9 @@ public class Personnel {
         this.mail = mail;
     }
 
+    public Personnel(){}
+
+
     /**
      * @return phoneNumber
      */

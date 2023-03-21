@@ -2,25 +2,21 @@ package fr.afpa.afmap;
 
 import fr.afpa.afmap.controllers.MainController;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
 
     private boolean isMaximized;
 
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view2.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view2.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 960, 540);
 
         MainController controller = fxmlLoader.getController();

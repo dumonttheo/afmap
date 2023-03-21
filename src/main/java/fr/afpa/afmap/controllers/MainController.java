@@ -1,19 +1,18 @@
 package fr.afpa.afmap.controllers;
 
+import fr.afpa.afmap.dao.DAOFormation;
 import fr.afpa.afmap.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -99,6 +98,8 @@ private ScrollPane scrollPaneForm;
 
 //        Create all formation
         getAllFormation();
+
+
 
 //        Create all Square
         createAllSquare();
@@ -309,107 +310,113 @@ private ScrollPane scrollPaneForm;
      */
     public void getAllFormation() {
 
+
+        DAOFormation daoFormation = new DAOFormation();
+        formationList = daoFormation.findAll();
+
+
+
 //        Create all buildings
-        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.76, 60.0, 44.0, Color.RED);
-        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.76, 84.0, 44.0, Color.BLUE);
-        BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0, Color.BLUE);
-        BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0, Color.LIGHTGREEN);
-        BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0, Color.CHARTREUSE);
-        BatimentFormation batOldCDA = new BatimentFormation(58, new Double[]{
-                474.0, 613.0,
-                502.0, 613.0,
-                502.0, 620.0,
-                532.0, 620.0,
-                532.0, 613.0,
-                560.0, 613.0,
-                560.0, 648.0,
-                532.0, 648.0,
-                532.0, 641.0,
-                502.0, 641.0,
-                502.0, 648.0,
-                474.0, 648.0
-        }, Color.PINK);
-        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05, 51.6, 100.0, 110.0, Color.BROWN);
-        BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
-                399.0, 678.0,
-                500.0, 679.0,
-                500.0, 730.0,
-                399.0, 730.0
-        }, Color.BROWN);
-        BatimentFormation batMaconDepotSecond = new BatimentFormation(26, new Double[]{
-                180.0, 680.0,
-                318.0, 710.0,
-                306.0, 774.0,
-                180.0, 774.0
-        }, Color.PINK);
-        BatimentAdministratif batAccueil = new BatimentAdministratif(3, new Double[]{
-                1051.0, 184.0,
-                1083.0, 169.0,
-                1086.0, 175.0,
-                1099.0, 175.0,
-                1099.0, 171.0,
-                1119.0, 171.0,
-                1119.0, 197.0,
-                1110.0, 197.0,
-                1110.0, 219.0,
-                1119.0, 219.0,
-                1119.0, 280.0,
-                1105.0, 280.0,
-                1105.0, 289.0,
-                1072.0, 289.0,
-                1072.0, 220.0,
-                1050.0, 220.0
+//        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.76, 60.0, 44.0, Color.RED);
+//        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.76, 84.0, 44.0, Color.BLUE);
+//        BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0, Color.BLUE);
+//        BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0, Color.LIGHTGREEN);
+//        BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0, Color.CHARTREUSE);
+//        BatimentFormation batOldCDA = new BatimentFormation(58, new Double[]{
+//                474.0, 613.0,
+//                502.0, 613.0,
+//                502.0, 620.0,
+//                532.0, 620.0,
+//                532.0, 613.0,
+//                560.0, 613.0,
+//                560.0, 648.0,
+//                532.0, 648.0,
+//                532.0, 641.0,
+//                502.0, 641.0,
+//                502.0, 648.0,
+//                474.0, 648.0
+//        }, Color.PINK);
+//        BatimentFormation batMaconMain = new BatimentFormation(25, 20.05, 51.6, 100.0, 110.0, Color.BROWN);
+//        BatimentFormation batMaconDepotFirst = new BatimentFormation(25, new Double[]{
+//                399.0, 678.0,
+//                500.0, 679.0,
+//                500.0, 730.0,
+//                399.0, 730.0
+//        }, Color.BROWN);
+//        BatimentFormation batMaconDepotSecond = new BatimentFormation(26, new Double[]{
+//                180.0, 680.0,
+//                318.0, 710.0,
+//                306.0, 774.0,
+//                180.0, 774.0
+//        }, Color.PINK);
+//        BatimentAdministratif batAccueil = new BatimentAdministratif(3, new Double[]{
+//                1051.0, 184.0,
+//                1083.0, 169.0,
+//                1086.0, 175.0,
+//                1099.0, 175.0,
+//                1099.0, 171.0,
+//                1119.0, 171.0,
+//                1119.0, 197.0,
+//                1110.0, 197.0,
+//                1110.0, 219.0,
+//                1119.0, 219.0,
+//                1119.0, 280.0,
+//                1105.0, 280.0,
+//                1105.0, 289.0,
+//                1072.0, 289.0,
+//                1072.0, 220.0,
+//                1050.0, 220.0
+//
+//        }, Color.LIGHTSALMON);
+//
+//
+////        Create all formateur
+//        Personnel ludo = new Personnel("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
+//        Personnel jean = new Personnel("Jean", "Jacques", "0612345678", "jj@gmail.com");
+//        Personnel secretaire = new Personnel("Micheline", "Micheline", "0123456789", "micheline.micheline@gmail.com");
+//
+//
+////      Crete All formation whit formateur and building
+//        Formation cda = new Formation("CDA", batCDA);
+//        Formation commerce = new Formation("Commerce", batCommerce);
+//        Formation aph = new Formation("APH", batAPH);
+//        Formation aes = new Formation("AES", batAES);
+//        Formation carrelage = new Formation("Carrelage", batCarrelage);
+//        Formation oldCDA = new Formation("OLD CDA", batOldCDA);
+//        Formation macon = new Formation("Maçon", batMaconMain);
+//        Service accueil = new Service("Accueil");
 
-        }, Color.LIGHTSALMON);
-
-
-//        Create all formateur
-        Personnel ludo = new Personnel("Ludo", "Esperce", "0612345678", "ludo@gmail.com");
-        Personnel jean = new Personnel("Jean", "Jacques", "0612345678", "jj@gmail.com");
-        Personnel secretaire = new Personnel("Micheline", "Micheline", "0123456789", "micheline.micheline@gmail.com");
-
-
-//      Crete All formation whit formateur and building
-        Formation cda = new Formation("CDA", batCDA);
-        Formation commerce = new Formation("Commerce", batCommerce);
-        Formation aph = new Formation("APH", batAPH);
-        Formation aes = new Formation("AES", batAES);
-        Formation carrelage = new Formation("Carrelage", batCarrelage);
-        Formation oldCDA = new Formation("OLD CDA", batOldCDA);
-        Formation macon = new Formation("Maçon", batMaconMain);
-        Service accueil = new Service("Accueil");
-
-        accueil.addPersonnel(secretaire);
-        accueil.addBatiment(batAccueil);
-
-        batAccueil.addService(accueil);
-
-
-        formationList.add(cda);
-        formationList.add(commerce);
-        formationList.add(aph);
-        formationList.add(aes);
-        formationList.add(carrelage);
-        formationList.add(oldCDA);
-        formationList.add(macon);
-        administrativList.add(accueil);
-
-        cda.addPersonnel(ludo);
-        cda.addPersonnel(jean);
-
-        macon.addBatiment(batMaconDepotFirst);
-        macon.addBatiment(batMaconDepotSecond);
-
-//        Add formation to a batiment
-        batCDA.addFormation(cda);
-        batCommerce.addFormation(commerce);
-        batAPH.addFormation(aph);
-        batAES.addFormation(aes);
-        batCarrelage.addFormation(carrelage);
-        batOldCDA.addFormation(oldCDA);
-        batMaconMain.addFormation(macon);
-        batMaconDepotFirst.addFormation(macon);
-        batMaconDepotSecond.addFormation(macon);
+//        accueil.addPersonnel(secretaire);
+//        accueil.addBatiment(batAccueil);
+//
+//        batAccueil.addService(accueil);
+//
+//
+//        formationList.add(cda);
+//        formationList.add(commerce);
+//        formationList.add(aph);
+//        formationList.add(aes);
+//        formationList.add(carrelage);
+//        formationList.add(oldCDA);
+//        formationList.add(macon);
+//        administrativList.add(accueil);
+//
+//        cda.addPersonnel(ludo);
+//        cda.addPersonnel(jean);
+//
+//        macon.addBatiment(batMaconDepotFirst);
+//        macon.addBatiment(batMaconDepotSecond);
+//
+////        Add formation to a batiment
+//        batCDA.addFormation(cda);
+//        batCommerce.addFormation(commerce);
+//        batAPH.addFormation(aph);
+//        batAES.addFormation(aes);
+//        batCarrelage.addFormation(carrelage);
+//        batOldCDA.addFormation(oldCDA);
+//        batMaconMain.addFormation(macon);
+//        batMaconDepotFirst.addFormation(macon);
+//        batMaconDepotSecond.addFormation(macon);
     }
 
 
