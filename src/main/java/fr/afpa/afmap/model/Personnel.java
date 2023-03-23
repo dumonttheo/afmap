@@ -4,6 +4,7 @@ package fr.afpa.afmap.model;
  * Classe formateur, numero de tel et son mail
  */
 public class Personnel {
+    private int id;
     private String nom;
     private String prenom;
     private String numeroTelephone;
@@ -17,6 +18,14 @@ public class Personnel {
      * @param mail mail of personnel
      */
     public Personnel(String nom, String prenom, String numeroTelephone, String mail){
+        this.nom = nom;
+        this.prenom = prenom;
+        this.numeroTelephone = numeroTelephone;
+        this.mail = mail;
+    }
+
+    public Personnel(int id ,String nom, String prenom, String numeroTelephone, String mail){
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTelephone = numeroTelephone;
@@ -80,5 +89,17 @@ public class Personnel {
      */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String toString(){
+        return this.nom + " " + this.prenom+ ", ";
     }
 }

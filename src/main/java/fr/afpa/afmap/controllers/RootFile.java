@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,6 +57,21 @@ public class RootFile {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-
+    public static void openPopupAddPersonnel (double width, double height) {
+        try {
+            final Stage popup = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("popupAddPersonnel.fxml"));
+            Scene scenepopup = new Scene(fxmlLoader.load(), width, height);
+            popup.setTitle("AFMAP - Ajout d'un Personnel");
+            popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("logo.png")).openStream()));
+            popup.setMinWidth(width);
+            popup.setMinHeight(height);
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.setScene(scenepopup);
+            popup.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

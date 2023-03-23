@@ -19,8 +19,8 @@ public class BatimentAdministratif extends Batiment {
      * @param heigth Heigth of square
      * @param color Color of building
      */
-    public BatimentAdministratif(int numero, Double topLeftX, Double topLeftY, Double width, Double heigth, Color color){
-        super(numero, topLeftX, topLeftY,  width,  heigth, color);
+    public BatimentAdministratif(int id, int numero, String nom, Double topLeftX, Double topLeftY, Double width, Double heigth, Color color){
+        super(id, numero,nom, topLeftX, topLeftY,  width,  heigth, color);
     }
 
     /**
@@ -29,8 +29,8 @@ public class BatimentAdministratif extends Batiment {
      * @param allPoints Array of all points to create a polygon
      * @param color Color of building
      */
-    public BatimentAdministratif(int numero, Double[] allPoints, Color color){
-        super(numero,  allPoints, color);
+    public BatimentAdministratif(int id, int numero, String nom, Double[] allPoints, Color color){
+        super(id, numero,  nom, allPoints, color);
     }
 
     /**

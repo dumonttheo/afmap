@@ -1,6 +1,7 @@
 package fr.afpa.afmap.controllers;
 
 
+import fr.afpa.afmap.Main;
 import fr.afpa.afmap.dao.DAOFormation;
 import fr.afpa.afmap.dao.DAOService;
 import fr.afpa.afmap.model.*;
@@ -104,6 +105,8 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
+
+
 
 
     public void initialize() {

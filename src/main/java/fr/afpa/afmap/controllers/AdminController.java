@@ -1,5 +1,6 @@
 package fr.afpa.afmap.controllers;
 
+import fr.afpa.afmap.Main;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;

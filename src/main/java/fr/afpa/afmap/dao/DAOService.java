@@ -31,7 +31,7 @@ public class DAOService extends Dao_Common<Service> {
                 DAOPersonnel daoPersonnel = new DAOPersonnel();
                 ArrayList<Personnel> personnels = daoPersonnel.getArrayListOfPersonnelAboutOneService(rs.getLong("id_service"));
 
-                Service service = new Service(rs.getString("nom"), batimentAdministratifs, personnels);
+                Service service = new Service(rs.getInt("id_service"), rs.getString("nom"), batimentAdministratifs, personnels);
                 services.add(service);
             }
         }catch (SQLException e){
@@ -53,5 +53,29 @@ public class DAOService extends Dao_Common<Service> {
     @Override
     public void delete(Service object) {
 
+    }
+
+    public ArrayList<Service> findServicesByOneBatiments(int id){
+        ArrayList<Service>services = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment_service bs JOIN service s ON s.id_service = bs.id_service WHERE id_batiment = (?)");
+            ps.setInt(1,id);
+            ResultSet r = ps.executeQuery();
+            while (r.next()){
+                DAOBatimentService daoBatimentService = new DAOBatimentService();
+                ArrayList<BatimentAdministratif> batimentAdministratifs = daoBatimentService.getArrayListOfBatimentAdministratifAboutOneService(r.getLong("id_service"));
+
+                DAOPersonnel daoPersonnel = new DAOPersonnel();
+                ArrayList<Personnel> personnels = daoPersonnel.getArrayListOfPersonnelAboutOneService(r.getLong("id_service"));
+                Service service = new Service(r.getInt("id_service"), r.getString("nom"), batimentAdministratifs, personnels);
+                services.add(service);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return services;
     }
 }

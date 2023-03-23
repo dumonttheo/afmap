@@ -47,7 +47,7 @@ public class DAOPersonnel extends Dao_Common<Personnel> {
             PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM personnel;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Personnel personnel = new Personnel(rs.getString("nom"), rs.getString("prenom"),rs.getString("numerotelephone"), rs.getString("mail"));
+                Personnel personnel = new Personnel(rs.getInt("id_personnel"),rs.getString("nom"), rs.getString("prenom"),rs.getString("numerotelephone"), rs.getString("mail"));
                 personnels.add(personnel);
             }
 
@@ -59,7 +59,18 @@ public class DAOPersonnel extends Dao_Common<Personnel> {
 
     @Override
     public Personnel create(Personnel object) {
-        return null;
+        try {
+                PreparedStatement ps = this.connect.prepareStatement("INSERT INTO personnel (nom, prenom, numerotelephone, mail) VALUES(?,?,?,?");
+                ps.setString(1,object.getNom());
+                ps.setString(2,object.getPrenom());
+                ps.setString(3,object.getNumeroTelephone());
+                ps.setString(4,object.getMail());
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return object;
     }
 
     @Override

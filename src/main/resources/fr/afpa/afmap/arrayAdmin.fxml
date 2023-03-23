@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.ArrayAdminController">
+<BorderPane prefHeight="1080.0" prefWidth="1900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.afmap.controllers.ArrayAdminController">
    <center>
-      <GridPane hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vgap="30.0">
+      <GridPane hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1878.0" vgap="30.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,12 +25,11 @@
             <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="204.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ListView fx:id="batimentListView" prefHeight="200.0" prefWidth="738.0" />
-            <ListView fx:id="servicesListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TableView fx:id="formationTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
               <columns>
                 <TableColumn fx:id="idFormationColumn" prefWidth="85.0" text="ID" />
-                <TableColumn fx:id="nameFormationColumn" prefWidth="864.0" text="Nom de la formation" />
+                <TableColumn fx:id="nameFormationColumn" prefWidth="565.0" text="Nom de la formation" />
+                  <TableColumn fx:id="formateursFormationColumn" prefWidth="299.0" text="Formateur(s)" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="1">
@@ -55,7 +53,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button mnemonicParsing="false" text="Ajouter un personnel">
+                  <Button mnemonicParsing="false" onAction="#addServicePopup" text="Ajouter un personnel">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -123,6 +121,21 @@
                   <TableColumn fx:id="prenomPersonnelColumn" minWidth="0.0" prefWidth="211.3333740234375" text="Prénom" />
                   <TableColumn fx:id="phonePersonnelColumn" prefWidth="218.0" text="Numéro de Téléphone" />
                   <TableColumn fx:id="emailPersonnelColumn" prefWidth="266.666748046875" text="Email" />
+              </columns>
+            </TableView>
+            <TableView fx:id="serviceListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <columns>
+                <TableColumn fx:id="idServiceColumn" prefWidth="134.0" text="ID" />
+                <TableColumn fx:id="nameServiceColumn" prefWidth="546.0" text="Nom du service" />
+                  <TableColumn fx:id="personnelServiceColumn" prefWidth="269.0" text="Personnel(s)" />
+              </columns>
+            </TableView>
+            <TableView fx:id="batimentTableView" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="idBatimentColumn" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="numeroBatimentColumn" prefWidth="158.0" text="Numéro" />
+                  <TableColumn fx:id="nameBatimentColumn" prefWidth="485.0" text="Nom" />
+                  <TableColumn fx:id="formationServiceBatimentColumn" prefWidth="231.0" text="Formation / Service" />
               </columns>
             </TableView>
          </children>

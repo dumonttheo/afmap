@@ -6,6 +6,7 @@ import java.util.ArrayList;
  *  Service class to go whit Administrativ Building
  */
 public class Service {
+    private int id;
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
 
@@ -16,6 +17,13 @@ public class Service {
      * @param nom Name of service
      */
     public Service(String nom, ArrayList<BatimentAdministratif> batimentAdministratifs, ArrayList<Personnel> personnels){
+        this.nom = nom;
+        this.listBatiment = batimentAdministratifs;
+        this.listePersonnel = personnels;
+    }
+
+    public Service(int id, String nom, ArrayList<BatimentAdministratif> batimentAdministratifs, ArrayList<Personnel> personnels){
+        this.id = id;
         this.nom = nom;
         this.listBatiment = batimentAdministratifs;
         this.listePersonnel = personnels;
@@ -64,5 +72,13 @@ public class Service {
     @Override
     public String toString() {
         return this.nom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

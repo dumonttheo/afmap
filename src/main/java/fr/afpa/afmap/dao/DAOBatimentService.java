@@ -2,6 +2,7 @@ package fr.afpa.afmap.dao;
 
 import fr.afpa.afmap.model.BatimentAdministratif;
 import fr.afpa.afmap.model.BatimentFormation;
+import fr.afpa.afmap.model.Service;
 import javafx.scene.paint.Color;
 
 import java.sql.Array;
@@ -11,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
+
+    private final DAOService daoService = new DAOService();
     @Override
     public BatimentAdministratif find(long id) {
         try {
@@ -18,11 +21,11 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
             if (result.first()) {
                 Array allpoints = result.getArray("allpoints");
                 if (allpoints == null) {
-                    return new BatimentAdministratif(Integer.parseInt(result.getString("numero")), result.getDouble("x1"), result.getDouble("x2"), result.getDouble("width"), result.getDouble("heigth"), givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(result.getString("color")));
+                    return new BatimentAdministratif(result.getInt("id_batiment"),Integer.parseInt(result.getString("numero")), result.getString("nom"), result.getDouble("x1"), result.getDouble("x2"), result.getDouble("width"), result.getDouble("heigth"), givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(result.getString("color")));
                 } else {
                     Float[] allPointsToFloat = (Float[]) allpoints.getArray();
                     Double[] allPointsToDouble = floatToDouble(allPointsToFloat);
-                    return new BatimentAdministratif(Integer.parseInt(result.getString("numero")), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(result.getString("color")));
+                    return new BatimentAdministratif(result.getInt("id_batiment"),Integer.parseInt(result.getString("numero")),result.getString("nom"), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(result.getString("color")));
                 }
             }
         } catch (SQLException e) {
@@ -33,7 +36,35 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
 
     @Override
     public ArrayList<BatimentAdministratif> findAll() {
-        return null;
+        ArrayList<BatimentAdministratif> batimentAdministratifs = new ArrayList<>();
+        try {
+            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment_service bs JOIN batiment b ON bs.id_batiment = b.id_batiment ");
+            ResultSet r = ps.executeQuery();
+            while (r.next()){
+                ArrayList<Service> services = daoService.findServicesByOneBatiments(r.getInt("id_batiment"));
+                Array allpoints = r.getArray("allpoints");
+                if (allpoints == null) {
+                    BatimentAdministratif batiment = new BatimentAdministratif(r.getInt("id_batiment"),Integer.parseInt(r.getString("numero")),r.getString("nom_batiment"), r.getDouble("x1"), r.getDouble("x2"), r.getDouble("width"), r.getDouble("heigth"), givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(r.getString("color")));
+                    for (Service service :services){
+                        batiment.addService(service);
+                    }
+                    batimentAdministratifs.add(batiment);
+                } else {
+                    Float[] allPointsToFloat = (Float[]) allpoints.getArray();
+                    Double[] allPointsToDouble = floatToDouble(allPointsToFloat);
+                    BatimentAdministratif batiment = new BatimentAdministratif(r.getInt("id_batiment"),Integer.parseInt(r.getString("numero")),r.getString("nom_batiment"), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(r.getString("color")));
+                    for (Service service :services){
+                        batiment.addService(service);
+                    }
+                    batimentAdministratifs.add(batiment);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return  batimentAdministratifs;
     }
 
     @Override
@@ -61,12 +92,12 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
             while (r.next()){
                 Array allpoints = r.getArray("allpoints");
                 if (allpoints == null) {
-                    BatimentAdministratif batiment = new BatimentAdministratif(Integer.parseInt(r.getString("numero")), r.getDouble("x1"), r.getDouble("x2"), r.getDouble("width"), r.getDouble("heigth"), givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(r.getString("color")));
+                    BatimentAdministratif batiment = new BatimentAdministratif(r.getInt("id_batiment"),Integer.parseInt(r.getString("numero")),r.getString("nom_batiment"), r.getDouble("x1"), r.getDouble("x2"), r.getDouble("width"), r.getDouble("heigth"), givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(r.getString("color")));
                     batimentAdministratifs.add(batiment);
                 } else {
                     Float[] allPointsToFloat = (Float[]) allpoints.getArray();
                     Double[] allPointsToDouble = floatToDouble(allPointsToFloat);
-                    BatimentAdministratif batiment = new BatimentAdministratif(Integer.parseInt(r.getString("numero")), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(r.getString("color")));
+                    BatimentAdministratif batiment = new BatimentAdministratif(r.getInt("id_batiment"),Integer.parseInt(r.getString("numero")),r.getString("nom_batiment"), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(r.getString("color")));
                     batimentAdministratifs.add(batiment);
                 }
             }
@@ -77,4 +108,6 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
 
         return  batimentAdministratifs;
     }
+
+
 }
