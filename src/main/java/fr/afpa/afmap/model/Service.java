@@ -15,9 +15,12 @@ public class Service {
     /**
      * @param nom Name of service
      */
-    public Service(String nom){
+    public Service(String nom, ArrayList<BatimentAdministratif> batimentAdministratifs, ArrayList<Personnel> personnels){
         this.nom = nom;
+        this.listBatiment = batimentAdministratifs;
+        this.listePersonnel = personnels;
     }
+
 
     /**
      * @return Get name of this service

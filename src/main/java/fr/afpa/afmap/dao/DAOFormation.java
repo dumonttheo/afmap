@@ -31,21 +31,20 @@ public class DAOFormation extends Dao_Common<Formation> {
     public ArrayList<Formation> findAll() {
         ArrayList<Formation> list = new ArrayList<>();
         try {
-            ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM formation JOIN formation_batiment fb ON fb.id_formation = formation.id_formation JOIN formation_personnel fp ON fp.id_formation = formation.id_formation");
+            ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM formation");
             while (result.next()) {
                 DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
                 ArrayList<BatimentFormation> batiments = daoBatimentFormation.findAllBatimentForOneFormation(result.getInt("id_formation"));
 
                 DAOPersonnel daoPersonnel = new DAOPersonnel();
-                ArrayList<Personnel> personnels = daoPersonnel.findAllPersonnelForOneFormation(result.getInt("id_personnel"));
+                ArrayList<Personnel> personnels = daoPersonnel.findAllPersonnelForOneFormation(result.getInt("id_formation"));
 
-                Formation formation = new Formation(result.getString("nom"), batiments, personnels);
+                Formation formation = new Formation(result.getInt("id_formation"), result.getString("nom"), batiments, personnels);
                 list.add(formation);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return list;
     }
 

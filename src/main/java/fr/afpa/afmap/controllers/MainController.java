@@ -1,6 +1,8 @@
 package fr.afpa.afmap.controllers;
 
+
 import fr.afpa.afmap.dao.DAOFormation;
+import fr.afpa.afmap.dao.DAOService;
 import fr.afpa.afmap.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +23,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +43,8 @@ public class MainController {
     @FXML
     private ComboBox<Formation> comboFormation;
 
-    private final ComboBox<Service> comboService = new ComboBox<>();
+    @FXML
+    private ComboBox<Service> comboService;
 
     @FXML
     private VBox vBoxBat;
@@ -63,10 +67,10 @@ public class MainController {
     private GridPane gridPaneBat;
     @FXML
     private VBox vBoxFormateurs;
-@FXML
-private ScrollPane scrollPane;
-@FXML
-private ScrollPane scrollPaneForm;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private ScrollPane scrollPaneForm;
     @FXML
     private Image image;
     @FXML
@@ -77,8 +81,6 @@ private ScrollPane scrollPaneForm;
     private int countFormateurI = 0;
 
 
-
-
     public Double getWidthHeigth() {
         return widthHeigth;
     }
@@ -86,7 +88,7 @@ private ScrollPane scrollPaneForm;
     public Double newValeur;
 
     private final ArrayList<Shape> squareArrayList = new ArrayList<>();
-    private final ArrayList<Service> administrativList = new ArrayList<>();
+    private ArrayList<Service> administrativList = new ArrayList<>();
 
 
     //creation des listes qui s'afficheront dans les comboBox via l'observableList
@@ -94,6 +96,14 @@ private ScrollPane scrollPaneForm;
 
     List<Formation> formationList = new ArrayList<>();
 
+
+    public void goToAdministrator(){
+        try {
+            RootFile.setRoot("arrayAdmin");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public void initialize() {
@@ -103,7 +113,6 @@ private ScrollPane scrollPaneForm;
         fleche1.setVisible(false);
         scrollPane.setViewOrder(2);
         drawingGroup.setViewOrder(1);
-//                    imageViewNombres.setViewOrder(-1);
         imageViewBat.setViewOrder(2);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-border-color: transparent; -fx-background-color:transparent;");
@@ -112,7 +121,6 @@ private ScrollPane scrollPaneForm;
 
 //        Create all formation
         getAllFormation();
-
 
 
 //        Create all Square
@@ -174,11 +182,11 @@ private ScrollPane scrollPaneForm;
         //ComboFormation invisible
         comboFormation.setVisible(false);
         labelFormation.setVisible(false);
+        gridPaneBat.getChildren().remove(comboService);
 
 
         comboBat.setOnAction(event -> {
             setCombobox();
-
         });
 
 
@@ -188,10 +196,10 @@ private ScrollPane scrollPaneForm;
             countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
-            if(comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 2){
+            if (comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 2) {
                 fleche.setVisible(true);
             }
-            if(comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1){
+            if (comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
                 fleche1.setVisible(true);
             }
             for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
@@ -232,9 +240,17 @@ private ScrollPane scrollPaneForm;
         });
 
         comboService.setOnAction(actionEvent -> {
+            fleche.setVisible(false);
+            fleche1.setVisible(false);
             countFormateurI = 0;
             vBoxBat.getChildren().clear();
             vBoxFormateurs.getChildren().clear();
+            if (comboService.getSelectionModel().getSelectedItem().getListBatiment().size() > 2) {
+                fleche.setVisible(true);
+            }
+            if (comboService.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
+                fleche1.setVisible(true);
+            }
             for (BatimentAdministratif batiment : comboService.getSelectionModel().getSelectedItem().getListBatiment()) {
                 vBoxBat.getChildren().add(new Label(batiment.getNom()));
             }
@@ -257,7 +273,6 @@ private ScrollPane scrollPaneForm;
                 if (countFormateurI != countFormateurs) {
                     vBoxFormateurs.getChildren().add(new Label(" "));
                 }
-
 
             }
 
@@ -337,11 +352,11 @@ private ScrollPane scrollPaneForm;
         DAOFormation daoFormation = new DAOFormation();
         formationList = daoFormation.findAll();
 
+        DAOService daoService = new DAOService();
+        administrativList = daoService.findAll();
 
 
 //        Create all buildings
-//        BatimentFormation batCDA = new BatimentFormation(9, 20.70, 14.76, 60.0, 44.0, Color.RED);
-//        BatimentFormation batCommerce = new BatimentFormation(9, 25.00, 14.76, 84.0, 44.0, Color.BLUE);
 //        BatimentFormation batAPH = new BatimentFormation(8, 37.60, 8.25, 45.5, 149.0, Color.BLUE);
 //        BatimentFormation batAES = new BatimentFormation(7, 43.75, 8.25, 42.5, 149.0, Color.LIGHTGREEN);
 //        BatimentFormation batCarrelage = new BatimentFormation(6, 49.83, 8.30, 37.0, 149.0, Color.CHARTREUSE);
@@ -488,7 +503,7 @@ private ScrollPane scrollPaneForm;
                         for (Shape square : squareArrayList) {
                             square.setFill(Color.TRANSPARENT);
                         }
-//      Change all batiment of formation to Color
+
                         for (Batiment bat : formation.getListeBatimentsFormation()) {
                             bat.getShape().setFill(bat.getColor());
                         }
@@ -517,7 +532,6 @@ private ScrollPane scrollPaneForm;
 //                Verify if is clicked before whit Color of square
                         if (!polygon.getFill().equals(batiment.getColor())) {
                             polygon.setFill(Color.LIGHTGRAY);
-
                         }
                     });
 
@@ -534,7 +548,7 @@ private ScrollPane scrollPaneForm;
                         for (Shape square : squareArrayList) {
                             square.setFill(Color.TRANSPARENT);
                         }
-//      Change all batiment of formation to Color
+
                         for (Batiment bat : formation.getListeBatimentsFormation()) {
                             bat.getShape().setFill(bat.getColor());
                         }
@@ -574,7 +588,6 @@ private ScrollPane scrollPaneForm;
 //                Verify if is clicked before whit Color of square
                         if (!shape.getFill().equals(batiment.getColor())) {
                             shape.setFill(Color.LIGHTGRAY);
-
                         }
                     });
                     shape.setOnMouseExited(event -> {
@@ -597,8 +610,8 @@ private ScrollPane scrollPaneForm;
                         }
 
 //  Change on Combobox all information.
-                        comboBat.getSelectionModel().selectLast();
                         comboService.getSelectionModel().select(service);
+                        comboBat.getSelectionModel().selectLast();
 
                     });
 
@@ -620,7 +633,6 @@ private ScrollPane scrollPaneForm;
 //                Verify if is clicked before whit Color of square
                         if (!polygon.getFill().equals(batiment.getColor())) {
                             polygon.setFill(Color.LIGHTGRAY);
-
                         }
                     });
 
@@ -633,27 +645,23 @@ private ScrollPane scrollPaneForm;
                     });
 
                     polygon.setOnMouseClicked(event -> {
+
 //                        change all Square to Transparent Color
                         for (Shape square : squareArrayList) {
                             square.setFill(Color.TRANSPARENT);
                         }
-//      Change all batiment of formation to Color
+
                         for (Batiment bat : service.getListBatiment()) {
                             bat.getShape().setFill(bat.getColor());
                         }
 
 //  Change on Combobox all information.
-                        comboBat.getSelectionModel().selectLast();
                         comboService.getSelectionModel().select(service);
+                        comboBat.getSelectionModel().selectLast();
                     });
-
-
                 }
             }
-
-
         }
-
     }
 
 
@@ -689,7 +697,7 @@ private ScrollPane scrollPaneForm;
 
     public void setCombobox() {
         if (comboBat.getSelectionModel().isSelected(0)) {
-            if (gridPaneBat.getChildren().remove(comboService)){
+            if (gridPaneBat.getChildren().remove(comboService)) {
                 gridPaneBat.getChildren().remove(comboService);
                 gridPaneBat.getChildren().remove(labelService);
                 gridPaneBat.add(comboFormation, 1, 1);
@@ -697,38 +705,124 @@ private ScrollPane scrollPaneForm;
             }
             labelFormation.setVisible(true);
             comboFormation.setVisible(true);
-            for (Shape shape : squareArrayList){
+            for (Shape shape : squareArrayList) {
                 shape.setFill(Color.TRANSPARENT);
             }
-            if (comboFormation.getSelectionModel().getSelectedItem() != null){
-                for (Batiment batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()){
-                    batiment.getShape().setFill(batiment.getColor());
+            if (comboFormation.getSelectionModel().getSelectedItem() != null) {
+                fleche.setVisible(false);
+                fleche1.setVisible(false);
+                countFormateurI = 0;
+                vBoxBat.getChildren().clear();
+                vBoxFormateurs.getChildren().clear();
+                if (comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 2) {
+                    fleche.setVisible(true);
                 }
+                if (comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
+                    fleche1.setVisible(true);
+                }
+                for (BatimentFormation batiment : comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation()) {
+                    vBoxBat.getChildren().add(new Label(batiment.getNom()));
+                }
+                if (comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
+                    titledPaneForm.setText("Formateurs");
+                } else {
+                    titledPaneForm.setText("Formateur");
+                }
+                if (comboFormation.getSelectionModel().getSelectedItem().getListeBatimentsFormation().size() > 1) {
+                    titledPaneBat.setText("Batiments");
+                } else {
+                    titledPaneBat.setText("Batiment");
+                }
+                for (Personnel personnel : comboFormation.getSelectionModel().getSelectedItem().getListePersonnel()) {
+                    int countFormateurs = comboFormation.getSelectionModel().getSelectedItem().getListePersonnel().size();
+                    countFormateurI++;
+                    vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
+                    vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
+                    vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
+                    if (countFormateurI != countFormateurs) {
+                        vBoxFormateurs.getChildren().add(new Label(" "));
+                    }
+                }
+
+                for (Shape shape : squareArrayList) {
+                    shape.setFill(Color.TRANSPARENT);
+                }
+
+                Formation formationSelected = comboFormation.getSelectionModel().getSelectedItem();
+                for (Batiment batForm : formationSelected.getListeBatimentsFormation()) {
+                    batForm.getShape().setFill(batForm.getColor());
+                }
+
             }
 
-        }else {
-            if (gridPaneBat.getChildren().remove(comboFormation)){
+
+        } else {
+            if (gridPaneBat.getChildren().remove(comboFormation)) {
                 gridPaneBat.getChildren().remove(comboFormation);
                 gridPaneBat.getChildren().remove(labelFormation);
                 gridPaneBat.add(comboService, 1, 1);
                 gridPaneBat.add(labelService, 0, 1);
             }
+
             labelService.setText("Services");
 
-            for (Shape shape : squareArrayList){
+            for (Shape shape : squareArrayList) {
                 shape.setFill(Color.TRANSPARENT);
             }
-            if (comboService.getSelectionModel().getSelectedItem() != null){
-                for (Batiment batiment : comboService.getSelectionModel().getSelectedItem().getListBatiment()){
-                    batiment.getShape().setFill(batiment.getColor());
+
+            if (comboService.getSelectionModel().getSelectedItem() != null) {
+                fleche.setVisible(false);
+                fleche1.setVisible(false);
+                countFormateurI = 0;
+                vBoxBat.getChildren().clear();
+                vBoxFormateurs.getChildren().clear();
+                if (comboService.getSelectionModel().getSelectedItem().getListBatiment().size() > 2) {
+                    fleche.setVisible(true);
                 }
+                if (comboService.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
+                    fleche1.setVisible(true);
+                }
+                for (Batiment batiment : comboService.getSelectionModel().getSelectedItem().getListBatiment()) {
+                    vBoxBat.getChildren().add(new Label(batiment.getNom()));
+                }
+                if (comboService.getSelectionModel().getSelectedItem().getListePersonnel().size() > 1) {
+                    titledPaneForm.setText("Personnels");
+                } else {
+                    titledPaneForm.setText("Personnel");
+                }
+                if (comboService.getSelectionModel().getSelectedItem().getListBatiment().size() > 1) {
+                    titledPaneBat.setText("Batiments");
+                } else {
+                    titledPaneBat.setText("Batiment");
+                }
+                for (Personnel personnel : comboService.getSelectionModel().getSelectedItem().getListePersonnel()) {
+                    int countFormateurs = comboService.getSelectionModel().getSelectedItem().getListePersonnel().size();
+                    countFormateurI++;
+                    vBoxFormateurs.getChildren().add(new Label(personnel.getNom() + " " + personnel.getPrenom()));
+                    vBoxFormateurs.getChildren().add(new Label(personnel.getMail()));
+                    vBoxFormateurs.getChildren().add(new Label(personnel.getNumeroTelephone()));
+                    if (countFormateurI != countFormateurs) {
+                        vBoxFormateurs.getChildren().add(new Label(" "));
+                    }
+
+
+                }
+
+                for (Shape shape : squareArrayList) {
+                    shape.setFill(Color.TRANSPARENT);
+                }
+
+                Service serviceSelected = comboService.getSelectionModel().getSelectedItem();
+                for (Batiment batForm : serviceSelected.getListBatiment()) {
+                    batForm.getShape().setFill(batForm.getColor());
+                }
+
             }
-
         }
-
 
     }
 
 
-
 }
+
+

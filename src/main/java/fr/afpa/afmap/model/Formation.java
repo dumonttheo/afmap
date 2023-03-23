@@ -1,11 +1,13 @@
 package fr.afpa.afmap.model;
 
+import java.text.Format;
 import java.util.ArrayList;
 
 /**
  * Formation, nom, personnel
  */
 public class Formation {
+    private int id;
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
     private ArrayList<BatimentFormation> listeBatimentsFormation = new ArrayList<BatimentFormation>();
@@ -15,6 +17,13 @@ public class Formation {
      * @param batimentFormation Batiment to class batimentFormation
      */
     public Formation(String nom, ArrayList<BatimentFormation> batimentFormation, ArrayList<Personnel> personnels) {
+        this.nom = nom;
+        this.listeBatimentsFormation = batimentFormation;
+        this.listePersonnel = personnels;
+    }
+
+    public Formation(int id , String nom, ArrayList<BatimentFormation> batimentFormation, ArrayList<Personnel> personnels) {
+        this.id = id;
         this.nom = nom;
         this.listeBatimentsFormation = batimentFormation;
         this.listePersonnel = personnels;
@@ -81,4 +90,11 @@ public class Formation {
     }
 
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

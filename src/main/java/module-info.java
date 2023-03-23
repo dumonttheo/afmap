@@ -7,6 +7,7 @@ module fr.afpa.afmap {
 
     opens fr.afpa.afmap.controllers to javafx.fxml;
     opens fr.afpa.afmap to javafx.fxml;
+    opens fr.afpa.afmap.model to javafx.base;
     exports fr.afpa.afmap;
     exports fr.afpa.afmap.controllers to javafx.fxml;
 }
