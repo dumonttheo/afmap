@@ -52,7 +52,7 @@
                      <children>
                         <ImageView fx:id="fleche" fitHeight="20.0" fitWidth="20.0" layoutX="259.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="-5.0">
                            <image>
-                              <Image url="@fleche.png" />
+                              <Image url="@assets/fleche.png" />
                            </image>
                         </ImageView>
                         <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="11.0" prefHeight="106.0" prefWidth="352.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.200000000000045">
@@ -66,7 +66,7 @@
                <graphic>
                   <ImageView fitHeight="37.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@home.png" />
+                        <Image url="@assets/home.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -86,7 +86,7 @@
                         </ScrollPane>
                         <ImageView fx:id="fleche1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-5.0" AnchorPane.rightAnchor="-5.0">
                            <image>
-                              <Image url="@fleche.png" />
+                              <Image url="@assets/fleche.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -95,7 +95,7 @@
                <graphic>
                   <ImageView fitHeight="31.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@formateur.png" />
+                        <Image url="@assets/formateur.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -119,13 +119,13 @@
          <children>
             <ImageView fx:id="imageViewBat" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
                <image>
-                  <Image fx:id="image" url="@batimentBis_1.png" />
+                  <Image fx:id="image" url="@assets/batimentBis_1.png" />
                </image>
             </ImageView>
             <Group fx:id="drawingGroup" />
             <ImageView fx:id="imageViewNombres" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
                <image>
-                  <Image url="@batimentNombre.png" />
+                  <Image url="@assets/batimentNombre.png" />
                </image>
             </ImageView>
          </children>

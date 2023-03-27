@@ -1,5 +1,6 @@
-package fr.afpa.afmap.controllers;
+package fr.afpa.afmap.controllers.popup;
 
+import fr.afpa.afmap.controllers.RootFile;
 import fr.afpa.afmap.dao.DAOPersonnel;
 import fr.afpa.afmap.model.Personnel;
 import javafx.fxml.FXML;
@@ -134,8 +135,9 @@ public class AddPersonnelController {
         }
 
         if (phoneGood && emailGood && firstNameGood && nameGood){
-            Personnel personnel = new Personnel(nameInput.getText(),firstnameInput.getText(), emailInput.getText(), phoneNumberInput.getText());
+            Personnel personnel = new Personnel(nameInput.getText(),firstnameInput.getText(), phoneNumberInput.getText(), emailInput.getText());
             daoPersonnel.create(personnel);
+            RootFile.closePopUp();
         }
 
     }

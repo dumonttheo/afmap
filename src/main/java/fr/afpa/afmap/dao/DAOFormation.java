@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.Format;
 import java.util.ArrayList;
 
@@ -21,10 +22,13 @@ public class DAOFormation extends Dao_Common<Formation> {
     public Formation find(long id) {
         Formation formation = new Formation();
         try {
-            ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM formation JOIN formation_batiment fb ON fb.id_formation = formation.id JOIN batiment b ON b.id_batiment = fb.id_batiment WHERE  id = " + id);
+            PreparedStatement ps = connect.prepareStatement("SELECT * FROM formation WHERE id_formation = (?);", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setLong(1, id);
+            ResultSet result = ps.executeQuery();
             if (result.first()) {
-                BatimentFormation bat = new BatimentFormation(result.getInt("id_batiment"), Integer.parseInt(result.getString("numero")), result.getString("nom"), result.getDouble("x1"), result.getDouble("x2"), result.getDouble("width"), result.getDouble("heigth"), Color.RED);
-//                formation = new Formation(result.getString("nom"), bat);
+                DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
+                DAOPersonnel daoPersonnel = new DAOPersonnel();
+                formation = new Formation(result.getInt("id_formation"), result.getString("nom"), daoBatimentFormation.findAllBatimentForOneFormation(result.getInt("id_formation")), daoPersonnel.findAllPersonnelForOneFormation(result.getInt("id_formation")));
             }
 
         } catch (SQLException e) {
@@ -55,7 +59,33 @@ public class DAOFormation extends Dao_Common<Formation> {
 
     @Override
     public Formation create(Formation object) {
-        return null;
+        try {
+            PreparedStatement prepared = connect.prepareStatement("INSERT INTO formation (nom) VALUES (?);", Statement.RETURN_GENERATED_KEYS);
+            prepared.setString(1,object.getNom());
+            prepared.executeUpdate();
+            ResultSet resultSet = prepared.getGeneratedKeys();
+            if (resultSet.next()){
+                int id = resultSet.getInt(1);
+                for (BatimentFormation batimentFormation : object.getListeBatimentsFormation()){
+                    PreparedStatement ps = connect.prepareStatement("INSERT INTO formation_batiment (id_batiment , id_formation) VALUES (?,?);");
+                    ps.setInt(1, batimentFormation.getId());
+                    ps.setInt(2, id);
+                    ps.executeUpdate();
+                }
+                for (Personnel personnel : object.getListePersonnel()){
+                    PreparedStatement ps = connect.prepareStatement("INSERT INTO formation_personnel (id_personnel , id_formation) VALUES (?,?);");
+                    ps.setInt(1, personnel.getId());
+                    ps.setInt(2, id);
+                    ps.executeUpdate();
+                }
+                object = find(id);
+            }
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+        return object;
     }
 
     @Override

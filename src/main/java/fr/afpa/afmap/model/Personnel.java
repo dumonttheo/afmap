@@ -3,7 +3,7 @@ package fr.afpa.afmap.model;
 /**
  * Classe formateur, numero de tel et son mail
  */
-public class Personnel {
+public class Personnel implements Comparable {
     private int id;
     private String nom;
     private String prenom;
@@ -11,20 +11,19 @@ public class Personnel {
     private String mail;
 
     /**
-     *
-     * @param nom name of personnel
-     * @param prenom firstname of personnel
+     * @param nom             name of personnel
+     * @param prenom          firstname of personnel
      * @param numeroTelephone phone number of personnel
-     * @param mail mail of personnel
+     * @param mail            mail of personnel
      */
-    public Personnel(String nom, String prenom, String numeroTelephone, String mail){
+    public Personnel(String nom, String prenom, String numeroTelephone, String mail) {
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTelephone = numeroTelephone;
         this.mail = mail;
     }
 
-    public Personnel(int id ,String nom, String prenom, String numeroTelephone, String mail){
+    public Personnel(int id, String nom, String prenom, String numeroTelephone, String mail) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -32,7 +31,8 @@ public class Personnel {
         this.mail = mail;
     }
 
-    public Personnel(){}
+    public Personnel() {
+    }
 
 
     /**
@@ -99,7 +99,19 @@ public class Personnel {
         this.id = id;
     }
 
-    public String toString(){
-        return this.nom + " " + this.prenom+ ", ";
+    public String toString() {
+        return this.nom + " " + this.prenom;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Personnel personnel = (Personnel) o;
+        if (this.id < personnel.getId()) {
+            return -1;
+        } else if (this.id > personnel.getId()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

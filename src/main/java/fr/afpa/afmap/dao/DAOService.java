@@ -59,7 +59,7 @@ public class DAOService extends Dao_Common<Service> {
         ArrayList<Service>services = new ArrayList<>();
 
         try {
-            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment_service bs JOIN service s ON s.id_service = bs.id_service WHERE id_batiment = (?)");
+            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment_service bs JOIN service s ON s.id_service = bs.id_service WHERE id_batiment = (?);");
             ps.setInt(1,id);
             ResultSet r = ps.executeQuery();
             while (r.next()){

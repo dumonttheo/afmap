@@ -31,6 +31,9 @@
                 <TableColumn fx:id="nameFormationColumn" prefWidth="565.0" text="Nom de la formation" />
                   <TableColumn fx:id="formateursFormationColumn" prefWidth="299.0" text="Formateur(s)" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="1">
                <children>
@@ -53,17 +56,17 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addServicePopup" text="Ajouter un personnel">
+                  <Button mnemonicParsing="false" onAction="#addPersonnelPopUp" text="Ajouter un personnel">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Modifier le personnel">
+                  <Button mnemonicParsing="false" onAction="#modifyPersonnelPopUp" text="Modifier le personnel">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Supprimer ce personnel">
+                  <Button mnemonicParsing="false" onAction="#deletePersonnelPopup" text="Supprimer ce personnel">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -72,7 +75,7 @@
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="3">
                <children>
-                  <Button mnemonicParsing="false" text="Ajouter une formation">
+                  <Button mnemonicParsing="false" onAction="#addFormation" text="Ajouter une formation">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -122,6 +125,9 @@
                   <TableColumn fx:id="phonePersonnelColumn" prefWidth="218.0" text="Numéro de Téléphone" />
                   <TableColumn fx:id="emailPersonnelColumn" prefWidth="266.666748046875" text="Email" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
             <TableView fx:id="serviceListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
               <columns>
@@ -129,14 +135,20 @@
                 <TableColumn fx:id="nameServiceColumn" prefWidth="546.0" text="Nom du service" />
                   <TableColumn fx:id="personnelServiceColumn" prefWidth="269.0" text="Personnel(s)" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
-            <TableView fx:id="batimentTableView" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="batimentTableView">
               <columns>
                 <TableColumn fx:id="idBatimentColumn" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="numeroBatimentColumn" prefWidth="158.0" text="Numéro" />
                   <TableColumn fx:id="nameBatimentColumn" prefWidth="485.0" text="Nom" />
                   <TableColumn fx:id="formationServiceBatimentColumn" prefWidth="231.0" text="Formation / Service" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </GridPane>

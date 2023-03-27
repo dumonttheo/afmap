@@ -1,21 +1,18 @@
 package fr.afpa.afmap.controllers;
 
-import fr.afpa.afmap.Main;
 import fr.afpa.afmap.dao.*;
 import fr.afpa.afmap.model.*;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class ArrayAdminController {
@@ -77,15 +74,21 @@ public class ArrayAdminController {
 
 
     public void initialize() {
+
         idFormationColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameFormationColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         formateursFormationColumn.setCellValueFactory(new PropertyValueFactory<>("listePersonnel"));
 
         idPersonnelColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idPersonnelColumn.setSortType(TableColumn.SortType.ASCENDING);
         nomPersonnelColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         prenomPersonnelColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         phonePersonnelColumn.setCellValueFactory(new PropertyValueFactory<>("numeroTelephone"));
         emailPersonnelColumn.setCellValueFactory(new PropertyValueFactory<>("mail"));
+
+        personnelTableView.getSortOrder().add(idPersonnelColumn);
+
+
 
         idServiceColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameServiceColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -137,6 +140,7 @@ public class ArrayAdminController {
 
 
         personnels.addAll(daoPersonnel.findAll());
+        Collections.sort(personnels);
         personnelTableView.setItems(personnels);
 
 
@@ -148,7 +152,28 @@ public class ArrayAdminController {
     }
 
     @FXML
-    public void addServicePopup() {
+    public void addPersonnelPopUp() {
         RootFile.openPopupAddPersonnel(450, 400);
+    }
+
+    @FXML
+    public void modifyPersonnelPopUp(){
+        if(personnelTableView.getSelectionModel().getSelectedItem() != null){
+            RootFile.openPopupModifyPersonnel(450, 400, personnelTableView.getSelectionModel().getSelectedItem() );
+        }
+    }
+
+    @FXML
+    public void deletePersonnelPopup(){
+        if (personnelTableView.getSelectionModel().getSelectedItem() != null){
+            daoPersonnel.delete(personnelTableView.getSelectionModel().getSelectedItem());
+            personnels.clear();
+            personnels.addAll(daoPersonnel.findAll());
+        }
+    }
+
+    @FXML
+    public void addFormation(){
+        RootFile.openPopupFormationAdd(600, 450);
     }
 }
