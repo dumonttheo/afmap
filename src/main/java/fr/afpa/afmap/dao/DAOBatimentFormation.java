@@ -67,7 +67,7 @@ public class DAOBatimentFormation extends Dao_Common<BatimentFormation> {
     public ArrayList<BatimentFormation> findAll() {
         ArrayList<BatimentFormation> batimentFormations = new ArrayList<>();
         try {
-            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM formation_batiment fb JOIN batiment b ON b.id_batiment = fb.id_batiment");
+            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment b JOIN formation_batiment fb ON b.id_batiment = fb.id_batiment");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Array allpoints = rs.getArray("allpoints");
@@ -77,7 +77,17 @@ public class DAOBatimentFormation extends Dao_Common<BatimentFormation> {
                     for (Formation formation : formations) {
                         batiment.addFormation(formation);
                     }
-                    batimentFormations.add(batiment);
+                    boolean isAlreadyIn = false;
+                    for (BatimentFormation batimentFormation : batimentFormations){
+                        if (batimentFormation.getNom().equals(batiment.getNom())) {
+                            isAlreadyIn = true;
+                            break;
+                        }
+                    }
+
+                    if (!isAlreadyIn){
+                        batimentFormations.add(batiment);
+                    }
 
                 } else {
                     Float[] allPointsToFloat = (Float[]) allpoints.getArray();
@@ -88,13 +98,22 @@ public class DAOBatimentFormation extends Dao_Common<BatimentFormation> {
                     for (Formation formation : formations) {
                         batiment.addFormation(formation);
                     }
-                    batimentFormations.add(batiment);
+                    boolean isAlreadyIn = false;
+                    for (BatimentFormation batimentFormation : batimentFormations){
+                        if (batimentFormation.getNom().equals(batiment.getNom())) {
+                            isAlreadyIn = true;
+                            break;
+                        }
+                    }
+
+                    if (!isAlreadyIn){
+                        batimentFormations.add(batiment);
+                    }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
         return batimentFormations;
     }

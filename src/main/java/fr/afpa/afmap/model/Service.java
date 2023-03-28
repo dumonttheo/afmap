@@ -29,6 +29,10 @@ public class Service {
         this.listePersonnel = personnels;
     }
 
+    public Service() {
+
+    }
+
 
     /**
      * @return Get name of this service

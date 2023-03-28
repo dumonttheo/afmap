@@ -2,7 +2,11 @@ package fr.afpa.afmap.controllers;
 
 import fr.afpa.afmap.Main;
 import fr.afpa.afmap.controllers.popup.ModiyPersonnelController;
+import fr.afpa.afmap.controllers.popup.UpdateFormationController;
+import fr.afpa.afmap.controllers.popup.UpdateService;
+import fr.afpa.afmap.model.Formation;
 import fr.afpa.afmap.model.Personnel;
+import fr.afpa.afmap.model.Service;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -84,7 +88,7 @@ public class RootFile {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("popup/addFormation.fxml"));
             Scene scenepopup = new Scene(fxmlLoader.load(), width, height);
-            popup.setTitle("AFMAP - Ajout d'un Personnel");
+            popup.setTitle("AFMAP - Ajout d'une Formation");
             popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("assets/logo.png")).openStream()));
             popup.setMinWidth(width);
             popup.setMinHeight(height);
@@ -108,7 +112,74 @@ public class RootFile {
             controller.setPersonnel(personnel);
 
             popup.setTitle("AFMAP - Modification de " + personnel.getNom() + " " + personnel.getPrenom());
-            popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("logo.png")).openStream()));
+            popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("assets/logo.png")).openStream()));
+            popup.setMinWidth(width);
+            popup.setMinHeight(height);
+            if (!popup.getModality().equals(Modality.APPLICATION_MODAL)) {
+                popup.initModality(Modality.APPLICATION_MODAL);
+            }
+            popup.setScene(scenepopup);
+            popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void openPopupUpdateFormation(double width, double height, Formation batiment) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("popup/updateFormation.fxml"));
+            Scene scenepopup = new Scene(fxmlLoader.load(), width, height);
+
+            //            Sett the personnel into the controller
+            UpdateFormationController controller = fxmlLoader.getController();
+            controller.setFormation(batiment);
+
+            popup.setTitle("AFMAP - Modification de " + batiment.getNom() );
+            popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("assets/logo.png")).openStream()));
+            popup.setMinWidth(width);
+            popup.setMinHeight(height);
+            if (!popup.getModality().equals(Modality.APPLICATION_MODAL)) {
+                popup.initModality(Modality.APPLICATION_MODAL);
+            }
+            popup.setScene(scenepopup);
+            popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void openPopupAddService(double width, double height) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("popup/addService.fxml"));
+            Scene scenepopup = new Scene(fxmlLoader.load(), width, height);
+
+
+            popup.setTitle("AFMAP - Ajout d'un service");
+            popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("assets/logo.png")).openStream()));
+            popup.setMinWidth(width);
+            popup.setMinHeight(height);
+            if (!popup.getModality().equals(Modality.APPLICATION_MODAL)) {
+                popup.initModality(Modality.APPLICATION_MODAL);
+            }
+            popup.setScene(scenepopup);
+            popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void openPopupUpdateService(double width, double height, Service service) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("popup/updateService.fxml"));
+            Scene scenepopup = new Scene(fxmlLoader.load(), width, height);
+
+
+            UpdateService controller = fxmlLoader.getController();
+            controller.setService(service);
+
+            popup.setTitle("AFMAP - Modification de " + service.getNom());
+            popup.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("assets/logo.png")).openStream()));
             popup.setMinWidth(width);
             popup.setMinHeight(height);
             if (!popup.getModality().equals(Modality.APPLICATION_MODAL)) {

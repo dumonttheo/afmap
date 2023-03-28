@@ -1,5 +1,5 @@
 module fr.afpa.afmap {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires org.controlsfx.controls;
     requires java.desktop;

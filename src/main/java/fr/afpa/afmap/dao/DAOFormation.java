@@ -61,18 +61,18 @@ public class DAOFormation extends Dao_Common<Formation> {
     public Formation create(Formation object) {
         try {
             PreparedStatement prepared = connect.prepareStatement("INSERT INTO formation (nom) VALUES (?);", Statement.RETURN_GENERATED_KEYS);
-            prepared.setString(1,object.getNom());
+            prepared.setString(1, object.getNom());
             prepared.executeUpdate();
             ResultSet resultSet = prepared.getGeneratedKeys();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 int id = resultSet.getInt(1);
-                for (BatimentFormation batimentFormation : object.getListeBatimentsFormation()){
+                for (BatimentFormation batimentFormation : object.getListeBatimentsFormation()) {
                     PreparedStatement ps = connect.prepareStatement("INSERT INTO formation_batiment (id_batiment , id_formation) VALUES (?,?);");
                     ps.setInt(1, batimentFormation.getId());
                     ps.setInt(2, id);
                     ps.executeUpdate();
                 }
-                for (Personnel personnel : object.getListePersonnel()){
+                for (Personnel personnel : object.getListePersonnel()) {
                     PreparedStatement ps = connect.prepareStatement("INSERT INTO formation_personnel (id_personnel , id_formation) VALUES (?,?);");
                     ps.setInt(1, personnel.getId());
                     ps.setInt(2, id);
@@ -81,7 +81,7 @@ public class DAOFormation extends Dao_Common<Formation> {
                 object = find(id);
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -90,21 +90,67 @@ public class DAOFormation extends Dao_Common<Formation> {
 
     @Override
     public Formation update(Formation object) {
-        return null;
+        try {
+            PreparedStatement deleteBatimentQuery = connect.prepareStatement("DELETE FROM formation_batiment WHERE id_formation = (?);");
+            deleteBatimentQuery.setInt(1, object.getId());
+            deleteBatimentQuery.executeUpdate();
+
+            PreparedStatement deletePersonnelQuery = connect.prepareStatement("DELETE FROM formation_personnel WHERE id_formation = (?);");
+            deletePersonnelQuery.setInt(1, object.getId());
+            deletePersonnelQuery.executeUpdate();
+
+            PreparedStatement updateFormationNameQuery = connect.prepareStatement("UPDATE formation SET nom = (?) WHERE id_formation = (?);");
+            updateFormationNameQuery.setString(1, object.getNom());
+            updateFormationNameQuery.setInt(2, object.getId());
+            updateFormationNameQuery.executeUpdate();
+
+            for (BatimentFormation batimentFormation : object.getListeBatimentsFormation()) {
+                PreparedStatement addBatimentToFormationQuery = connect.prepareStatement("INSERT INTO formation_batiment (id_batiment, id_formation) VALUES (?,?)");
+                addBatimentToFormationQuery.setInt(1, batimentFormation.getId());
+                addBatimentToFormationQuery.setInt(2, object.getId());
+                addBatimentToFormationQuery.executeUpdate();
+            }
+            for (Personnel personnel : object.getListePersonnel()) {
+                PreparedStatement addPersonnelToFormationQuery = connect.prepareStatement("INSERT INTO formation_personnel (id_personnel, id_formation) VALUES (?,?)");
+                addPersonnelToFormationQuery.setInt(1, personnel.getId());
+                addPersonnelToFormationQuery.setInt(2, object.getId());
+                addPersonnelToFormationQuery.executeUpdate();
+            }
+
+            object = find(object.getId());
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return object;
     }
 
     @Override
     public void delete(Formation object) {
+        try {
+            PreparedStatement deleteEveryOccurenceOfIdFormationInBatimentTable = connect.prepareStatement("DELETE FROM formation_batiment WHERE id_formation = (?);");
+            deleteEveryOccurenceOfIdFormationInBatimentTable.setInt(1,object.getId());
+            deleteEveryOccurenceOfIdFormationInBatimentTable.executeUpdate();
 
+            PreparedStatement deleteEveryOccurenceOfIdFormationInPersonnelTable = connect.prepareStatement("DELETE FROM formation_personnel WHERE id_formation = (?);");
+            deleteEveryOccurenceOfIdFormationInPersonnelTable.setInt(1, object.getId());
+            deleteEveryOccurenceOfIdFormationInPersonnelTable.executeUpdate();
+
+            PreparedStatement deleteFormation = connect.prepareStatement("DELETE FROM formation WHERE id_formation = (?);");
+            deleteFormation.setInt(1, object.getId());
+            deleteFormation.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     public ArrayList<Formation> findAllFormationOfOneBatiment(int id) {
         ArrayList<Formation> formations = new ArrayList<>();
         try {
-            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM formation_batiment fb JOIN formation f ON f.id_formation = fb.id_formation WHERE fb.id_batiment = (?) ;");
-            ps.setInt(1,id);
+            PreparedStatement ps = this.connect.prepareStatement("SELECT DISTINCT * FROM formation_batiment fb JOIN formation f ON f.id_formation = fb.id_formation WHERE fb.id_batiment = (?) ;");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
                 ArrayList<BatimentFormation> batiments = daoBatimentFormation.findAllBatimentForOneFormation(rs.getInt("id_formation"));
                 DAOPersonnel daoPersonnel = new DAOPersonnel();

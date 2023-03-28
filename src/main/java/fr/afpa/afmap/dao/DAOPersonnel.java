@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class DAOPersonnel extends Dao_Common<Personnel> {
 
+    public DAOPersonnel(){}
 
     @Override
     public Personnel find(long id) {
@@ -30,7 +31,7 @@ public class DAOPersonnel extends Dao_Common<Personnel> {
         ArrayList<Personnel> personnels = new ArrayList<>();
         try {
             ResultSet resultSet = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM personnel JOIN formation_personnel fp ON fp.id_personnel = personnel.id_personnel WHERE id_formation = " + id);
-            if (resultSet.first()) {
+            while (resultSet.next()) {
                 Personnel personnel = new Personnel(resultSet.getInt("id_personnel"), resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("numeroTelephone"), resultSet.getString("mail"));
                 personnels.add(personnel);
             }
@@ -114,7 +115,7 @@ public class DAOPersonnel extends Dao_Common<Personnel> {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Personnel personnel = new Personnel(rs.getString("nom"), rs.getString("prenom"), rs.getString("numeroTelephone"), rs.getString("mail"));
+                Personnel personnel = new Personnel(rs.getInt("id_personnel"),rs.getString("nom"), rs.getString("prenom"), rs.getString("numeroTelephone"), rs.getString("mail"));
                 personnels.add(personnel);
             }
         } catch (SQLException e) {

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
 
+    public DAOBatimentService(){}
     private final DAOService daoService = new DAOService();
     @Override
     public BatimentAdministratif find(long id) {
@@ -48,7 +49,18 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
                     for (Service service :services){
                         batiment.addService(service);
                     }
-                    batimentAdministratifs.add(batiment);
+
+                    boolean isAlreadyIn = false;
+                    for (BatimentAdministratif batimentFormation : batimentAdministratifs){
+                        if (batimentFormation.getNom().equals(batiment.getNom())) {
+                            isAlreadyIn = true;
+                            break;
+                        }
+                    }
+
+                    if (!isAlreadyIn){
+                        batimentAdministratifs.add(batiment);
+                    }
                 } else {
                     Float[] allPointsToFloat = (Float[]) allpoints.getArray();
                     Double[] allPointsToDouble = floatToDouble(allPointsToFloat);
@@ -56,7 +68,17 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
                     for (Service service :services){
                         batiment.addService(service);
                     }
-                    batimentAdministratifs.add(batiment);
+                    boolean isAlreadyIn = false;
+                    for (BatimentAdministratif batimentFormation : batimentAdministratifs){
+                        if (batimentFormation.getNom().equals(batiment.getNom())) {
+                            isAlreadyIn = true;
+                            break;
+                        }
+                    }
+
+                    if (!isAlreadyIn){
+                        batimentAdministratifs.add(batiment);
+                    }
                 }
             }
 

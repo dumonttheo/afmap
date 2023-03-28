@@ -2,20 +2,15 @@ package fr.afpa.afmap.controllers.popup;
 
 import fr.afpa.afmap.controllers.RootFile;
 import fr.afpa.afmap.dao.DAOBatimentFormation;
-import fr.afpa.afmap.dao.DAOBatimentService;
 import fr.afpa.afmap.dao.DAOFormation;
 import fr.afpa.afmap.dao.DAOPersonnel;
-import fr.afpa.afmap.model.Batiment;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Formation;
 import fr.afpa.afmap.model.Personnel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -41,7 +36,6 @@ public class AddFormation {
 
     public void initialize() {
         DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
-        DAOBatimentService daoBatimentService = new DAOBatimentService();
         DAOPersonnel daoPersonnel = new DAOPersonnel();
 
         listViewBatiment.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

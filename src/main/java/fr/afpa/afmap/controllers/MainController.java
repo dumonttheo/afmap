@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
+
+    public MainController() {
+    }
+
     @FXML
     public Label labelNomFormateur;
     @FXML
@@ -98,7 +102,7 @@ public class MainController {
     List<Formation> formationList = new ArrayList<>();
 
 
-    public void goToAdministrator(){
+    public void goToAdministrator() {
         try {
             RootFile.setRoot("arrayAdmin");
         } catch (IOException e) {
@@ -107,8 +111,7 @@ public class MainController {
     }
 
 
-
-
+    @FXML
     public void initialize() {
         fleche.setViewOrder(1);
         fleche1.setViewOrder(1);
