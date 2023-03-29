@@ -4,6 +4,7 @@ import fr.afpa.afmap.Main;
 import fr.afpa.afmap.controllers.popup.ModiyPersonnelController;
 import fr.afpa.afmap.controllers.popup.UpdateFormationController;
 import fr.afpa.afmap.controllers.popup.UpdateService;
+import fr.afpa.afmap.model.Batiment;
 import fr.afpa.afmap.model.Formation;
 import fr.afpa.afmap.model.Personnel;
 import fr.afpa.afmap.model.Service;
@@ -187,6 +188,20 @@ public class RootFile {
             }
             popup.setScene(scenepopup);
             popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void openUpdateBatiment(Batiment batiment) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("updateBatiment.fxml"));
+            Parent parent = fxmlLoader.load();
+
+            UpdateBatimentController controller = fxmlLoader.getController();
+            controller.setBatiment(batiment);
+
+            scene.setRoot(parent);
         } catch (IOException e) {
             e.printStackTrace();
         }

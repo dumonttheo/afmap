@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -175,8 +176,9 @@ public class ArrayAdminController {
 
         batiments.addAll(daoBatimentFormation.findAll());
         batiments.addAll(daoBatimentService.findAll());
-        batimentTableView.setItems(batiments);
+        Collections.sort(batiments);
 
+        batimentTableView.setItems(batiments);
 
     }
 
@@ -257,6 +259,13 @@ public class ArrayAdminController {
             RootFile.setRoot("admin");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void updateBatiment(){
+        if (batimentTableView.getSelectionModel().getSelectedItem() != null){
+            RootFile.openUpdateBatiment(batimentTableView.getSelectionModel().getSelectedItem());
         }
     }
 }

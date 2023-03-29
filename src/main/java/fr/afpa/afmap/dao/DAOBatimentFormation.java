@@ -1,14 +1,12 @@
 package fr.afpa.afmap.dao;
 
+import fr.afpa.afmap.Main;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Formation;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
-import java.sql.Array;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -67,7 +65,7 @@ public class DAOBatimentFormation extends Dao_Common<BatimentFormation> {
     public ArrayList<BatimentFormation> findAll() {
         ArrayList<BatimentFormation> batimentFormations = new ArrayList<>();
         try {
-            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment b JOIN formation_batiment fb ON b.id_batiment = fb.id_batiment");
+            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment b LEFT JOIN formation_batiment fb ON b.id_batiment = fb.id_batiment WHERE is_formation = true");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Array allpoints = rs.getArray("allpoints");
@@ -120,12 +118,38 @@ public class DAOBatimentFormation extends Dao_Common<BatimentFormation> {
 
     @Override
     public BatimentFormation create(BatimentFormation object) {
-        return null;
+        try {
+            PreparedStatement addBatimentQuery = connect.prepareStatement("INSERT INTO batiment (numero, nom_batiment, color, allpoints, is_formation) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            addBatimentQuery.setString(1, String.valueOf(object.getNumero()));
+            addBatimentQuery.setString(2, object.getNom());
+            addBatimentQuery.setString(3, Main.colorToHex(object.getColor()));
+            addBatimentQuery.setObject(4,object.getAllPoints());
+            addBatimentQuery.setBoolean(5, true);
+            addBatimentQuery.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return object;
     }
 
     @Override
     public BatimentFormation update(BatimentFormation object) {
-        return null;
+
+        try {
+            PreparedStatement updateBatimentQuery = connect.prepareStatement("UPDATE batiment SET numero = (?), nom_batiment = (?),color = (?), allpoints = (?), is_formation = (?) WHERE id_batiment = (?); ");
+            updateBatimentQuery.setString(1, String.valueOf(object.getNumero()));
+            updateBatimentQuery.setString(2, object.getNom());
+            updateBatimentQuery.setString(3, Main.colorToHex(object.getColor()));
+            updateBatimentQuery.setObject(4, object.getAllPoints());
+            updateBatimentQuery.setBoolean(5, true);
+            updateBatimentQuery.setInt(6, object.getId());
+            updateBatimentQuery.executeUpdate();
+
+            object = find(object.getId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return object;
     }
 
     @Override

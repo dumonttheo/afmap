@@ -42,7 +42,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Modifier le batiment">
+                  <Button mnemonicParsing="false" text="Modifier le batiment" onAction="#updateBatiment">
                      <font>
                         <Font size="14.0" />
                      </font>

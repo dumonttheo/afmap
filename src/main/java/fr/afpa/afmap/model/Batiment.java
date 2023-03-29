@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * Description batiment afpa avec coordonnées
  */
-abstract public class Batiment extends FormeBatiment {
+abstract public class Batiment extends FormeBatiment implements Comparable{
     private int id;
     private int numero;
     private String nom;
@@ -102,5 +102,17 @@ abstract public class Batiment extends FormeBatiment {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Batiment batiment = (Batiment) o;
+        if (this.id < batiment.getId()) {
+            return -1;
+        } else if (this.id > batiment.getId()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -39,7 +39,7 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
     public ArrayList<BatimentAdministratif> findAll() {
         ArrayList<BatimentAdministratif> batimentAdministratifs = new ArrayList<>();
         try {
-            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment_service bs JOIN batiment b ON bs.id_batiment = b.id_batiment ");
+            PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM batiment b LEFT JOIN batiment_service bs ON bs.id_batiment = b.id_batiment WHERE is_formation = false;");
             ResultSet r = ps.executeQuery();
             while (r.next()){
                 ArrayList<Service> services = daoService.findServicesByOneBatiments(r.getInt("id_batiment"));

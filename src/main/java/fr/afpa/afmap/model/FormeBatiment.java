@@ -3,6 +3,10 @@ package fr.afpa.afmap.model;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *  Form of Building, Separate Polygon to square
  */

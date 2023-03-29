@@ -1,7 +1,6 @@
 package fr.afpa.afmap.controllers;
 
 
-import fr.afpa.afmap.Main;
 import fr.afpa.afmap.dao.DAOFormation;
 import fr.afpa.afmap.dao.DAOService;
 import fr.afpa.afmap.model.*;
@@ -191,9 +190,7 @@ public class MainController {
         gridPaneBat.getChildren().remove(comboService);
 
 
-        comboBat.setOnAction(event -> {
-            setCombobox();
-        });
+        comboBat.setOnAction(event -> setCombobox());
 
 
         comboFormation.setOnAction(event -> {
@@ -292,15 +289,6 @@ public class MainController {
             }
 
         });
-
-
-//        pane.setOnMouseMoved(mouseEvent -> {
-//            System.out.println("---------------------");
-//            System.out.println("Mouse en X : " + mouseEvent.getX());
-//            System.out.println("Mouse en Y : " + mouseEvent.getY());
-//            System.out.println("Taille de l'image :" + imageViewBat.fitWidthProperty().get());
-//            System.out.println("Hauteur de l'image : " + pane.getHeight());
-//        });
 
     }
 
