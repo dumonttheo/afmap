@@ -43,24 +43,10 @@ public class Personnel implements Comparable {
     }
 
     /**
-     * @param numeroTelephone set a phone number
-     */
-    public void setNumeroTelephone(String numeroTelephone) {
-        this.numeroTelephone = numeroTelephone;
-    }
-
-    /**
      * @return mail
      */
     public String getMail() {
         return mail;
-    }
-
-    /**
-     * @param mail set a mail
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     /**
@@ -84,13 +70,6 @@ public class Personnel implements Comparable {
         return prenom;
     }
 
-    /**
-     * @param prenom set firstname of personnal
-     */
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
     public int getId() {
         return id;
     }
@@ -106,12 +85,6 @@ public class Personnel implements Comparable {
     @Override
     public int compareTo(Object o) {
         Personnel personnel = (Personnel) o;
-        if (this.id < personnel.getId()) {
-            return -1;
-        } else if (this.id > personnel.getId()) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Integer.compare(this.id, personnel.getId());
     }
 }

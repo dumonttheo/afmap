@@ -33,8 +33,6 @@ public class UpdateFormationController {
     private final ObservableList<BatimentFormation> batiments = FXCollections.observableArrayList();
     private final ObservableList<Personnel> personnels = FXCollections.observableArrayList();
 
-    private final ObservableList<BatimentFormation> batimentFormations = FXCollections.observableArrayList();
-
     private final DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
     private final DAOPersonnel daoPersonnel = new DAOPersonnel();
     private final DAOFormation daoFormation = new DAOFormation();
@@ -84,10 +82,8 @@ public class UpdateFormationController {
     }
 
     public void updateFormationHandle() {
-        ArrayList<BatimentFormation> batiments = new ArrayList<>();
-        ArrayList<Personnel> personnelArrayList = new ArrayList<>();
-        batiments.addAll(listViewBatiment.getSelectionModel().getSelectedItems());
-        personnelArrayList.addAll(listViewPersonnel.getSelectionModel().getSelectedItems());
+        ArrayList<BatimentFormation> batiments = new ArrayList<>(listViewBatiment.getSelectionModel().getSelectedItems());
+        ArrayList<Personnel> personnelArrayList = new ArrayList<>(listViewPersonnel.getSelectionModel().getSelectedItems());
 
         if (batiments.size() > 0) {
             if (personnelArrayList.size() > 0) {

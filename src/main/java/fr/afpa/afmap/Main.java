@@ -16,7 +16,7 @@ public class Main extends Application {
             main.setStage(stage);
 
         } catch (IOException e) {
-            System.err.println(e);
+            throw new RuntimeException(e);
         }
 
     }

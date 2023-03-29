@@ -119,7 +119,7 @@
          <children>
             <ImageView fx:id="imageViewBat" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
                <image>
-                  <Image fx:id="image" url="@assets/batimentBis_1.png" />
+                  <Image url="@assets/batimentBis_1.png" />
                </image>
             </ImageView>
             <Group fx:id="drawingGroup" />

@@ -3,19 +3,14 @@ package fr.afpa.afmap.dao;
 import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Formation;
 import fr.afpa.afmap.model.Personnel;
-import javafx.scene.paint.Color;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.Format;
 import java.util.ArrayList;
 
 public class DAOFormation extends Dao_Common<Formation> {
-
-//    private final DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
-//    private final DAOPersonnel daoPersonnel = new DAOPersonnel();
 
 
     @Override
@@ -82,7 +77,7 @@ public class DAOFormation extends Dao_Common<Formation> {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
 
         return object;

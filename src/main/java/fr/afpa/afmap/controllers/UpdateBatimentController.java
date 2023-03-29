@@ -11,7 +11,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -111,38 +110,32 @@ public class UpdateBatimentController {
 
         xColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         yColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        yColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ArrayList<Double>, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<ArrayList<Double>, String> event) {
-                ArrayList<Double> points = event.getRowValue();
-                for (Line line : allLine) {
-                    if (line.getStartY() == points.get(1)) {
-                        if (line.getStartX() == points.get(0)) {
-                            line.setStartY(Double.parseDouble(event.getNewValue()));
-                            line.setEndY(Double.parseDouble(event.getNewValue()));
-                        }
+        yColumn.setOnEditCommit(event -> {
+            ArrayList<Double> points = event.getRowValue();
+            for (Line line : allLine) {
+                if (line.getStartY() == points.get(1)) {
+                    if (line.getStartX() == points.get(0)) {
+                        line.setStartY(Double.parseDouble(event.getNewValue()));
+                        line.setEndY(Double.parseDouble(event.getNewValue()));
                     }
                 }
-                points.remove(1);
-                points.add(1, Double.valueOf(event.getNewValue()));
+            }
+            points.remove(1);
+            points.add(1, Double.valueOf(event.getNewValue()));
 
-            }
         });
-        xColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ArrayList<Double>, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<ArrayList<Double>, String> event) {
-                ArrayList<Double> points = event.getRowValue();
-                for (Line line : allLine) {
-                    if (line.getStartY() == points.get(1)) {
-                        if (line.getStartX() == points.get(0)) {
-                            line.setStartX(Double.parseDouble(event.getNewValue()));
-                            line.setEndX(Double.parseDouble(event.getNewValue()) + 0.5);
-                        }
+        xColumn.setOnEditCommit(event -> {
+            ArrayList<Double> points = event.getRowValue();
+            for (Line line : allLine) {
+                if (line.getStartY() == points.get(1)) {
+                    if (line.getStartX() == points.get(0)) {
+                        line.setStartX(Double.parseDouble(event.getNewValue()));
+                        line.setEndX(Double.parseDouble(event.getNewValue()) + 0.5);
                     }
                 }
-                points.remove(0);
-                points.add(0, Double.valueOf(event.getNewValue()));
             }
+            points.remove(0);
+            points.add(0, Double.valueOf(event.getNewValue()));
         });
     }
 
@@ -170,24 +163,16 @@ public class UpdateBatimentController {
                 points.clear();
                 points.add(event1.getX());
                 points.add(event1.getY());
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                drawingGroup.getChildren().remove(polygon);
-                                Polygon poly = new Polygon();
-                                for (ArrayList<Double> points : listOfPoints) {
-                                    poly.getPoints().addAll(points);
-                                }
-                                polygon = poly;
-                                drawingGroup.getChildren().add(poly);
-                                poly.setFill(colorPickerBuilding.getValue());
-                            }
-                        });
+                thread = new Thread(() -> Platform.runLater(() -> {
+                    drawingGroup.getChildren().remove(polygon);
+                    Polygon poly = new Polygon();
+                    for (ArrayList<Double> points1 : listOfPoints) {
+                        poly.getPoints().addAll(points1);
                     }
-                });
+                    polygon = poly;
+                    drawingGroup.getChildren().add(poly);
+                    poly.setFill(colorPickerBuilding.getValue());
+                }));
                 thread.start();
 
             });
@@ -283,24 +268,16 @@ public class UpdateBatimentController {
                 list.clear();
                 list.add(event1.getX());
                 list.add(event1.getY());
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                drawingGroup.getChildren().remove(polygon);
-                                Polygon poly = new Polygon();
-                                for (ArrayList<Double> points : listOfPoints) {
-                                    poly.getPoints().addAll(points);
-                                }
-                                polygon = poly;
-                                drawingGroup.getChildren().add(poly);
-                                poly.setFill(colorPickerBuilding.getValue());
-                            }
-                        });
+                thread = new Thread(() -> Platform.runLater(() -> {
+                    drawingGroup.getChildren().remove(polygon);
+                    Polygon poly = new Polygon();
+                    for (ArrayList<Double> points : listOfPoints) {
+                        poly.getPoints().addAll(points);
                     }
-                });
+                    polygon = poly;
+                    drawingGroup.getChildren().add(poly);
+                    poly.setFill(colorPickerBuilding.getValue());
+                }));
                 thread.start();
 
             });

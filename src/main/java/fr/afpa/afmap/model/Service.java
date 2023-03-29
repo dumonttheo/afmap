@@ -48,12 +48,6 @@ public class Service {
         this.nom = nom;
     }
 
-    /**
-     * @param personnel Add personnel to ArrayList of Personnal
-     */
-    public void addPersonnel(Personnel personnel){
-        listePersonnel.add(personnel);
-    }
 
     /**
      * @return ArrayList of Personnel
@@ -62,9 +56,6 @@ public class Service {
         return listePersonnel;
     }
 
-    public void addBatiment (BatimentAdministratif batiment) {
-        this.listBatiment.add(batiment);
-    }
 
     public ArrayList<BatimentAdministratif> getListBatiment() {
         return listBatiment;

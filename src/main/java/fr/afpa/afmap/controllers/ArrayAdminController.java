@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -82,12 +81,12 @@ public class ArrayAdminController {
         formateursFormationColumn.setCellValueFactory(c -> {
             Formation object = c.getValue();
             StringProperty str = new SimpleStringProperty();
-            StringBuilder string  = new StringBuilder();
+            StringBuilder string = new StringBuilder();
             int counterPersonnel = 0;
-            for (Personnel personnel : object.getListePersonnel()){
-                counterPersonnel++ ;
+            for (Personnel personnel : object.getListePersonnel()) {
+                counterPersonnel++;
                 string.append(personnel.getNom()).append(" ").append(personnel.getPrenom());
-                if (!(counterPersonnel == object.getListePersonnel().size())){
+                if (!(counterPersonnel == object.getListePersonnel().size())) {
                     string.append(", ");
                 }
             }
@@ -105,18 +104,17 @@ public class ArrayAdminController {
         personnelTableView.getSortOrder().add(idPersonnelColumn);
 
 
-
         idServiceColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameServiceColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         personnelServiceColumn.setCellValueFactory(c -> {
             Service object = c.getValue();
             StringProperty str = new SimpleStringProperty();
-            StringBuilder string  = new StringBuilder();
+            StringBuilder string = new StringBuilder();
             int counterPersonnel = 0;
-            for (Personnel personnel : object.getListePersonnel()){
-                counterPersonnel++ ;
+            for (Personnel personnel : object.getListePersonnel()) {
+                counterPersonnel++;
                 string.append(personnel.getNom()).append(" ").append(personnel.getPrenom());
-                if (counterPersonnel != object.getListePersonnel().size()){
+                if (counterPersonnel != object.getListePersonnel().size()) {
                     string.append(", ");
                 }
             }
@@ -134,11 +132,11 @@ public class ArrayAdminController {
             if (objet instanceof BatimentFormation) {
                 ArrayList<Formation> formations1 = ((BatimentFormation) objet).getListeFormations();
                 StringBuilder string = new StringBuilder();
-                int counterFormation =0;
-                for (Formation formation : formations1){
+                int counterFormation = 0;
+                for (Formation formation : formations1) {
                     string.append(formation.getNom());
                     counterFormation++;
-                    if (counterFormation != formations1.size()){
+                    if (counterFormation != formations1.size()) {
                         string.append(", ");
                     }
                 }
@@ -146,11 +144,11 @@ public class ArrayAdminController {
             } else if (objet instanceof BatimentAdministratif) {
                 ArrayList<Service> services1 = ((BatimentAdministratif) objet).getListeServices();
                 StringBuilder string = new StringBuilder();
-                int counterService =0;
-                for (Service service : services1){
+                int counterService = 0;
+                for (Service service : services1) {
                     string.append(service.getNom());
                     counterService++;
-                    if (counterService != services1.size()){
+                    if (counterService != services1.size()) {
                         string.append(", ");
                     }
                 }
@@ -183,15 +181,15 @@ public class ArrayAdminController {
     }
 
     @FXML
-    public void updateFormation(){
-        if (formationTableView.getSelectionModel().getSelectedItem() != null){
+    public void updateFormation() {
+        if (formationTableView.getSelectionModel().getSelectedItem() != null) {
             RootFile.openPopupUpdateFormation(600, 450, formationTableView.getSelectionModel().getSelectedItem());
         }
     }
 
     @FXML
-    public void deleteFormation(){
-        if (formationTableView.getSelectionModel().getSelectedItem() != null){
+    public void deleteFormation() {
+        if (formationTableView.getSelectionModel().getSelectedItem() != null) {
             daoFormation.delete(formationTableView.getSelectionModel().getSelectedItem());
             formations.clear();
             formations.addAll(daoFormation.findAll());
@@ -200,21 +198,22 @@ public class ArrayAdminController {
             batiments.addAll(daoBatimentService.findAll());
         }
     }
+
     @FXML
     public void addPersonnelPopUp() {
         RootFile.openPopupAddPersonnel(450, 400);
     }
 
     @FXML
-    public void modifyPersonnelPopUp(){
-        if(personnelTableView.getSelectionModel().getSelectedItem() != null){
-            RootFile.openPopupModifyPersonnel(450, 400, personnelTableView.getSelectionModel().getSelectedItem() );
+    public void modifyPersonnelPopUp() {
+        if (personnelTableView.getSelectionModel().getSelectedItem() != null) {
+            RootFile.openPopupModifyPersonnel(450, 400, personnelTableView.getSelectionModel().getSelectedItem());
         }
     }
 
     @FXML
-    public void deletePersonnelPopup(){
-        if (personnelTableView.getSelectionModel().getSelectedItem() != null){
+    public void deletePersonnelPopup() {
+        if (personnelTableView.getSelectionModel().getSelectedItem() != null) {
             daoPersonnel.delete(personnelTableView.getSelectionModel().getSelectedItem());
             personnels.clear();
             personnels.addAll(daoPersonnel.findAll());
@@ -225,25 +224,25 @@ public class ArrayAdminController {
     }
 
     @FXML
-    public void addFormation(){
+    public void addFormation() {
         RootFile.openPopupFormationAdd(600, 450);
     }
 
     @FXML
-    public void addServicePopup(){
+    public void addServicePopup() {
         RootFile.openPopupAddService(600, 450);
     }
 
     @FXML
-    public void updateServicePopup(){
-        if (serviceListView.getSelectionModel().getSelectedItem() != null){
+    public void updateServicePopup() {
+        if (serviceListView.getSelectionModel().getSelectedItem() != null) {
             RootFile.openPopupUpdateService(600, 450, serviceListView.getSelectionModel().getSelectedItem());
         }
     }
 
     @FXML
-    public void deleteService(){
-        if (serviceListView.getSelectionModel().getSelectedItem() != null){
+    public void deleteService() {
+        if (serviceListView.getSelectionModel().getSelectedItem() != null) {
             daoService.delete(serviceListView.getSelectionModel().getSelectedItem());
             services.clear();
             batiments.clear();
@@ -254,7 +253,7 @@ public class ArrayAdminController {
     }
 
     @FXML
-    public void addBatiment(){
+    public void addBatiment() {
         try {
             RootFile.setRoot("admin");
         } catch (IOException e) {
@@ -263,9 +262,25 @@ public class ArrayAdminController {
     }
 
     @FXML
-    public void updateBatiment(){
-        if (batimentTableView.getSelectionModel().getSelectedItem() != null){
+    public void updateBatiment() {
+        if (batimentTableView.getSelectionModel().getSelectedItem() != null) {
             RootFile.openUpdateBatiment(batimentTableView.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    @FXML
+    public void deleteBatiment() {
+        Batiment batiment = batimentTableView.getSelectionModel().getSelectedItem();
+        if (batiment != null) {
+            if (batiment instanceof BatimentFormation) {
+                daoBatimentFormation.delete((BatimentFormation) batiment);
+            } else if (batiment instanceof BatimentAdministratif) {
+                daoBatimentService.delete((BatimentAdministratif) batiment);
+            }
+            batiments.clear();
+            batiments.addAll(daoBatimentFormation.findAll());
+            batiments.addAll(daoBatimentService.findAll());
+            Collections.sort(batiments);
         }
     }
 }

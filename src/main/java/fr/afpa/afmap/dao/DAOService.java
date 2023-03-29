@@ -1,7 +1,6 @@
 package fr.afpa.afmap.dao;
 
 import fr.afpa.afmap.model.BatimentAdministratif;
-import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Personnel;
 import fr.afpa.afmap.model.Service;
 
@@ -89,7 +88,7 @@ public class DAOService extends Dao_Common<Service> {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
 
         return object;

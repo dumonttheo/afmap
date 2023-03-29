@@ -36,14 +36,6 @@ public class RootFile {
             }
         });
 
-//        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-//            if(!isMaximized){
-//                MainController controller = new MainController();
-//                Double value = controller.getWidthHeigth();
-//                stage.setHeight(value);
-//            }
-//        });
-
 
         stage.maximizedProperty().addListener((observable, oldValue, newValue) -> isMaximized = newValue);
 

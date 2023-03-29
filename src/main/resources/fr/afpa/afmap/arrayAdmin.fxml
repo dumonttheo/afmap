@@ -37,17 +37,17 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="1">
                <children>
-                  <Button mnemonicParsing="false" text="Ajouter un batiment" onAction="#addBatiment">
+                  <Button mnemonicParsing="false" onAction="#addBatiment" text="Ajouter un batiment">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Modifier le batiment" onAction="#updateBatiment">
+                  <Button mnemonicParsing="false" onAction="#updateBatiment" text="Modifier le batiment">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Supprimer le batiment">
+                  <Button mnemonicParsing="false" onAction="#deleteBatiment" text="Supprimer le batiment">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -107,7 +107,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Supprimer ce service" onAction="#deleteService">
+                  <Button mnemonicParsing="false" onAction="#deleteService" text="Supprimer ce service">
                      <font>
                         <Font size="14.0" />
                      </font>

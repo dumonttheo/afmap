@@ -7,26 +7,11 @@ import javafx.scene.paint.Color;
  */
 abstract public class Batiment extends FormeBatiment implements Comparable{
     private int id;
-    private int numero;
+    private final int numero;
     private String nom;
 
-    /**
-     * Constructor for Square Building
-     *
-     * @param numero   Number of Building
-     * @param topLeftX Layout X to left corner of square
-     * @param topLeftY Layout Y to left corner of square
-     * @param width    Width of square
-     * @param heigth   heigth of square
-     * @param color    Color of the Batiment
-     */
 
-    public Batiment(int id, int numero, String nom, Double topLeftX, Double topLeftY, Double width, Double heigth, Color color) {
-        super(topLeftX, topLeftY, width, heigth, color);
-        this.numero = numero;
-        this.nom = nom;
-        this.id = id;
-    }
+
 
     /**
      * Constructor For Polygon Building
@@ -69,15 +54,6 @@ abstract public class Batiment extends FormeBatiment implements Comparable{
     }
 
     /**
-     * Set number of building
-     *
-     * @param numero number to set at building
-     */
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    /**
      * Get name of building
      *
      * @return String to get building name
@@ -107,12 +83,6 @@ abstract public class Batiment extends FormeBatiment implements Comparable{
     @Override
     public int compareTo(Object o) {
         Batiment batiment = (Batiment) o;
-        if (this.id < batiment.getId()) {
-            return -1;
-        } else if (this.id > batiment.getId()) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Integer.compare(this.id, batiment.getId());
     }
 }

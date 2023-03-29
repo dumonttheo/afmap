@@ -1,6 +1,5 @@
 package fr.afpa.afmap.model;
 
-import java.text.Format;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +9,7 @@ public class Formation {
     private int id;
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
-    private ArrayList<BatimentFormation> listeBatimentsFormation = new ArrayList<BatimentFormation>();
+    private ArrayList<BatimentFormation> listeBatimentsFormation = new ArrayList<>();
 
     /**
      * @param nom               Name of formation
@@ -48,32 +47,12 @@ public class Formation {
     }
 
     /**
-     * @param personnel Add a personnel to this formation
-     */
-    public void addPersonnel(Personnel personnel) {
-        listePersonnel.add(personnel);
-    }
-
-    /**
      * @return Array List of Personnel
      */
     public ArrayList<Personnel> getListePersonnel() {
         return listePersonnel;
     }
 
-    /**
-     * @param batimentFormation Add a building in this formation
-     */
-    public void addBatiment(BatimentFormation batimentFormation) {
-        this.listeBatimentsFormation.add(batimentFormation);
-    }
-
-    /**
-     * @param batimentFormation Remove a building on this formation
-     */
-    public void removeBatiment(BatimentFormation batimentFormation) {
-        this.listeBatimentsFormation.remove(batimentFormation);
-    }
 
     /**
      * @return Get name of the formation

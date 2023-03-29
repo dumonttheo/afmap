@@ -5,7 +5,6 @@ import fr.afpa.afmap.dao.DAOBatimentService;
 import fr.afpa.afmap.dao.DAOPersonnel;
 import fr.afpa.afmap.dao.DAOService;
 import fr.afpa.afmap.model.BatimentAdministratif;
-import fr.afpa.afmap.model.BatimentFormation;
 import fr.afpa.afmap.model.Personnel;
 import fr.afpa.afmap.model.Service;
 import javafx.collections.FXCollections;
