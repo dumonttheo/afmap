@@ -17,12 +17,14 @@ public class DAOBatimentService extends Dao_Common<BatimentAdministratif> {
     @Override
     public BatimentAdministratif find(long id) {
         try {
-            ResultSet result = this.connect.createStatement().executeQuery("SELECT * FROM batiment WHERE id = " + id);
+            PreparedStatement findQuery = this.connect.prepareStatement("SELECT * FROM batiment WHERE id_batiment = (?);", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            findQuery.setLong(1,id);
+            ResultSet  result = findQuery.executeQuery();
             if (result.first()) {
                 Array allpoints = result.getArray("allpoints");
                 Float[] allPointsToFloat = (Float[]) allpoints.getArray();
                 Double[] allPointsToDouble = floatToDouble(allPointsToFloat);
-                return new BatimentAdministratif(result.getInt("id_batiment"), Integer.parseInt(result.getString("numero")), result.getString("nom"), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(result.getString("color")));
+                return new BatimentAdministratif(result.getInt("id_batiment"), Integer.parseInt(result.getString("numero")), result.getString("nom_batiment"), allPointsToDouble, givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(result.getString("color")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
