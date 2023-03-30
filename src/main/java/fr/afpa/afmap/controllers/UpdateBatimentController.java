@@ -215,6 +215,11 @@ public class UpdateBatimentController {
         }
     }
 
+    /**
+     *
+     * Set Batiment is a method who is called in change view to set all information about a Batiment
+     * @param batiment Batiment for set all information on input and created polygon
+     */
     public void setBatiment(Batiment batiment) {
         listOfTypeOfBatiment.add("Formation");
         listOfTypeOfBatiment.add("Administratif");

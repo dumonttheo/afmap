@@ -303,6 +303,14 @@ public class MainController {
     }
 
 
+    /**
+     * Generate a Polygon of a batiment
+     *
+     * @param batiment a batiment of Class Batiment who can be a BatimentFormation or a BatimentAdministratif
+     * @param formation a formation, can be null if the batiment is a BatimentAdministratif
+     * @param service a service, can be null if the batiment is a BatimentFormation
+     *
+     */
     public void generetaAPolygon(Batiment batiment, Formation formation, Service service) {
         Polygon polygon = new Polygon();
         for (ArrayList<Double> doubles : batiment.getAllPoints()) {
@@ -386,6 +394,10 @@ public class MainController {
         polygon.getPoints().setAll(newPoints);
     }
 
+
+    /**
+     * Method who is called in initialize, do parameter of combobox and set eventHandler
+     */
     public void setCombobox() {
         if (comboBat.getSelectionModel().isSelected(0)) {
             if (gridPaneBat.getChildren().remove(comboService)) {
@@ -495,8 +507,6 @@ public class MainController {
                     if (countFormateurI != countFormateurs) {
                         vBoxFormateurs.getChildren().add(new Label(" "));
                     }
-
-
                 }
 
                 for (Shape shape : squareArrayList) {
