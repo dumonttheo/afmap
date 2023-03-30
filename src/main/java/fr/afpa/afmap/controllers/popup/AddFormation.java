@@ -87,7 +87,7 @@ public class AddFormation {
     }
 
     public static boolean matchToPattern(String str){
-        Pattern pattern = Pattern.compile("^[a-zA-Z ]*$", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("^([a-zA-Z ]|[à-ü]|[À-Ü])*$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
     }

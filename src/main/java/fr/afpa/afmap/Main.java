@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -31,6 +32,23 @@ public class Main extends Application {
                 (int)( color.getRed() * 255 ),
                 (int)( color.getGreen() * 255 ),
                 (int)( color.getBlue() * 255 ) );
+    }
+
+    public static ArrayList<ArrayList<Double>> stringToArrayList(String input) {
+        ArrayList<ArrayList<Double>> result = new ArrayList<ArrayList<Double>>();
+        String[] entries = input.split("[{}]+");
+        for (String entry : entries) {
+            if (entry.trim().length() == 0) {
+                continue;
+            }
+            String[] values = entry.split(",");
+            ArrayList<Double> coordinates = new ArrayList<Double>();
+            for (String value : values) {
+                coordinates.add(Double.parseDouble(value.trim()));
+            }
+            result.add(coordinates);
+        }
+        return result;
     }
 
 }

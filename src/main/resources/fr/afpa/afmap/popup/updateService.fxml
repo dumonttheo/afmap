@@ -24,9 +24,17 @@
                     </children>
                 </HBox>
                 <TextField fx:id="nameService" promptText="Nom du service" />
-                <ListView fx:id="listViewBatiment" prefHeight="200.0" prefWidth="200.0">
-                    <selectionModel />
-                </ListView>
+                <Label text="Batiments : ">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
+                <ListView fx:id="listViewBatiment" prefHeight="200.0" prefWidth="200.0"/>
+                <Label text="Personnels : ">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
                 <ListView fx:id="listViewPersonnel" prefHeight="200.0" prefWidth="200.0" />
                 <HBox alignment="CENTER">
                     <children>

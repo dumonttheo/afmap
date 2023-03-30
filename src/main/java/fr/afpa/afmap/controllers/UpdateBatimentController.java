@@ -230,19 +230,7 @@ public class UpdateBatimentController {
         nameBatiment.setText(batiment.getNom());
         numberBatiment.setText(String.valueOf(batiment.getNumero()));
         colorPickerBuilding.setValue(batiment.getColor());
-        ArrayList<Double> points = new ArrayList<>();
-        for (int i = 0; i < batiment.getAllPoints().length; i++) {
-            if (i % 2 == 0 && i != 0) {
-                listOfPoints.add(points);
-                points = new ArrayList<>();
-                points.add(batiment.getAllPoints()[i]);
-            } else {
-                points.add(batiment.getAllPoints()[i]);
-            }
-            if (i == batiment.getAllPoints().length - 1) {
-                listOfPoints.add(points);
-            }
-        }
+        listOfPoints.addAll(batiment.getAllPoints());
         previewBuilding();
         createLine();
 
@@ -293,8 +281,10 @@ public class UpdateBatimentController {
     @FXML
     public void updateBatiment() {
         polygon = new Polygon();
+        ArrayList<ArrayList<Double>> arraylistOfPoints = new ArrayList<>();
         for (ArrayList<Double> points : listOfPoints) {
             polygon.getPoints().addAll(points);
+            arraylistOfPoints.add(points);
         }
         if (!nameBatiment.getText().isEmpty() && !numberBatiment.getText().isEmpty()) {
             String batimentName = nameBatiment.getText();
@@ -304,20 +294,12 @@ public class UpdateBatimentController {
                     if (polygon.getPoints().size() > 0) {
                         if (comboBatiment.getSelectionModel().getSelectedItem() != null) {
                             if (colorPickerBuilding.getValue() != null) {
-                                Double[] doubles = new Double[listOfPoints.size() * 2];
-                                int i = 0;
-                                for (ArrayList<Double> doublesArrayList : listOfPoints) {
-                                    for (Double doubl : doublesArrayList) {
-                                        doubles[i] = doubl;
-                                        i++;
-                                    }
-                                }
                                 if (comboBatiment.getSelectionModel().getSelectedItem().equals("Formation")) {
-                                    BatimentFormation bat = new BatimentFormation(this.batiment.getId(), Integer.parseInt(batimentNumber), batimentName, doubles, colorPickerBuilding.getValue());
+                                    BatimentFormation bat = new BatimentFormation(this.batiment.getId(), Integer.parseInt(batimentNumber), batimentName, arraylistOfPoints, colorPickerBuilding.getValue());
                                     DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
                                     daoBatimentFormation.update(bat);
                                 } else if (comboBatiment.getSelectionModel().getSelectedItem().equals("Administratif")) {
-                                    BatimentAdministratif bat = new BatimentAdministratif(this.batiment.getId(), Integer.parseInt(batimentNumber), batimentName, doubles, colorPickerBuilding.getValue());
+                                    BatimentAdministratif bat = new BatimentAdministratif(this.batiment.getId(), Integer.parseInt(batimentNumber), batimentName, arraylistOfPoints, colorPickerBuilding.getValue());
                                     DAOBatimentService daoBatimentService = new DAOBatimentService();
                                     daoBatimentService.update(bat);
 

@@ -219,8 +219,10 @@ public class AdminController {
     @FXML
     private void addBatiment() {
         polygon = new Polygon();
+        ArrayList<ArrayList<Double>> arraylistOfPoints = new ArrayList<>();
         for (ArrayList<Double> points : listOfPoints) {
             polygon.getPoints().addAll(points);
+            arraylistOfPoints.add(points);
         }
         if (!nameBatiment.getText().isEmpty() && !numberBatiment.getText().isEmpty()) {
             String batimentName = nameBatiment.getText();
@@ -230,20 +232,12 @@ public class AdminController {
                     if (polygon.getPoints().size() > 0) {
                         if (comboBatiment.getSelectionModel().getSelectedItem() != null) {
                             if (colorPickerBuilding.getValue() != null) {
-                                Double[] doubles = new Double[listOfPoints.size() * 2];
-                                int i = 0;
-                                for (ArrayList<Double> doublesArrayList : listOfPoints){
-                                    for (Double doubl : doublesArrayList){
-                                        doubles[i] = doubl;
-                                        i++;
-                                    }
-                                }
                                 if (comboBatiment.getSelectionModel().getSelectedItem().equals("Formation")) {
-                                    BatimentFormation bat = new BatimentFormation(0, Integer.parseInt(batimentNumber), batimentName, doubles, colorPickerBuilding.getValue());
+                                    BatimentFormation bat = new BatimentFormation(0, Integer.parseInt(batimentNumber), batimentName, arraylistOfPoints, colorPickerBuilding.getValue());
                                     DAOBatimentFormation daoBatimentFormation = new DAOBatimentFormation();
                                     daoBatimentFormation.create(bat);
                                 } else if (comboBatiment.getSelectionModel().getSelectedItem().equals("Administratif")) {
-                                    BatimentAdministratif bat = new BatimentAdministratif(0, Integer.parseInt(batimentNumber), batimentName, doubles, colorPickerBuilding.getValue());
+                                    BatimentAdministratif bat = new BatimentAdministratif(0, Integer.parseInt(batimentNumber), batimentName, arraylistOfPoints, colorPickerBuilding.getValue());
                                     DAOBatimentService daoBatimentService = new DAOBatimentService();
                                     daoBatimentService.create(bat);
                                 }

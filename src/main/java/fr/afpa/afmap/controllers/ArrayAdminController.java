@@ -161,9 +161,11 @@ public class ArrayAdminController {
 
 
         formations.addAll(daoFormation.findAll());
+        Collections.sort(formations);
         formationTableView.setItems(formations);
 
         services.addAll(daoService.findAll());
+        Collections.sort(services);
         serviceListView.setItems(services);
 
 
@@ -217,9 +219,10 @@ public class ArrayAdminController {
             daoPersonnel.delete(personnelTableView.getSelectionModel().getSelectedItem());
             personnels.clear();
             personnels.addAll(daoPersonnel.findAll());
-            batiments.clear();
-            batiments.addAll(daoBatimentFormation.findAll());
-            batiments.addAll(daoBatimentService.findAll());
+            services.clear();
+            services.addAll(daoService.findAll());
+            formations.clear();
+            formations.addAll(daoFormation.findAll());
         }
     }
 
@@ -281,6 +284,14 @@ public class ArrayAdminController {
             batiments.addAll(daoBatimentFormation.findAll());
             batiments.addAll(daoBatimentService.findAll());
             Collections.sort(batiments);
+        }
+    }
+    @FXML
+    public void returnToHome() {
+        try {
+            RootFile.setRoot("main-view2");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

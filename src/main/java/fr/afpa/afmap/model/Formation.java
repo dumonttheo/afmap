@@ -2,10 +2,11 @@ package fr.afpa.afmap.model;
 
 import java.util.ArrayList;
 
+
 /**
  * Formation, nom, personnel
  */
-public class Formation {
+public class Formation implements Comparable {
     private int id;
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
@@ -75,5 +76,11 @@ public class Formation {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Formation formation = (Formation) o;
+        return Integer.compare(this.id, formation.getId());
     }
 }

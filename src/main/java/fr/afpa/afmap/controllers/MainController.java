@@ -131,13 +131,13 @@ public class MainController {
 //            Use Function SwapPlaceRectangle to replace all square on the map
             for (Formation formation : formationList) {
                 for (Batiment batiment : formation.getListeBatimentsFormation()) {
-                    swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) batiment.getShape(), 1536, 1014, batiment.getAllPoints());
+//                    swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) batiment.getShape(), 1536, 1014, batiment.getAllPoints());
                 }
             }
 
             for (Service service : administrativList) {
                 for (Batiment batiment : service.getListBatiment()) {
-                    swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) batiment.getShape(), 1536, 1014, batiment.getAllPoints());
+//                    swapPlacePolygon(newVal.doubleValue(), Math.round(newVal.doubleValue() / 1.51), (Polygon) batiment.getShape(), 1536, 1014, batiment.getAllPoints());
                 }
             }
 
@@ -395,7 +395,7 @@ public class MainController {
         for (Formation formation : formationList) {
             for (BatimentFormation batiment : formation.getListeBatimentsFormation()) {
                 Polygon polygon = new Polygon();
-                polygon.getPoints().addAll(batiment.getAllPoints());
+//                polygon.getPoints().addAll(batiment.getAllPoints());
                 polygon.setFill(Color.TRANSPARENT);
                 polygon.setCursor(Cursor.HAND);
 
@@ -446,7 +446,7 @@ public class MainController {
             for (Batiment batiment : service.getListBatiment()) {
 
                 Polygon polygon = new Polygon();
-                polygon.getPoints().addAll(batiment.getAllPoints());
+//                polygon.getPoints().addAll(batiment.getAllPoints());
                 polygon.setFill(Color.TRANSPARENT);
                 polygon.setCursor(Cursor.HAND);
 

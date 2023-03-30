@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  *  Service class to go whit Administrativ Building
  */
-public class Service {
+public class Service implements Comparable{
     private int id;
     private String nom;
     private ArrayList<Personnel> listePersonnel = new ArrayList<>();
@@ -75,5 +75,11 @@ public class Service {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Service service = (Service) o;
+        return Integer.compare(this.id, service.getId());
     }
 }

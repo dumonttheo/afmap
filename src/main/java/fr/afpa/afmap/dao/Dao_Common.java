@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023
+ *
+ * Do by Antonin LOPEZ , https://gitlab.com/NeoXuS18
+ */
+
 package fr.afpa.afmap.dao;
 
 import fr.afpa.afmap.dataBase.DatabaseConnect;
@@ -23,6 +29,19 @@ public abstract class Dao_Common<T> {
         return doubles;
     }
 
+    public ArrayList<ArrayList<Double>> floatToArrayListDouble(Float[][] floats) {
+        ArrayList<ArrayList<Double>> arrayLists = new ArrayList<>();
+        for (Float[] aFloat : floats) {
+            ArrayList<Double> arrayList = new ArrayList<>();
+            arrayList.add(aFloat[0].doubleValue());
+            arrayList.add(aFloat[1].doubleValue());
+            arrayLists.add(arrayList);
+        }
+        return arrayLists;
+    }
+
+
+
     public Color givenHexCode_whenConvertedToRgb_thenCorrectRgbValuesAreReturned(String color) {
         int resultRed = Integer.valueOf(color.substring(0, 2), 16);
         int resultGreen = Integer.valueOf(color.substring(2, 4), 16);
@@ -30,6 +49,17 @@ public abstract class Dao_Common<T> {
 
         return Color.rgb(resultRed, resultGreen, resultBlue);
 
+    }
+
+    protected Double[][] givenArrayListOfArrayListOfDoubleToArrayTwoDimensionOfDouble(ArrayList<ArrayList<Double>> points){
+        Double[][] doubles = new Double[points.size()][2];
+        int i = 0;
+        for (ArrayList<Double> doubl : points){
+            doubles[i][0] = doubl.get(0);
+            doubles[i][1] = doubl.get(1);
+            i++;
+        }
+        return  doubles;
     }
 
 }

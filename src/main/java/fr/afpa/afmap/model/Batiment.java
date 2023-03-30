@@ -2,6 +2,8 @@ package fr.afpa.afmap.model;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 /**
  * Description batiment afpa avec coordonnées
  */
@@ -20,7 +22,7 @@ abstract public class Batiment extends FormeBatiment implements Comparable{
      * @param allPoints Array of points for polygon
      * @param color     Color for building
      */
-    public Batiment(int id, int numero, String nom, Double[] allPoints, Color color) {
+    public Batiment(int id, int numero, String nom, ArrayList<ArrayList<Double>> allPoints, Color color) {
         super(allPoints, color);
         this.numero = numero;
         this.nom = nom;

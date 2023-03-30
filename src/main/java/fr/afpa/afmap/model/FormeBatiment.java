@@ -3,13 +3,15 @@ package fr.afpa.afmap.model;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
+import java.util.ArrayList;
+
 /**
  *  Form of Building, Separate Polygon to square
  */
 public abstract class FormeBatiment {
 
     private Color color;
-    protected Double[] allPoints;
+    protected ArrayList<ArrayList<Double>> allPoints;
     private Shape shape;
 
 
@@ -18,7 +20,7 @@ public abstract class FormeBatiment {
      * @param allPoints ArrayList for building
      * @param color Color of building
      */
-    public FormeBatiment(Double[] allPoints, Color color)  {
+    public FormeBatiment(ArrayList<ArrayList<Double>> allPoints, Color color)  {
         this.allPoints = allPoints;
         this.color = color;
     }
@@ -40,7 +42,7 @@ public abstract class FormeBatiment {
     /**
      * @return get array of points
      */
-    public  Double[] getAllPoints(){
+    public  ArrayList<ArrayList<Double>> getAllPoints(){
         return allPoints;
     }
 

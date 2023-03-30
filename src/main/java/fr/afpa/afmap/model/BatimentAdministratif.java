@@ -18,7 +18,7 @@ public class BatimentAdministratif extends Batiment {
      * @param allPoints Array of all points to create a polygon
      * @param color Color of building
      */
-    public BatimentAdministratif(int id, int numero, String nom, Double[] allPoints, Color color){
+    public BatimentAdministratif(int id, int numero, String nom, ArrayList<ArrayList<Double>> allPoints, Color color){
         super(id, numero,  nom, allPoints, color);
     }
 

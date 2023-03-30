@@ -18,7 +18,7 @@ public class BatimentFormation extends Batiment{
      * @param allPoints Array of all points to create a polygon
      * @param color Color of building
      */
-    public BatimentFormation(int id, int numero, String nom,  Double[] allPoints, Color color){
+    public BatimentFormation(int id, int numero, String nom,  ArrayList<ArrayList<Double>> allPoints, Color color){
         super(id, numero,nom,allPoints, color);
     }
 

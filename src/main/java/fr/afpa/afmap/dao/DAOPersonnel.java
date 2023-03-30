@@ -99,6 +99,14 @@ public class DAOPersonnel extends Dao_Common<Personnel> {
     @Override
     public void delete(Personnel object) {
         try {
+            PreparedStatement deleteOccurenceOnTableFormation = this.connect.prepareStatement("DELETE FROM formation_personnel WHERE id_personnel = (?);");
+            deleteOccurenceOnTableFormation.setInt(1,object.getId());
+            deleteOccurenceOnTableFormation.executeUpdate();
+
+            PreparedStatement deleteOccurenceOnTableService = connect.prepareStatement("DELETE FROM personnel_service WHERE id_personnel = (?);");
+            deleteOccurenceOnTableService.setInt(1,object.getId());
+            deleteOccurenceOnTableService.executeUpdate();
+
             PreparedStatement ps = this.connect.prepareStatement("DELETE FROM personnel WHERE id_personnel = (?);");
             ps.setInt(1, object.getId());
             ps.executeUpdate();
